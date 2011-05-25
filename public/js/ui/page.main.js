@@ -2,10 +2,12 @@
   SB.ui('page.main', function(opts) {
     SB.require('page.main', 'css');
     return SB.run(function() {
-      SB.render($('#main'), 'page.main');
-      return SB.ui('feed', {
-        el: $('#feed')
-      });
+      return SB.log('okay...');
+      /*
+          SB.render $('#main'), 'page.main'
+          SB.ui 'feed',
+            el: $('#feed')
+          */
     });
   });
 }).call(this);
