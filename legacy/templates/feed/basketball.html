@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/feed.index.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/module.feed.css?v=23">
+</head>
+<body id="FEED">
+
+<div class="mod-all">
+
+<a class="mod-logo basketball" href="/basketball"><div class="text"></div><div class="bot"></div></a>
+
+<div id="menu">
+    <div class="mod-account">
+        <div class="menu">
+            <a class="inbox"><div>Inbox (<span class="messages" id="inbox-alerts">0</span>)</div></a>
+             <a class="profile" id="my-profile" href="/m/<%= user.id %>" rel="<%= user.id %>"><div>My Profile</div></a>
+            <a class="account"><div>Account</div></a>
+            <div class="account-menu">
+                <div class="options">
+                    <div class="name"><%= user.display_name %></div>
+                    <!--<a href="/account/settings">Settings</a>-->
+                    <a href="/signout">Sign Out</a>
+                </div>
+            </div>
+            <div class="inbox-list">
+                <div class="controls"><button id="clear-inbox-alerts">Clear all alerts</button>Your Topic Alerts</div>
+                <div class="messages"></div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mod-nav basketball">
+        <div class="nav">
+            <div class="search br-t-5"><div class="box br-3"><input type="text" class="transparent" title="search (disabled)" disabled="disabled" /></div></div>
+            <div class="menu">
+                <div class="sect"><a href="/football">Football</a></div>
+                <div class="sect on"><a href="/basketball">Basketball</a></div>
+		<div class="sect"><a href="/baseball">Baseball</a></div>
+            </div>
+            <div class="submenu br-b-5">
+                <div class="meta members-online br-b-5"><span><strong id="members-online">Loading...</strong> members online.</span></div>
+                <div class="info"><span><strong>Fantasy Basketball</strong> - real-time fantasy basketball feed.</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page">
+
+<div class="mod-channels">
+	<div class="channels">
+	    <a id="channel-fantasy" class="channel"><span class="br-3 dynamic"></span> Fantasy Basketball</a>
+	    <a id="channel-advice" class="channel"><span class="br-3 dynamic"></span>Instant Advice</a>
+	    <a id="channel-offtopic" class="channel"><span class="br-3 dynamic"></span>Off Topic</a>
+	    <a id="channel-feedback" class="channel"><span class="br-3 dynamic"></span>Beta Feedback</a>
+	</div>
+	<div class="cookies">
+		<a id="channel-mycookies"><span class="br-3"><%= member.cookies.basketball %></span> My Cookies</a>
+		<a id="channel-givecookies">Give Cookies</a>
+		<a id="channel-cookiesgiven">Cookies I Gave</a>
+	</div>
+</div>
+
+<div class="mod-feed" id="feed"><div class="wrap">
+    <div class="new-topic br-3">
+        <a class="publish button"><span>Publish</span></a>
+        <input class="default br-3" type="text" title="Start a Topic" maxlength="250" />
+    </div>
+    <div class="topics"></div>
+    <a class="load-more br-5 shadow"><span>Load More</span></a>
+</div></div>
+
+<div class="mod-news" id="news">
+    <div class="tabs" id="news-filters">
+        <a class="tab breaking on" rel="all"><div class="wrap">Breaking</div></a>
+        <a class="tab sleepers" rel="sleepers"><div class="wrap">Sleepers</div></a>
+        <a class="tab injuries" rel="injuries"><div class="wrap">Injuries</div></a>
+    </div>
+
+    <div class="wrap">
+        <div class="updates">
+            <!-- <div class="ad" id="ad"></div> -->
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="mod-footer">
+    <div class="links">
+        <a href="http://blog.sleeperbot.com/">Blog</a> |
+        <a href="http://twitter.com/sbfantasysports">Twitter</a> |
+        <a href="/about">About</a> | 
+        <a href="/contact">Contact</a>
+    </div>
+    <div class="copyright">Copyright &copy; 2010 <strong>SleeperBot</strong>. A production of Rentfox, LLC. All Rights Reserved.</div>
+</div>
+
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.history.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.jsonp.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.prettydate.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.menu.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.feed.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.news.js?v=23"></script>
+<script type="text/javascript" src="/js/page.basketball.feed.index.js?v=23"></script>
+<script type="text/javascript" src="/js/date.js?v=23"></script>
+<script type="text/javascript">UI.render('basketball.feed.index');</script>
+</body>
+</html>

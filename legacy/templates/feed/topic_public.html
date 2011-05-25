@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SleeperBot | <%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/feed.topic.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/module.feed.css?v=23">
+</head>
+<body id="TOPIC" title="<%= topic.sport %>" rel="<%= topic.channel %>">
+
+<%
+    var sport_name = topic.sport.charAt(0).toUpperCase() + topic.sport.slice(1);
+%>
+
+<div class="mod-all">
+
+<a class="mod-logo <%= topic.sport %>" href="/<%= topic.sport %>"><div class="text"></div><div class="bot"></div></a>
+
+
+<div id="menu">
+    <%
+        var football_on, basketball_on, baseball_on;
+        if (topic.sport === 'football') football_on = 'on';
+        if (topic.sport === 'basketball') basketball_on = 'on';
+	if (topic.sport === 'baseball') baseball_on = 'on';
+    %>
+    <div class="mod-account">
+        <div class="menu">
+            <a class="membership br-b-5" href="/"><div>Apply for exclusive <strong>FREE</strong> membership</div></a>
+        </div>
+    </div>
+    
+    <div class="mod-nav <%= topic.sport %>">
+        <div class="nav">
+            <div class="search br-t-5"><div class="box br-3"><input type="text" class="transparent" title="search (disabled)" disabled="disabled" /></div></div>
+            <div class="menu">
+                <div class="sect <%= football_on %>"><a href="/football">Football</a></div>
+                <div class="sect <%= basketball_on %>"><a href="/basketball">Basketball</a></div>
+		<div class="sect <%= baseball_on %>"><a href="/baseball">Baseball</a></div>
+            </div>
+            <div class="submenu br-b-5">
+                <div class="meta members-online br-b-5"><span id="member-connected"><strong id="members-online">Loading...</strong> members online.</span></div>
+                <div class="info"><span><strong>Fantasy <%= sport_name %></strong> - real-time fantasy <%= topic.sport %> feed.</span></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page">
+
+<div class="mod-channels">
+    <div class="back">
+        <a href="/<%= topic.sport %>#/channel/<%= topic.channel %>">&laquo; Back to Channel</a>
+    </div>
+    <%
+        var class_commentary = class_fantasy = class_advice = class_feedback = class_offtopic = '';
+        if ( topic.channel === 'fantasy' ) class_fantasy = 'on';
+		if ( topic.channel === 'commentary' ) class_commentary = 'on';
+        if ( topic.channel === 'advice' ) class_advice = 'on';
+        if ( topic.channel === 'feedback' ) class_feedback = 'on';
+        if ( topic.channel === 'offtopic' ) class_offtopic = 'on';
+    %>
+    <a href="/<%= topic.sport %>#/channel/fantasy" class="<%= class_fantasy %>">Fantasy <%= sport_name %></a>
+	<% 
+		if (topic.sport === 'baseball') {
+	%>
+	<a href="/<%= topic.sport %>#/channel/commentary" class="<%= class_commentary %>">Game Commentary</a>
+	<%
+		}
+	%>
+    <a href="/<%= topic.sport %>#/channel/advice" class="<%= class_advice %>">Instant Advice</a>
+    <a href="/<%= topic.sport %>#/channel/offtopic" class="<%= class_offtopic %>">Off Topic</a>
+    <a href="/<%= topic.sport %>#/channel/feedback" class="<%= class_feedback %>">Beta Feedback</a>
+</div>
+
+<div class="mod-feed" id="topic"><div class="wrap">
+    <div class="topic-header">
+        <div id="topic-title-display">
+            <h3 id="topic-title" class="title"><%= topic.comment %></h3>
+        </div>
+        <div class="byline">Posted By <a href="/m/<%= topic.user_id %>"><%= topic.user_name %></a> on <span id="posted" title="<%= topic.created %>"></span></div>
+    </div>
+    
+    <div class="topic" id="<%= topic._id %>">
+	
+		<div class="cookies">
+			<div class="upvote br-3"><div class="arrow"></div><div class="wrap"><%= topic.cookies.upvoted.length %></div></div>
+			<%
+				if (topic.cookies.received) {
+					var amount = topic.cookies.received.amount,
+						cookie_str = amount === 1 ? 'cookie' : 'cookies';
+			%>
+				<div class="received br-3"><div class="arrow"></div><div class="wrap"><a href="/m/<%= topic.cookies.received.user_id %>"><%= topic.cookies.received.user_name %></a> received <%= amount %> <%= cookie_str %>.</div></div>
+			<%
+				} else {
+			%>
+				<div class="received br-3"><div class="arrow"></div><div class="wrap">Participate for a chance to get cookies!</div></div>
+			<%
+				}
+			%>
+		</div>
+        
+        <div class="comments">
+            <%
+                if (topic.comments) {
+                    
+                    var comments = topic.comments,
+                        len = comments.length;
+    
+                    for (var i=0; i < len; i++) {
+                        var comment = comments[i];
+            %>
+            <div class="comment">
+                <div class="time" title="<%= comment.created %>"></div>
+                <div class="text"><%= comment.comment %> <span class="member">-&nbsp;<a href="/m/<%= comment.user_id %>"><%= comment.user_name %></a></span></div>
+            </div>
+            <%
+                    }
+                }
+            %>
+        </div>
+                
+    </div>
+</div></div>
+
+<div class="mod-news" id="news"><div class="wrap">
+    <div class="updates"></div>
+</div></div>
+
+</div>
+
+<div class="mod-footer">
+    <div class="links">
+        <a href="http://blog.sleeperbot.com/">Blog</a> |
+        <a href="http://twitter.com/sbfantasysports">Twitter</a> |
+        <a href="/about">About</a> | 
+        <a href="/contact">Contact</a>
+    </div>
+    <div class="copyright">Copyright &copy; 2010 <strong>SleeperBot</strong>. A production of Rentfox, LLC. All Rights Reserved.</div>
+</div>
+
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.jsonp.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.prettydate.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.dialog.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.dateformat.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.menu.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.feed.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.news.js?v=23"></script>
+<script type="text/javascript" src="/js/page.feed.topic.js?v=23"></script>
+<script type="text/javascript" src="/js/date.js?v=23"></script>
+<script type="text/javascript">UI.render('feed.topic');</script>
+</body>
+</html>

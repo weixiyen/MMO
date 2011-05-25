@@ -1,0 +1,18 @@
+.ui-feed
+  .topic-input
+    input(type='text')
+  .topic-list
+    - each topic in topics
+      .topic
+        .title
+          .time 5min
+          .text #{topic.comment}
+        .comments
+          - each comment in topic.comments
+            .comment
+              .time 3min
+              .text!= comment.comment
+                
+        .reply
+          textarea
+          a.reply-btn

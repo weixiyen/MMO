@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+</head>
+<body id="BETA">
+<div class="all">
+    
+    <div id="logo-text" class="logo-text"></div>
+    <div id="logo" class="logo"></div>
+    <div class="tagline">real-time fantasy sports</div>
+    
+    <form method="POST" action="/signin" class="form" id="signin-form">
+        
+        <div class="apply"><a class="button" href="/"><span>Apply for FREE membership</span></a></div>
+        
+        <h3>Sign In to SleeperBot</h3>
+        <span>
+            SleeperBot is an Invite Only community.
+            You will be unable to login without receiving a <strong>beta code</strong>.
+        </span>
+        
+        <%
+            if (errors) {
+                var error_html = [];
+                _.each(errors, function(error){
+                    error_html.push('<li>'+error.msg+'</li>');
+                });
+        %>
+        <ul id="error-box" class="error"><%= error_html.join('') %></ul>
+        <%
+            }
+        %>
+        
+        <input type="hidden" name="path" value="/football" id="path" />
+        <label for="email">Email</label>
+        <input type="text" id="email" name="email" />
+        <label for="password">Password</label>
+        <input type="password" id="password" name="password" />
+        <div><a href="/auth/password">Forgot your password?</a></div>
+        <a id="signin-button" class="login button"><span>Sign In</span></a>
+        
+    </form>
+
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/page.auth.signin.js?v=23"></script>
+<script type="text/javascript">UI.render('auth.signin');</script>
+</body>
+</html>

@@ -1,0 +1,31 @@
+#PROFILE .page {
+    overflow: hidden;
+    }
+#PROFILE .body {
+    float: left;
+    width: 650px;    
+    }
+#PROFILE .body .nav {
+    clear: both;    
+    }
+#PROFILE .body .content {
+    clear: both;
+    padding: 20px 0 0 0;
+    }
+#PROFILE .mod-profile {
+    float: left;
+    width: 310px;
+    }
+#PROFILE .mod-feed > .wrap {
+    border-right: none;
+    padding: 0 10px 3px 10px;
+    min-height: 300px;
+    }
+#PROFILE .mod-feed .topic {
+    margin: 0 0 5px 0;
+    padding: 0;
+    }
+#PROFILE .mod-feed .topic .title {
+    font-size: 11px;
+    font-weight: normal;
+    }

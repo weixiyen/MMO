@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/feed.topic.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/member.profile.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/football.tools.tiersheet.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/module.feed.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/module.profile.css?v=23">
+</head>
+<body id="PROFILE">
+
+<div class="mod-all">
+    
+<a class="mod-logo" href="/"><div class="text"></div><div class="bot"></div></a>
+
+<div id="menu">
+    <div class="mod-account">
+        <div class="menu">
+            <a class="inbox"><div>Inbox (<span class="messages" id="inbox-alerts">0</span>)</div></a>
+            <%
+                var profile_class = '';
+                if (member.id == user.id) profile_class = 'on';
+            %>
+ 			<a class="profile <%= profile_class %>" id="my-profile" href="/m/<%= user.id %>" rel="<%= user.id %>"><div>My Profile</div></a>
+            <a class="account"><div>Account</div></a>
+            <div class="account-menu">
+                <div class="options">
+                    <div class="name"><%= user.display_name %></div>
+                    <!--<a href="/account/settings">Settings</a>-->
+                    <a href="/signout">Sign Out</a>
+                </div>
+            </div>
+            <div class="inbox-list">
+                <div class="controls"><button id="clear-inbox-alerts">Clear all alerts</button>Your Topic Alerts</div>
+                <div class="messages"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page">
+
+<div class="body">
+    <div class="nav">
+        
+        <div class="mod-tabs">
+            <div class="tab on">
+                <h3>Activity</h3>
+                <p>latest activity</p>
+            </div>
+            <div class="tab">
+                <h3>Y! Teams</h3>
+                <p>Coming soon!</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="content">
+        <div class="mod-channels">
+            <a class="on" id="channel-all"><span class="br-3"><%= member.participated %></span>All</a>
+            <a id="channel-started"><span class="br-3"><%= member.started %></span>Topics Started</a>
+            <a id="channel-replied"><span class="br-3"><%= member.replied %></span>Replied to</a>
+        </div>
+        
+        <div class="mod-feed" id="feed"><div class="wrap">
+            <div class="description" id="description-all">
+                <h1><strong><%= member.display_name %></strong>'s participation</h1>
+                <p>Participated in <%= member.participated %> topics (started <%= member.started %> and replied to <%= member.replied %>).</p>
+            </div>
+            <div class="description hidden" id="description-started">
+                <h1>Topics started by <strong><%= member.display_name %></strong></h1>
+                <p><%= member.display_name %> started <%= member.started %> topics on SleeperBot.</p>
+            </div>
+            <div class="description hidden" id="description-replied">
+                <h1><strong><%= member.display_name %></strong>'s comments</h1>
+                <p><%= member.display_name %> replied to <%= member.replied %> topics on SleeperBot.</p>
+            </div>
+            <div class="topics"></div>
+            <a class="load-more br-5 shadow"><span>Load More</span></a>
+        </div></div>
+        
+    </div>
+</div>
+    
+<div class="mod-profile">
+    <div class="header br-t-5"><%= member.display_name %></div>
+    <div class="details br-b-5">
+        <div class="section">
+            <strong class="cookie"><%= member.cookies.football %></strong> football cookies<br>
+            <strong class="cookie"><%= member.cookies.basketball %></strong> basketball cookies<br>
+	    <strong class="cookie"><%= member.cookies.baseball %></strong> baseball cookies<br>
+        </div>
+        <%
+            var access_level = 'Member';
+            if ( _.indexOf(member.permissions, 'moderator') !== -1) access_level = "Moderator";
+            if ( _.indexOf(member.permissions, 'admin') !== -1) access_level = "Admin";
+        %>
+        <div class="section">
+            <span id="access-level"><%= access_level %></span> of SleeperBot
+        </div>
+        <div class="section">
+            Member since <span id="joined" title="<%= member.created %>"></span>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<div class="mod-footer">
+    <div class="links">
+        <a href="http://blog.sleeperbot.com/">Blog</a> |
+        <a href="http://twitter.com/sbfantasysports">Twitter</a> |
+        <a href="/about">About</a> | 
+        <a href="/contact">Contact</a>
+    </div>
+    <div class="copyright">Copyright &copy; 2010 <strong>SleeperBot</strong>. A production of Rentfox, LLC. All Rights Reserved.</div>
+</div>
+
+
+</div>
+<input type="hidden" id="user_id" value="<%= member.id %>" />
+
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.cookie.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.jsonp.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.prettydate.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.dateformat.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.menu.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.feed.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.module.news.js?v=23"></script>
+<script type="text/javascript" src="/js/page.members.profile.js?v=23"></script>
+<script type="text/javascript" src="/js/date.js?v=23"></script>
+<script type="text/javascript">UI.render('members.profile');</script>
+</body>
+</html>

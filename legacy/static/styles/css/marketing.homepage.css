@@ -1,0 +1,273 @@
+#HOME {
+    background: #eee;
+    }
+#HOME .mid {
+    width: 800px;
+    margin: auto;
+    }
+
+/* header
+----------------------*/
+#HOME > .header {
+    overflow: hidden;
+    padding: 20px 0 0 0;
+    background: #fff;
+    }
+#HOME > .header .logo {
+    display: block;
+    height: 30px;
+    width: 155px;
+    background: url('../img/spritesheet.png?v=23') no-repeat -440px -350px;
+    float: left;
+    }
+#HOME > .header .signin {
+    float: right;
+    background-repeat: no-repeat;
+    background-image: url('../img/spritesheet.png?v=23');
+    background-position: 8px -118px;
+    }
+#HOME > .header .promo {
+    clear: both;
+    overflow: hidden;
+    }
+#HOME > .header .tiersheet {
+    background: none repeat scroll 0 0 #EEEEEE;
+    float: left;
+    padding: 5px;
+    position: relative;
+    left: 26px;
+    top: -27px;
+    font-size: 12px;
+    font-weight: bold;
+    }
+#HOME > .header .banner {
+    float: left;
+    height: 225px;
+    width: 600px;
+    background: no-repeat url('../img/homepage_banner.png');
+    }
+#HOME > .header .bot {
+    float: left;
+    height: 250px;
+    width: 120px;
+    background: no-repeat url('../img/homepage_banner.png') -630px 0;
+    margin-left: 50px;
+    }
+
+/* apply
+----------------------*/
+#HOME > .apply {
+    min-height: 120px;
+    background: url('../img/grass_bg.png') repeat-x center top;
+    color: #FFE8D8;
+    overflow: hidden;
+    }
+#HOME > .apply h3 {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0;
+    color: #fff;
+    }
+#HOME > .apply .features {
+    overflow: hidden;    
+    }
+#HOME > .apply .feature {
+    float: left;
+    width: 250px;
+    margin: 20px 15px 0 0;
+    border-right: 1px solid #FFE8D8;
+    }
+#HOME > .apply .feature:last-child {
+    border: none;    
+    }
+#HOME > .apply p {
+    font-size: 13px;
+    margin: 10px 0 20px 0;
+    }
+#HOME > #open-application-form {
+    display: none;
+    }
+#HOME > .apply-button {
+    display: block;
+    width: 300px;
+    margin: auto;
+    text-align: center;
+    padding: 10px 0 10px 0;
+    cursor: pointer;
+    background: #10d700;
+    color: #fff;
+    position: relative;
+    left: -16px;
+    border-bottom: 1px solid #0DA600;
+    text-decoration: none;
+    }
+#HOME > .apply-button:hover {
+    background: #11EF00;    
+    }
+#HOME > .apply-button:active {
+    background: #333;
+    border-bottom: 1px solid #000;
+    }
+#HOME > .apply .form .promo {
+    float: right;
+    width: 300px;
+    margin: 40px 20px 20px 20px;
+    border-left: 1px solid #ccc;
+    font-size: 14px;
+    line-height: 1.5em;
+    padding-left: 15px;
+    }
+#HOME > .apply .form .fields {
+    padding: 10px;
+    }
+#HOME > .apply .form .fields h3 {
+    color: #DEFF00;
+    padding: 0 0 5px 0;
+    }
+#HOME > .apply .form .fields label {
+    display: block;
+    margin: 10px 0 3px 0;
+    font-weight: bold;
+    font-size: 12px;
+    }
+#HOME > .apply .form .fields input {
+    display: block;
+    width: 250px;
+    font: 13px Verdana;
+    padding: 5px;
+    }
+#HOME > .apply .form .fields input.long {
+    width: 300px;
+    }
+#HOME > .apply .apply.button {
+    background-repeat: no-repeat;
+    background-image: url('../img/spritesheet.png?v=23');
+    background-position: 8px -118px;
+    margin: 20px 0 20px 0;
+    }
+#HOME > .apply .share-url {
+    padding: 3px;
+    background: #333;
+    float: left;
+    }
+    
+/* apply
+----------------------*/
+#HOME > .topics {
+    overflow: hidden;
+    margin-top: 20px;
+    }
+#HOME > .topics .latest {
+    float: left;
+    width: 500px;
+    }
+#HOME > .topics .breaking {
+    float: left;
+    width: 300px;
+    }
+#HOME > .topics h3 {
+    background: url('../img/spritesheet.png?v=23') no-repeat;
+    padding: 10px 0 10px 40px;
+    font-size: 16px;
+    font-weight: bold;
+    margin: 0;
+    }
+#HOME > .topics .list {
+    padding: 0 0 0 40px;
+    font-size: 12px;
+    }
+#HOME > .topics .list > div {
+    margin: 0 0 10px 0;
+    }
+#HOME > .topics .latest h3 {
+    background-position: -5px -162px;
+    }
+#HOME > .topics .breaking h3 {
+    background-position: -570px -700px;
+    }
+#HOME > .topics .topic {
+    overflow: hidden;
+    }
+#HOME > .topics .update {
+    overflow: hidden;
+    }
+#HOME > .topics .time {
+    float: left;
+    width: 50px;
+    color: #666;
+    font-size: 11px;
+    }
+#HOME > .topics .latest .title {
+    float: left;
+    width: 350px;
+    }
+#HOME > .topics .breaking .title {
+    float: left;
+    width: 200px;
+    }
+
+/* values
+----------------------*/
+#HOME > .values {
+    overflow: hidden;
+    margin-top: 50px;
+    }
+#HOME > .values .value {
+    float: left;
+    width: 235px;
+    margin: 0 15px 0 15px;
+    border-right: 1px solid #ccc;
+    }
+#HOME > .values .value:last-child {
+    margin-right: 0;
+    border-right: none;
+    }
+#HOME > .values .value strong {
+    font-size: 16px;
+    padding-right: 5px;
+    font-weight: normal;
+    }
+#HOME > .values .value span {
+    color: #FF5831;
+    }
+
+/* quotes
+----------------------*/
+#HOME > .quotes-header {
+    font-size: 30px;
+    text-align: center;
+    margin: 50px 0 0 0;
+    color: #555;
+    }
+#HOME > .quotes {
+    background: #f9f9f9;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    }
+#HOME > .quotes .list {
+    width: 600px;
+    padding: 30px 0 30px 0;
+    }
+#HOME > .quotes .list > div {
+    margin-bottom: 25px;
+    font-size: 18px;
+    color: #333;
+    }
+#HOME > .quotes .list > div span {
+    font-size: 10px;
+    padding-left: 10px;
+    color: #666;
+    }
+#HOME > .quotes .list > div strong {
+    color: #000;
+    }
+    
+/* footer
+----------------------*/
+#HOME > .footer {
+    padding: 30px 0 50px 0;
+    text-align: center;
+    }
+#HOME > .footer .links {
+    padding-bottom: 10px;    
+    }

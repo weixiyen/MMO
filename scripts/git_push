@@ -1,0 +1,7 @@
+#!/bin/bash
+cd ..
+echo Enter a commit message
+read MESSAGE
+git add *
+git commit -m "$MESSAGE"
+git push origin master

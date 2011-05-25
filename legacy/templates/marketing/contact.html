@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+</head>
+<body id="BETA">
+
+<div class="all">
+    
+    <div id="logo-text" class="logo-text"></div>
+    <div id="logo" class="logo"></div>
+    <div class="tagline">real-time fantasy sports</div>
+    
+    <ul id="error-box"></ul>
+    <div class="form" id="form">
+        <h3>Contact SleeperBot</h3>
+        <label for="name">Your Name</label>
+        <input type="text" id="name" maxlength="20" />
+        <label for="email">Your Email</label>
+        <input type="text" id="email" maxlength="100" />
+        <label for="subject">Subject</label>
+        <input type="text" id="subject" maxlength="100" />
+        <label for="message">Message</label>
+        <textarea id="message"></textarea>
+        <button id="send-button">Send Message</button>
+    </div>
+    <div id="sent-box" class="form hidden">
+        <h3>Message Sent!</h3>
+        <p>
+            We have received your inquiry and will be in touch with you shortly.
+        </p>
+    </div>
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/page.marketing.contact.js?v=23"></script>
+<script type="text/javascript">UI.render('marketing.contact');</script>
+</body>
+</html>

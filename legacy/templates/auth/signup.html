@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/football.tools.tiersheet.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+</head>
+<body id="BETA">
+<div class="all">
+    
+    <div id="logo-text" class="logo-text"></div>
+    <div id="logo" class="logo"></div>
+    <div class="tagline">real-time fantasy sports</div>
+    
+    <ul id="error-box"></ul>
+    <div id="form" class="form">
+        <h3>SleeperBot Sign Up</h3>
+        <label for="display-name">Display Name</label>
+        <input type="text" id="display-name" maxlength="20" />
+        <label for="email">Email</label>
+        <input type="text" id="email" maxlength="100" />
+        <label for="email2">Email (repeat)</label>
+        <input type="text" id="email2" maxlength="100" />
+        <label for="password">Password</label>
+        <input type="password" id="password" maxlength="100" />
+        <label for="password2">Password (repeat)</label>
+        <input type="password" id="password2" maxlength="100" />
+        <label for="code">Beta Code<span> SleeperBot is an invite-only community.</span></label>
+        <input type="text" id="code" class="small" title="beta code" maxlength="100" />
+        <button id="signup-button">Sign Up</button>
+    </div>
+    <div id="sent-box" class="form hidden">
+        <h3>Check your email</h3>
+        <p>
+            Went sent you an activation link to your email.
+            Make sure to check the <strong>junkmail</strong> folder as well.
+        </p>
+    </div>
+
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/page.auth.signup.js?v=23"></script>
+<script type="text/javascript">UI.render('auth.signup');</script>
+</body>
+</html>

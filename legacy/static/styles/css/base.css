@@ -1,0 +1,504 @@
+/*  CSS mini reset
+-------------------------------------------------*/
+html, body, div, form, fieldset, legend, label{margin: 0;padding: 0; }
+table{border-collapse: collapse; border-spacing: 0;}
+th, td {text-align: left; vertical-align: top;}
+h1, h2, h3, h4, h5, h6, th, td, caption { font-weight:normal; }
+img { border: 0; }
+
+/*  colors and shadows
+-------------------------------------------------*/
+.red {color:red;}
+.shadow {
+    -moz-box-shadow: 1px 1px 2px #666;
+    -webkit-box-shadow: 1px 1px 2px #666;
+    box-shadow: 1px 1px 2px #666;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#666666')";
+    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=1, Direction=135, Color='#666666');
+    }
+/*  borders
+-------------------------------------------------*/
+.br-3 {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    }
+.br-5 {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    }
+.br-t-5 {
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    }
+.br-b-5 {
+    -webkit-border-bottom-left-radius: 5px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    }
+
+/*  borders
+-------------------------------------------------*/
+.m-t-3 {margin-top: 3px;}
+.m-r-5 {margin-right: 5px;}
+.block {display: block;}
+.left {float: left;}
+.right {float:right;}
+    
+/*  button
+-------------------------------------------------*/
+.button {
+    background: #eee no-repeat;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    text-decoration: none;
+    padding: 6px 4px 6px 4px;
+    color: #000;
+    font-weight: bold;
+    font-size: 12px;
+    display: block;
+    float: left;
+    }
+.button > span {
+    margin: 0 0 0 34px;
+    border-left: 1px solid #ccc;
+    padding: 0 10px 0 10px;
+    display: block;
+    }
+.button:active {
+    background: #f9f9f9;
+    color: #333;
+    }
+.button.red {
+    background-color: #ffe0e0;
+    color: #7d0000;
+    }
+.button.red > span {
+    border-left: 1px solid #e4a7a7;
+    }
+.button.red:active {
+    background: #f9f9f9;
+    color: #B94E41;
+    }
+.button.mini {
+    padding: 3px 10px 3px 10px;
+    font-size: 10px;
+    cursor: pointer;
+    }
+    
+/*  modules
+-------------------------------------------------*/
+.mod-all {
+    margin: auto;    
+    width: 960px;
+    }
+
+/*  mod-sections
+-------------------------------------------------*/
+.mod-sections {
+    position: absolute;
+    margin-left: 175px;
+    }
+.mod-sections > a {
+    float: left;
+    padding: 6px 20px 8px 20px;
+    border-top: 3px solid #ccc;
+    color: #000;
+    text-decoration: none;
+    }
+.mod-sections > a.on {
+    border-top: 3px solid #000;
+    font-weight: bold;
+    cursor: default;
+    }
+.mod-sections > a:hover {
+    border-top: 3px solid #4D91FF;
+    background: #DFF2FF;
+    color: #3A5BC7;
+    }
+.mod-sections > a.on:hover {
+    background: none;
+    border-top: 3px solid #000;
+    color: #000;
+    }
+    
+/*  mod-account
+-------------------------------------------------*/
+.mod-account {
+    overflow: hidden;
+    }
+.mod-account .menu {
+    float: right;
+    width: 310px;
+    cursor: pointer;
+    }
+.mod-account .menu a {
+    text-decoration: none;
+    color: #ccc;
+    }
+.mod-account .menu .inbox {
+    float: left;
+    width: 123px;
+    height: 31px;
+    -webkit-border-bottom-left-radius: 5px;
+    -moz-border-radius-bottomleft: 5px;
+    border-bottom-left-radius: 5px;
+    border-left: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    color: #666;
+    background: #eee url('../img/spritesheet.png?v=23') no-repeat -575px 5px;
+    }
+.mod-account .menu .inbox div {
+    padding: 9px 0 0 30px;
+    }
+.mod-account .menu .inbox.new {
+    background-position: -575px -35px;
+    color: #000;
+    }
+.mod-account .menu .inbox.new div span {
+    font-weight: bold;
+    }
+.mod-account .menu .inbox:hover {
+    background-color: #DFF2FF;
+    color: #000;
+    }
+.mod-account .menu .inbox.on {
+    border-bottom: 1px solid #DFF2FF;
+    background-color: #DFF2FF;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    }
+.mod-account .menu .inbox-list {
+    display: none;
+    position: absolute;
+    width: 300px;
+    margin: 32px 0 0 0;
+    cursor: default;  
+    }
+.mod-account .menu .inbox-list.on {
+    display: block;
+    }
+.mod-account .menu .inbox-list .messages {
+    background: #DFF2FF;
+    border: 1px solid #ccc;
+    border-top: 0;
+    border-bottom: 3px solid #ccc;
+    }
+.mod-account .menu .inbox-list a {
+    color: #000;
+    display: block;
+    padding: 10px;
+    border-bottom: 1px dotted #7A9BCC;
+    }
+.mod-account .menu .inbox-list a:hover {
+    background: #A9D6FF;
+    }
+.mod-account .menu .inbox-list .controls {
+    background: #DFF2FF;
+    border: 1px solid #ccc;
+    border-top: 0;
+    border-bottom: 1px dotted #7A9BCC;
+    padding: 13px 10px 7px 10px;
+    overflow: hidden;
+    font-weight: bold;
+    font-size: 11px;
+    color: #333;
+    }
+.mod-account .menu .inbox-list .controls button {
+    float: right;
+    margin-top: -3px;
+    }
+.mod-account .menu .profile {
+    float: left;
+    width: 89px;
+    height: 32px;
+    border-right: 1px solid #333;
+    background: #000;
+    }
+.mod-account .menu .profile.on {
+    background: #31A0F9;
+    color: #fff;
+    }
+.mod-account .menu .profile.on:hover {
+    background: #3C5DAA;
+    color: #fff;
+    }
+.mod-account .menu .profile div {
+    text-align: center;
+    padding: 9px 0 0 0;
+    }
+.mod-account .menu .profile:hover {
+    background-color: #333;
+    }
+.mod-account .menu .account {
+    float: left;
+    width: 96px;
+    height: 32px;
+    -webkit-border-bottom-right-radius: 5px;
+    -moz-border-radius-bottomright: 5px;
+    border-bottom-right-radius: 5px;
+    background: #000 url('../img/spritesheet.png?v=23') no-repeat 65px -36px;
+    }
+.mod-account .menu .membership {
+    display: block;
+    height: 32px;
+    color: #fff;
+    background: #00C22A;
+    }
+.mod-account .menu .membership div {
+    text-align: center;
+    padding: 9px 0 0 0;
+    }
+.mod-account .menu .membership:hover {
+    background: #333;
+    }
+.mod-account .menu .account div {
+    padding: 9px 0 0 18px;
+    }
+.mod-account .menu .account:hover {
+    background-color: #333;
+    }
+.mod-account .menu .account.on {
+    -webkit-border-bottom-right-radius: 0;
+    -moz-border-radius-bottomright: 0;
+    border-bottom-right-radius: 0;
+    background-color: #eee;
+    background-position: 65px -76px;
+    border-right: 1px solid #ccc;
+    width: 95px;
+    color: #000;
+    }
+.mod-account .account-menu {
+    display: none;
+    position: absolute;
+    width: 310px;
+    margin: 32px 0 0 0;
+    cursor: default;
+    }
+.mod-account .account-menu .options {
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+    border-bottom: 3px solid #ccc;
+    margin: 0 0 0 75px;
+    background: #eee;
+    padding: 0 0 10px 0;
+    }
+.mod-account .account-menu .options .name {
+    padding: 10px 15px 10px 15px;
+    border-bottom: 1px dotted #ccc;
+    font-weight: bold;
+    }
+.mod-account .account-menu .options a {
+    padding: 3px 15px 3px 15px;
+    display: block;
+    color: #0275D6;
+    border-bottom: 1px dotted #ccc;
+    }
+.mod-account .account-menu .options a:hover {
+    background: #ddd;
+    }
+.mod-account .account-menu .options a:active {
+    background: #333;
+    color: #fff;
+    }
+.mod-account .account-menu.on {
+    display: block;
+    }
+
+/*  mod-nav
+-------------------------------------------------*/
+.mod-nav {
+    margin: 13px 0 20px 0;
+    overflow: hidden;    
+    }
+.mod-nav .nav {
+    margin: 0 0 0 175px;
+    }
+.mod-nav .nav .menu {
+    overflow: hidden;
+    border-bottom: 3px solid #333;
+    }
+.mod-nav .nav .search {
+    float: right;
+    height: 33px;
+    width: 310px;
+    background: #333;
+    }
+.mod-nav .nav .search .box {
+    margin: 5px;
+    background: #eee;
+    padding: 0 0 0 3px;
+    }
+.mod-nav .nav .search input {
+    width: 290px;
+    height: 23px;
+    font-size: 15px;
+    }
+.mod-nav .nav .search input.default {
+    color: #666;
+    }
+.mod-nav .nav .menu .sect {
+    float: left;
+    border-right: 1px solid #333;
+    margin: 17px 0 0 0;
+    height: 10px;
+    padding: 0 20px 0 20px;
+    border-bottom: 3px solid #fff;
+    }
+.mod-nav .nav .menu .sect:first-child {
+    border-left: 1px solid #333;
+    }
+.mod-nav .nav .menu .sect a {
+    position: relative;
+    display: block;
+    font-size: 16px;
+    margin-top: -12px;
+    text-decoration: none;
+    color: #000;
+    }
+.mod-nav .nav .menu .sect.on {
+    border-bottom: 3px solid #333;
+    font-weight: bold;
+    }
+.mod-nav .submenu {
+    margin: 0 0 0 0;
+    overflow: hidden;
+    }
+.mod-nav .submenu .info span {
+    display: block;
+    margin: 5px 0 0 10px;
+    }
+.mod-nav .submenu .meta {
+    float: right;
+    width: 310px;
+    height: 25px;
+    }
+.mod-nav .submenu .meta span {
+    margin: 5px 0 0 30px;
+    display: block;
+    }
+.mod-nav .meta {
+    background: #555;
+    color: #fff;
+    }
+.mod-nav .meta.members-online {
+    background-repeat: no-repeat;
+    background-image: url('../img/spritesheet.png?v=23');
+    background-position: -575px -120px;
+    }
+.mod-nav .meta.members-online.disconnected {
+    background-position: -575px -400px;
+    }
+.mod-nav .submenu {
+    color: #333;
+    }
+.mod-nav.football .submenu {
+    background: #DBFFBD;
+    }
+.mod-nav.basketball .submenu {
+    background: #FFF6BE;
+    }
+.mod-nav.baseball .submenu {
+    background: #D6E2FF;
+    }
+
+/*  mod-logo - for robotlogo
+-------------------------------------------------*/
+.mod-logo {
+    display: block;
+    width: 185px;
+    position: absolute;
+    margin: 20px 0 0 0;
+    }
+.mod-logo .text {
+    height: 30px;
+    width: 155px;
+    background: url('../img/spritesheet.png?v=23') no-repeat -440px -350px;
+    position: absolute;
+    margin: 49px 0 0 0;
+    }
+.mod-logo .bot {
+    height: 80px;
+    width: 60px;
+    background: url('../img/spritesheet.png?v=23') no-repeat 0 -300px;
+    margin: 0 0 0 60px;
+    }
+.mod-logo.football .text {
+    background-position: -3px -2px;
+    }
+.mod-logo.basketball .text {
+    background-position: -184px -2px;
+    }
+.mod-logo.baseball .text {
+    background-position: -364px -2px;
+    }
+/*  mod-tabs
+-------------------------------------------------*/
+.mod-tabs {
+    border-bottom: 1px solid #ccc;
+    overflow: hidden;
+    margin: 7px 0 0 190px;
+    }
+.mod-tabs .tab {
+    padding: 10px 30px 10px 10px;
+    float: left;
+    cursor: pointer;
+    margin: 0 1px 0 0;
+    }
+.mod-tabs .tab:hover {
+    background: #eee;
+    border-bottom: 3px solid #999;
+    }
+.mod-tabs .tab.on {
+    background: #E2F6FF;
+    border-bottom: 3px solid #000;
+    cursor: default;
+    }
+.mod-tabs .tab h3 {
+    margin: 0;
+    padding: 0 0 5px 0;
+    font-size: 18px;
+    }
+.mod-tabs .tab.on h3 {
+    color: #3C5DAA;    
+    }
+.mod-tabs .tab p {
+    margin: 0;
+    padding: 0;
+    font-size: 10px;
+    color: #999;
+    }
+.mod-tabs .tab.on p {
+    color: #4A73D2; 
+    }
+
+/*  mod-footer
+-------------------------------------------------*/
+.mod-footer {
+    margin: 30px 0 30px 0;
+    border-top: 3px solid #ccc;
+    padding: 10px 0 0 0;
+    text-align: center;
+    }
+.mod-footer .links {
+    padding-bottom: 10px;
+    }
+
+/*  base styles
+-------------------------------------------------*/
+body { font-size: 11px; font-family: "Century Gothic", "Arial", sans-serif; }
+a { color: #316CC1; text-decoration: underline; cursor: pointer; }
+input.error { border: 1px solid red; background: #FFD5CF; }
+.hidden{display:none}
+input.transparent {border: 0; margin: 0; padding: 0; background: rgb(255, 255, 255); background: rgba(255, 255, 255, 0);}

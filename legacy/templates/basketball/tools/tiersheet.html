@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <meta name="description" content="Fantasy Basketball Tier Sheets for 2010.  Prepare for your fantasy basketball draft by creating a tier sheet now.  Use the tiersheet online or print it out."/>
+    <meta name="keywords" content="fantasy basketball, fantasy basketball tier sheets, fantasy basketball cheat sheet, cheet sheets"/>
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/basketball.tools.tiersheet.css?v=23">
+</head>
+<body id="BBTS">
+<div class="all">
+<%
+    var type = tiersheet.draft_type.toUpperCase();
+%>
+
+<div class="logo" id="logo"></div>
+<h1><%= tiersheet.name %> <span><%= type %> SCORING</span></h1>
+<h2><a href="/">SleeperBot</a> will <strong><em>win your fantasy league</em></strong>. Apply for <a href="/">beta access</a> before the season begins.</h2>
+<div class="save" id="save-box">
+    <div class="info">
+        <strong>Save Tiersheet</strong><br />
+        SleeperBot will email you a <strong>snapshot</strong> of this tiersheet.<br />
+    </div>
+    <ul class="error-box" id="error-box"></ul>
+    <select id="draft-type">
+        <%
+            var h2h, roto, draft_type_link;
+            if (tiersheet.draft_type === 'h2h') {
+                h2h = 'selected="selected"';
+                draft_type_link = '<strong>H2H</strong> | <a href="/basketball/tools/tiersheet/roto">Roto</a>';
+            } else {
+                roto = 'selected="selected"';
+                draft_type_link = '<a href="/basketball/tools/tiersheet/h2h">H2H</a> | <strong>Roto</strong>';
+            }
+        %>
+        <option value="h2h" <%= h2h %>>H2H</option>
+        <option value="roto" <%= roto %>>Roto</option>
+    </select>
+    <input type="text" id="name" title="Name Your Tiersheet" maxlength="30" />
+    <input type="text" id="email" title="Your Email" maxlength="50" />
+    <button id="save-tiersheet">Send Tiersheet</button>
+</div>
+
+<div class="sent" id="sent-box">
+    <h3>Tiersheet Sent!</h3>
+    <p id="sent-msg"></p>
+    <p>
+        <button id="beta-button">I'd like to apply for Beta</button> (SleeperBot is the only fantasy sports resource you'll ever need)
+    </p>
+    <button id="sent-close">Close</button>
+</div>
+
+<div class="instructions">
+    <strong>Quick Tips</strong>
+    <div class="draft-type br-5">Default: <%= draft_type_link %></div>
+    <ol>
+        <li>Drag &amp; drop players and tiers</li>
+        <li>Email yourself a copy (above)</li>
+        <li>Bring it to the draft or share with others</li>
+        <li><strong>Drafting now?</strong> Double click to players highlight</li>
+    </ol>
+</div>
+
+<div class="menu">
+    <a class="facebook" name="fb_share" type="button" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+    <a class="print" id="print">Print</a>
+</div>
+        
+    <div class="sheet" id="pg">
+        <h1>PG</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.pg.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.pg, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="sg">
+        <h1>SG</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.sg.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.sg, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="sf">
+        <h1>SF</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.sf.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.sf, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+        
+    <div class="sheet" id="pf">
+        <h1>PF</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.pf.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.pf, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="c">
+        <h1>C</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.c.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.c, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+
+
+
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/page.marketing.beta.signup.js?v=23"></script>
+<script type="text/javascript" src="/js/page.basketball.tools.tiersheet.js?v=23"></script>
+<script type="text/javascript">UI.render('basketball.tools.tiersheet');</script>
+</body>
+</html>

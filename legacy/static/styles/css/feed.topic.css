@@ -1,0 +1,15 @@
+/*  layout
+-------------------------------------------------*/
+#TOPIC .page {
+    overflow: hidden;
+    }
+#TOPIC .folded {
+    display: block;
+    }
+#TOPIC .topic-type {
+    }
+#TOPIC .topic-type label {
+    display: block;
+    float: left;
+    margin: 0 10px 10px 0;
+    }

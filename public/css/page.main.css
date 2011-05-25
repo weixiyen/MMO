@@ -1,0 +1,12 @@
+.pg-main .col-left {
+  float: left;
+  width: 200px;
+}
+.pg-main .col-mid {
+  float: left;
+  width: 460px;
+}
+.pg-main .col-right {
+  float: left;
+  width: 300px;
+}

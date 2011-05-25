@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <meta name="description" content="Fantasy Baseball Tier Sheets for 2011.  Prepare for your fantasy baseball draft by creating a tier sheet now.  Use the tiersheet online or print it out."/>
+    <meta name="keywords" content="fantasy baseball, fantasy baseball tier sheets, fantasy baseball cheat sheet, cheet sheets"/>
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/baseball.tools.tiersheet.css?v=23">
+</head>
+<body id="BBTS">
+<div class="all">
+<%
+    var type = tiersheet.draft_type.toUpperCase();
+%>
+
+<div class="logo" id="logo"></div>
+<h1><%= tiersheet.name %> <span><%= type %> SCORING</span></h1>
+<h2><a href="/">SleeperBot</a> will <strong><em>win your fantasy league</em></strong>. Apply for <a href="/">beta access</a> before the season begins.</h2>
+<div class="save" id="save-box">
+    <div class="info">
+        <strong>Save Tiersheet</strong><br />
+        SleeperBot will email you a <strong>snapshot</strong> of this tiersheet.<br />
+    </div>
+    <ul class="error-box" id="error-box"></ul>
+    <select id="draft-type">
+        <%
+            var h2h, roto, draft_type_link;
+            if (tiersheet.draft_type === 'h2h') {
+                h2h = 'selected="selected"';
+                draft_type_link = '<strong>H2H</strong> | <a href="/baseball/tools/tiersheet/roto">Roto</a>';
+            } else {
+                roto = 'selected="selected"';
+                draft_type_link = '<a href="/baseball/tools/tiersheet/h2h">H2H</a> | <strong>Roto</strong>';
+            }
+        %>
+        <option value="h2h" <%= h2h %>>H2H</option>
+        <option value="roto" <%= roto %>>Roto</option>
+    </select>
+    <input type="text" id="name" title="Name Your Tiersheet" maxlength="30" />
+    <input type="text" id="email" title="Your Email" maxlength="50" />
+    <button id="save-tiersheet">Send Tiersheet</button>
+</div>
+
+<div class="sent" id="sent-box">
+    <h3>Tiersheet Sent!</h3>
+    <p id="sent-msg"></p>
+    <p>
+        <button id="beta-button">I'd like to apply for Beta</button> (SleeperBot is the only fantasy sports resource you'll ever need)
+    </p>
+    <button id="sent-close">Close</button>
+</div>
+
+<div class="instructions">
+    <strong>Quick Tips</strong>
+    <div class="draft-type br-5">Default: <%= draft_type_link %></div>
+    <ol>
+        <li>Drag &amp; drop players and tiers</li>
+        <li>Email yourself a copy (above)</li>
+        <li>Bring it to the draft or share with others</li>
+        <li><strong>Drafting now?</strong> Double click to highlight players</li>
+    </ol>
+</div>
+
+<div class="menu">
+    <a href="http://twitter.com/share" class="twitter-share-button" data-text="SleeperBot 2011 Fantasy Baseball Tiersheet App" data-count="none">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+    <a class="facebook" name="fb_share" type="button" href="http://www.facebook.com/sharer.php">Share</a><script src="http://static.ak.fbcdn.net/connect.php/js/FB.Share" type="text/javascript"></script>
+    <a class="feedback" href="/contact" target="_blank">Feedback</a>
+    <a class="print" id="print">Print</a>
+    <a class="tierset-link on" id="tierset-link-1">C | 1B | 2B | 3B | SS</a> - 
+    <a class="tierset-link" id="tierset-link-2">LF | CF | RF | OF</a> -
+    <a class="tierset-link" id="tierset-link-3">SP | RP</a> 
+</div>
+        
+<div id="tierset-1" class="tierset">
+    <div class="sheet" id="c">
+        <h1>C</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.c.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.c, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="b1">
+        <h1>1B</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.b1.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.b1, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="b2">
+        <h1>2B</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.b2.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.b2, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+        
+    <div class="sheet" id="b3">
+        <h1>3B</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.b3.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.b3, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="ss">
+        <h1>SS</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.ss.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.ss, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+</div>
+
+<div id="tierset-2" class="tierset">
+    <div class="sheet" id="lf">
+        <h1>LF</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.lf.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.lf, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="cf">
+        <h1>CF</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.cf.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.cf, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="rf">
+        <h1>RF</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.rf.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.rf, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+        
+    <div class="sheet" id="of">
+        <h1>OF</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.of.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.of, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+</div>
+
+
+<div id="tierset-3" class="tierset">
+    <div class="sheet" id="sp">
+        <h1>SP</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.sp.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.sp, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+    <div class="sheet" id="rp">
+        <h1>RP</h1>
+        <div class="marker">
+            <%
+                var len = tiersheet.tiers.rp.length;
+                for (var i=0; i<len; i+=1) {
+            %>
+            <div><span>Tier <%= i+1 %></span></div>
+            <%
+                }
+            %>
+        </div>
+        <ol>
+            <%
+                var begin_tier;
+                _.each(tiersheet.tiers.rp, function(tier){
+                    begin_tier = 'begin-tier';
+                    _.each(tier, function(player){
+                        var name = player.first_name.substr(0,1) + '. ' + player.last_name + ' (' + player.team + ')',
+                            id = player._id;
+            %>
+            <li class="<%= begin_tier %>" rel="<%= id %>"><span><%= name %></span></li>
+            <%
+                        begin_tier = '';
+                    });
+                });
+            %>
+        </ol>
+    </div>
+    
+</div>
+
+
+
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/page.marketing.beta.signup.js?v=23"></script>
+<script type="text/javascript" src="/js/page.baseball.tools.tiersheet.js?v=23"></script>
+<script type="text/javascript">UI.render('baseball.tools.tiersheet');</script>
+</body>
+</html>
+

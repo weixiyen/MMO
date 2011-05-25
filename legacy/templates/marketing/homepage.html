@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.homepage.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+</head>
+<body id="HOME">
+
+<div class="header"><div class="mid">
+    <div class="top">
+        <a class="signin button" href="/signin"><span>Sign in</span></a>
+        <a class="logo" href="/"></a>
+    </div>
+    <div class="promo">
+        <a class="bot" id="robot" href="/signin"></a>
+        <div class="banner"></div>
+	<div class="tiersheet br-5">
+	    <a class="tiersheet-link" href="/baseball/tools/tiersheet/h2h" target="_blank"><span>2011 Fantasy Baseball Tiersheets</span></a>
+	</div>	
+    </div>
+</div></div>
+
+<div class="apply full"><div class="mid">
+    <div class="features hidden" id="features">
+        <div class="feature">
+            <h3>Live Discussions</h3>
+            <p>Fun community discussions.</p>
+        </div>
+        <div class="feature">
+            <h3>Expert Advice</h3>
+            <p>Advice from perennial champions.</p>
+        </div>
+        <div class="feature">
+            <h3>Real-time Updates</h3>
+            <p>Breaking news live from the games.</p>
+        </div>
+    </div>
+    <div class="form" id="application-form">
+        <div class="promo">
+            <strong>SleeperBot</strong> is currently in Closed Beta.
+            If you'd like to apply for beta access, please fill out
+            the form on your left.  Invites are sent out weekly on a
+            rolling basis.<br /><br />
+            SleeperBot will never share your information to third parties under any circumstances unless required by law.
+        </div>
+        <div class="fields" id="form">
+            <h3>Apply for Membership</h3>
+            <label for="email">Email</label>
+            <input type="text" class="long" id="email" />
+            <label for="team">Favorite Team (optional)</label>
+            <input type="text" id="team" />
+            <label for="occupation">Occupation (optional)</label>
+            <input type="text" id="occupation" />
+            <a class="button apply" id="apply-button"><span>Apply</span></a>
+        </div>
+        <div class="fields hidden" id="sent-box">
+            <h3>We have received your application!</h3>
+            <p>
+                Thank you for your beta application to SleeperBot!<br><br>
+            </p>
+            <h3>Want to get in sooner?</h3>
+            <p>
+                Share this link on your Facebook, Twitter, and fantasy leagues:<br>
+                <div class="share-url br-3">http://www.sleeperbot.com/r/<span id="referral-id"></span></div>
+            </p>
+        </div>
+    </div>
+</div></div>
+
+<a class="apply-button br-b-5" id="open-application-form">Apply for <strong>FREE</strong> Membership</a>
+
+<div class="topics mid">
+    <div class="latest">
+        <h3>Latest Topics</h3>
+        <div class="list">
+            <%
+                var len = topics.length;
+                for (var i=0; i<len; i+=1) {
+                    var topic = topics[i];
+            %>
+            <div class="topic">
+                <div class="time" title="<%= topic.created %>"></div>
+                <div class="title"><a href="/topic/<%= topic._id %>"><%= topic.comment %></a></div>
+            </div>
+            <%
+                }
+            %>
+        </div>
+    </div>
+    <div class="breaking">
+        <h3>Breaking News</h3>
+        <div class="list">
+            <%
+                var len = news.length;
+                for (var i=0; i<len; i+=1) {
+                    var topic = news[i];
+            %>
+            <div class="topic">
+                <div class="time" title="<%= topic.created %>"></div>
+                <div class="title"><a href="/topic/<%= topic._id %>"><%= topic.comment %></a></div>
+            </div>
+            <%
+                }
+            %>
+        </div>
+    </div>
+</div>
+
+<div class="values mid">
+    <div class="value">
+        <h3><strong>Technology</strong> blazing <span>streams</span></h3>
+        <p>Fastest fantasy sports site online.</p>
+    </div>
+    <div class="value">
+        <h3><strong>Killer product</strong> built by <span>veterans</span></h3>
+        <p>We built SleeperBot for ourselves.</p>
+    </div>
+    <div class="value">
+        <h3><strong>100% free</strong> service for <span>members</span></h3>
+        <p>Never pay a single dime.</p>
+    </div>
+</div>
+
+<h3 class="quotes-header">What our members are saying</h3>
+<div class="quotes">
+    <div class="list mid">
+        <div>
+            "I really like this forum, I am military in Germany so I get selected games...
+            but between all of us on here it seems we got up to the second info! Just thought I'd say..."
+            <span>Posted By <strong>winmagslayer</strong></span>
+        </div>
+        <div>
+            "Is it wrong to not want to share this site with my friends? i want any/every advantage i can get."
+            <span>Posted By <strong>kast</strong></span>
+        </div>
+        <div>
+            "I like the site. It was fun watching games and getting results quickly."
+            <span>Posted By <strong>AvsAddict</strong></span>
+        </div>
+        <div>
+            "I'm starting to prefer this site.  The speed of the site is appealing."
+            <span>Posted By <strong>SameSongNDance</strong></span>
+        </div>
+        <div>
+            "I'm starting to enjoy this too. I love the speed."
+            <span>Posted By <strong>HomerJay</strong></span>
+        </div>
+    </div>
+</div>
+
+<div class="footer mid">
+    <div class="links">
+        <a href="http://blog.sleeperbot.com/">Blog</a> |
+        <a href="http://twitter.com/sbfantasysports">Twitter</a> |
+        <a href="/about">About</a> | 
+        <a href="/contact">Contact</a>
+    </div>
+    <div class="copyright">Copyright &copy; 2010 <strong>SleeperBot</strong>. A production of Rentfox, LLC. All Rights Reserved.</div>
+</div>
+
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.prettydate.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/page.marketing.homepage.js?v=23"></script>
+<script type="text/javascript" src="/js/date.js?v=23"></script>
+<script type="text/javascript">UI.render('marketing.homepage');</script>
+</body>
+</html>

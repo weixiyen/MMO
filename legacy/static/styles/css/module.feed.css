@@ -1,0 +1,445 @@
+/*  layout
+-------------------------------------------------*/
+.mod-channels {
+    float: left;
+    width: 175px;
+    }
+.mod-feed {
+    float: left;
+    width: 475px;
+    }
+.mod-news {
+    float: left;
+    width: 310px;
+    }
+.mod-news .ad {
+    width: 300px;
+    height: 250px;
+    background: #eee;
+    margin: 15px 0 15px 0;
+    }
+    
+/*  mod-feed
+-------------------------------------------------*/
+.mod-feed > .wrap {
+    border-left: 1px solid #eee;
+    border-right: 1px solid #ccc;
+    padding: 0 10px 3px 10px;
+    min-height: 600px;
+    }
+.mod-feed .new-topic {
+    padding: 6px;
+    background: #DFF2FF;
+    border: 1px solid #B9DCFF;
+    border-bottom: 2px solid #96C5FF;
+    }
+.mod-feed .new-topic input {
+    width: 316px;
+    background: #fff;
+    height: 20px;
+    font-weight: bold;
+    font-size: 12px;
+    border: 1px solid #000;
+    padding: 4px 5px 4px 5px;
+    }
+.mod-feed .new-topic input.default {
+    border: 1px solid #ccc;
+    color: #999;
+    text-decoration: none;
+    font-weight: normal;
+    background: #fff;
+    }
+.mod-feed .new-topic input.short {
+    width: 260px;    
+    }
+.mod-feed .new-topic .button {
+    float: right;
+    }
+.mod-feed .new-topic .button.publish {
+    background-image: url('../img/spritesheet.png?v=23');
+    background-position: -572px -157px;  
+    }
+.mod-feed .new-topic .button.cancel {
+    margin-left: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    }
+.mod-feed .new-topic .button.save {
+    padding-left: 25px;
+    padding-right: 25px;
+    }
+.mod-feed .topic {
+    border-bottom: 1px dotted #ccc;
+    padding: 15px 0 15px 0;
+    }
+.mod-feed .topic .start.comment {
+    font-weight: bold;
+    font-size: 14px;
+    }
+.mod-feed .topic .start.comment a.title {
+    color: #000;
+    text-decoration: none;
+    }
+.mod-feed .topic .start.comment a.title:hover {
+    text-decoration: underline;
+    }
+.mod-feed .topic .cookies {
+	overflow: hidden;
+	margin: 0 0 10px 50px;
+	}
+.mod-feed .topic .cookies .upvote {
+	width: 70px;
+	height: 25px;
+	float: left;
+	border: 1px solid #ccc;
+	background-image: url('../img/spritesheet.png?v=23');
+	background-position: -575px -939px;
+	margin: 9px 10px 9px 0;
+	position: relative;
+	cursor: pointer;
+	display: block;
+	}
+.mod-feed .topic .cookies .upvote .arrow {
+	width: 20px;
+	height: 9px;
+	background: url('../img/spritesheet.png?v=23') -570px -991px;
+	position: absolute;
+	top: -9px;
+	left: 5px;
+	}
+.mod-feed .topic .cookies .upvote.on {
+	background-color: #fef6cb;
+	font-weight: bold;
+	cursor: default;
+	}
+.mod-feed .topic .cookies .upvote.on .arrow {
+	background-position: -570px -1031px;
+	}
+.mod-feed .topic .cookies .upvote > .wrap {
+	padding: 5px 5px 0 30px;
+	}
+.mod-feed .topic .cookies .received {
+	width: 300px;
+	height: 25px;
+	float: left;
+	border: 1px solid #ccc;
+	background: #eee url('../img/spritesheet.png?v=23') -575px -858px;
+	margin: 9px 0 9px 0;
+	position: relative;
+	}
+.mod-feed .topic .cookies .received .arrow {
+	width: 20px;
+	height: 9px;
+	background: url('../img/spritesheet.png?v=23') -570px -1071px;
+	position: absolute;
+	top: 25px;
+	left: 5px;
+	}
+.mod-feed .topic .cookies .received > .wrap {
+	padding: 5px 5px 0 30px;
+	}
+.mod-feed .topic .cookies .received select {
+	position: relative;
+	top: -3px;
+	width: 175px;
+	}
+.mod-feed .topic .cookies .received button {
+	position: relative;
+	top: -3px;
+	margin: 0 0 0 5px;
+	}
+.mod-feed .topic .comment {
+    overflow: hidden;
+    margin: 0 0 7px 0;
+    font-size: 12px;
+    line-height: 1.5em;
+    }
+.mod-feed .topic .comments .comment.folded {
+    display: none;
+    }
+.mod-feed .topic .comments.expanded .comment.folded {
+    display: block;    
+    }
+.mod-feed .topic .comments .show-previous {
+    padding: 0 0 10px 50px;
+    overflow: hidden;
+    }
+.mod-feed .topic .comments .show-previous em {
+    font-style: normal;
+    }
+.mod-feed .topic .comments .show-previous a {
+    background: url('../img/spritesheet.png?v=23') no-repeat -582px -80px;
+    display: block;
+    float: left;
+    padding: 3px 0 3px 25px;
+    font-weight: bold;
+    }
+.mod-feed .topic .comments.expanded .show-previous a {
+    color: #AB0000;
+    background-position: -582px -281px;
+    }
+.mod-feed .topic .comments .show-previous a:active {
+    color: #000;
+    text-decoration: none;
+    }
+.mod-feed .topic .time {
+    float: left;
+    color: #666;
+    width: 50px;
+    font-weight: normal;
+    }
+.mod-feed .topic div.text {
+    margin-left: 50px;
+    }
+.topic.deleted {
+    background: #FFE5DF;
+    padding: 5px;
+    text-align: center;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    }
+.mod-feed .member a {
+    font-weight: normal;
+    font-size: 10px;
+    color: #316CC1;
+    }
+.mod-feed .reply {
+    margin: 7px 0 0 50px;
+    overflow: hidden;
+    }
+.mod-feed .reply textarea {
+    width: 380px;
+    padding: 3px;
+    height: 40px;
+    border: 1px solid #666;
+    }
+.mod-feed .reply textarea.default {
+    border: 1px solid #ccc;
+    padding: 3px;
+    height: 16px;
+    }
+.mod-feed .reply .chars-remaining {
+    float: right;
+    padding: 0 15px 0 0;
+    }
+.mod-feed .reply .action {
+    padding: 5px 0 0 0;
+    display: none;
+    }
+.mod-feed .time {
+    font-size: 10px;
+    }
+.mod-feed .load-more {
+    background: #ddd;
+    border: 1px solid #ccc;
+    text-align: center;
+    margin: 20px 0 0 0;
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 12px;
+    }
+.mod-feed .load-more span {
+    background: #eee;
+    display: block;
+    margin: 0 0 6px 0;
+    padding: 4px 0 0 0;
+    }
+.mod-feed .load-more:active span {
+    background: #ddd;
+    color: #000;
+    }
+
+/*  topic specific
+-------------------------------------------------*/
+.mod-feed .topic-header {
+    border-bottom: 1px dotted #ccc;
+    min-height: 55px;
+    overflow: hidden;
+    }
+.mod-feed .topic-header h3 {
+    margin: 0 0 5px 0;
+    font-size: 18px;
+    font-weight: bold;
+    }
+.mod-feed .topic-header .byline {
+    color: #666;
+    margin: 0 0 10px 0;
+    }
+.mod-feed .topic-header .controls {
+    float: right;
+    }
+.mod-feed .topic-header .controls a {
+    margin-left: 5px;
+    }
+.mod-feed .description {
+    border-bottom: 1px dotted #ccc;
+    margin: 0 0 20px 0;
+    padding: 0 0 0 0;
+    }
+.mod-feed .description h1 {
+    margin: 0;
+    font-weight: normal;
+    font-size: 15px;
+    }
+.mod-feed .description p {
+    font-size: 13px;
+    color: #666;
+    margin: 5px 0 10px 0;
+    }
+
+/*  channels
+-------------------------------------------------*/
+.mod-channels a {
+    padding: 5px 10px 5px 10px;
+    color: #000;
+    display: block;
+    text-decoration: none;
+    }
+.mod-channels .on {
+    background: #eee;
+    font-weight: bold;
+    border-left: 3px solid #999;
+    padding-left: 7px;
+    }
+.mod-channels a:hover {
+    background: #DFF2FF;
+    }
+.mod-channels a:active {
+    background: #000;
+    color: #fff;
+    }
+.mod-channels a.on:hover {
+    background: #eee;
+    }
+.mod-channels a.on:active {
+    background: #eee;
+    color: #000;
+    }
+.mod-channels .back {
+    height: 55px;
+    }
+.mod-channels .back a {
+    position: relative;
+    top: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    }
+.mod-channels a span {
+    background: #999;
+    color: #fff;
+    float: right;
+    padding: 0 3px 0 3px;
+    }
+.mod-channels a.on span {
+    background: #52A117;
+    }
+.mod-channels .cookies {
+	margin: 20px 0 0 0;
+	padding: 20px 0 0 0;
+	border-top: 1px solid #ccc;
+	}
+
+/*  news
+-------------------------------------------------*/
+.mod-news > .wrap {
+    padding: 0 0 0 10px;
+    }
+.mod-news .update {
+    margin: 0 0 7px 0;
+    }
+.mod-news .update .time {
+    float: left;
+    color: #666;
+    width: 50px;
+    font-weight: normal;
+    }
+.mod-news .update .link {
+    margin-left: 50px;
+    }
+.mod-news .controls {
+    overflow: hidden;
+    border-bottom: 1px dotted #ccc;
+    min-height: 55px;
+    margin-bottom: 20px;
+    }
+.mod-news .controls .button {
+    background-image: url('../img/spritesheet.png?v=23');
+    background-position: -572px -157px;
+    margin: 12px 0 0 0;
+    }
+.mod-news .controls .button.red {
+    background-image: url('../img/spritesheet.png?v=23');
+    background-position: -572px -197px;
+    }
+.mod-news .controls .facebook {
+    display: block;
+    float: left;
+    margin: 21px 10px 0 0;
+    }
+.mod-news .controls .twitter-share-button {
+    display: block;
+    float: left;
+    margin: 20px 0 0 0;
+    }
+.mod-news .tabs {
+    overflow: hidden;
+    margin: 0 0 20px 0;
+    font-size: 12px;
+    }
+.mod-news .tabs .tab {
+    width: 33%;
+    float: left;
+    border-top: 1px solid #fff;
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    background: #eee no-repeat url('../img/spritesheet.png?v=23');
+    cursor: pointer;
+    display: block;
+    text-decoration: none;
+    color: #000;
+    }
+.mod-news .tabs .tab .wrap {
+    padding: 18px 0 12px 40px;
+    }
+.mod-news .tabs .tab.on {
+    background-color: #fff;
+    border-bottom: 1px solid #fff;
+    cursor: default;
+    border-top: 1px solid #ccc;
+    }
+.mod-news .tabs .tab:hover {
+    background-color: #ddd;
+    }
+.mod-news .tabs .tab.on:hover {
+    background-color: #fff;
+    color: #000;
+    }
+.mod-news .tabs .tab:active {
+    background-color: #555;
+    color: #fff;
+    }
+.mod-news .tabs .tab.breaking {
+    background-position: -560px -755px;
+    }
+.mod-news .tabs .tab.breaking.on, .mod-news .tabs .tab.breaking:hover {
+    background-position: -560px -695px;
+    }
+.mod-news .tabs .tab.injuries {
+    background-position: -560px -635px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topright: 5px;
+    border-top-right-radius: 5px;
+    }
+.mod-news .tabs .tab.injuries.on, .mod-news .tabs .tab.injuries:hover {
+    background-position: -560px -575px;
+    }
+.mod-news .tabs .tab.sleepers {
+    background-position: -560px -515px;
+    }
+.mod-news .tabs .tab.sleepers.on, .mod-news .tabs .tab.sleepers:hover  {
+    background-position: -560px -455px;
+    }

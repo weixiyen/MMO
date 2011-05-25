@@ -1,0 +1,217 @@
+/*  baseball tiersheet
+-------------------------------------------------*/
+#BBTS {
+    padding: 20px;
+    }
+#BBTS > div.all {
+    width: 1000px;
+    }
+#BBTS > div.all > h1 {
+    margin: 0 0 15px 0;
+    padding: 5px 0 5px 35px;
+    background: no-repeat url('../img/ico/sheet.png') left center;
+    }
+#BBTS > div.all > h1 > span {
+    font: 9px Arial;
+    color: #666;
+    }
+#BBTS > div.all > .logo {
+    width: 93px;
+    height: 160px;
+    position: absolute;
+    left: 920px;
+    top: 10px;
+    cursor: pointer;
+    background: url('../img/logo.png') no-repeat;
+    }
+#BBTS h2 {
+    font-size: 13px;
+    }
+#BBTS h2 a {
+    font-size: larger;    
+    }
+#BBTS .tierset {
+    visibility: hidden;
+    position: fixed;
+    width: 1000px;
+    }
+    
+/*  instructions
+-------------------------------------------------*/
+#BBTS .instructions {
+    padding: 20px 0 10px 10px;
+    }
+#BBTS .instructions li {
+    margin: 0 0 5px 0;
+    }
+#BBTS .instructions .draft-type {
+    float: right;
+    background: #eee;
+    padding: 5px;
+    }
+
+/*  savebox
+-------------------------------------------------*/
+#BBTS .save {
+    background: #eee;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 15px;
+    }
+#BBTS .save .info {
+    margin: 0 0 10px 0;
+    line-height: 1.5em;
+    font-size: 14px;
+    }
+#BBTS .save label {
+    display: block;
+    margin: 5px 0 0 0;
+    }
+#BBTS .save input.default {
+    color: #666;
+    font-style: italic;
+    }
+#BBTS .save .error-box {
+    margin: 0 0 10px 0;
+    padding: 10px 10px 10px 30px;
+    background: #900006;
+    color: #fff;
+    font: 12px Verdana;
+    display: none;
+    width: 450px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    }
+#BBTS .save .error-box li {
+    padding: 3px 0 3px 0;
+    }
+
+/*  sentbox
+-------------------------------------------------*/
+#BBTS .sent {
+    background: #CEFCBF;
+    border: 1px solid #B3D3B3;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 15px;
+    display: none;
+    }
+#BBTS .sent h3 {
+    margin: 0 0 10px 0;
+    font: bold 15px 'Verdana';
+    }
+#BBTS .sent p {
+    line-height: 1.5em;
+    }
+
+/*  menu
+-------------------------------------------------*/
+#BBTS .menu {
+    margin: 10px 0 10px 0;
+    padding: 10px;
+    overflow: hidden;
+    }
+#BBTS .menu a.on {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000;
+    }
+#BBTS .menu .twitter-share-button {
+    float: right;
+    margin: 3px 0 5px 15px;
+    }
+#BBTS .menu .print {
+    display: block;
+    float: right;
+    padding: 5px 5px 5px 30px;
+    background: url('../img/ico/printer.png') no-repeat;
+    }
+#BBTS .menu .facebook {
+    float: right;
+    margin: 4px 0 5px 15px;
+    }
+#BBTS .menu .feedback {
+    float: right;
+    margin: 4px 0 5px 15px;
+    }
+    
+/*  sheet widget
+-------------------------------------------------*/
+#BBTS .sheet {
+    float: left;
+    margin: 0 10px 0 10px;
+    }
+#BBTS .sheet h1 {
+    border-bottom: 1px solid #000;
+    padding: 0 0 10px 0;
+    margin: 0 0 10px 0;
+    width: 180px;
+    }
+#BBTS .sheet .marker {
+    position: absolute;
+    }
+#BBTS .sheet .marker div {
+    width: 180px;
+    overflow: hidden;
+    cursor: move;
+    height: 25px;
+    position: absolute;
+    display: none;
+    }
+#BBTS .sheet .marker div.on {
+    border-top: 1px solid #000;
+    }
+#BBTS .sheet .marker span {
+    float: left;
+    font-weight: bold;
+    padding: 5px;
+    display: block;
+    background: #fff;
+    -webkit-border-bottom-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    }
+#BBTS .sheet .marker span:hover {
+    background: #ddd;
+    }
+#BBTS .sheet .marker div.on span:hover {
+    background: #000;
+    color: #fff;
+    }
+#BBTS .sheet ol {
+    margin: 0 0 0 50px;
+    width: 130px;
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    }
+#BBTS .sheet ol li {
+    height: 25px;
+    cursor: move;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    }
+#BBTS .sheet ol li.picked {
+    background: #000;
+    color: #fff;
+    }
+#BBTS .sheet ol li:hover {
+    background: #000;
+    color: #fff;
+    }
+#BBTS .sheet ol li.on:hover {
+    color: #000;
+    }
+#BBTS .sheet ol li span {
+    display: block;
+    padding: 5px 5px 0 5px;
+    }
+

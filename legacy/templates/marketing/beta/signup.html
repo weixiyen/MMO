@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=18">
+    <link rel="stylesheet" type="text/css" href="/styles/css/football.tools.tiersheet.css?v=18">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=18">
+</head>
+<body id="BETA">
+
+<div class="all">
+    
+    <div class="links br-5">
+        <a href="/basketball/tools/tiersheet/h2h">2010 Fantasy Basketball Tiersheets</a>
+        <a href="http://blog.sleeperbot.com/">SleeperBot Blog</a>
+    </div>
+    <div class="signin br-5">
+        <a href="/signin">Sign In (beta members only)</a>
+    </div>
+    <div id="logo-text" class="logo-text"></div>
+    <div id="logo" class="logo"></div>
+    <div class="tagline">real-time fantasy sports</div>
+    
+    <div id="form" class="form">
+        <h3>SleeperBot Beta Application</h3>
+        <label for="name">Name</label>
+        <input type="text" id="name" />
+        <label for="email">Email</label>
+        <input type="text" id="email" />
+        <label for="experience">Describe your fantasy sports experience
+            <span>
+                Due to the high amount of interest in our service,
+                we have are now requiring applicants to describe
+                their fantasy sports experience.
+            </span>
+        </label>
+        <textarea id="experience"></textarea>
+        <button id="send-app">Send My Application</button>
+    </div>
+    <div id="sent-box" class="form hidden">
+        <h3>Beta Application Received</h3>
+        <p>
+            Thanks for your interest in SleeperBot.
+        </p>
+    </div>
+
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=18"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=18"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=18"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=18"></script>
+<script type="text/javascript" src="/js/underscore.js?v=18"></script>
+<script type="text/javascript" src="/js/ui.js?v=18"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=18"></script>
+<script type="text/javascript" src="/js/page.marketing.beta.signup.js?v=18"></script>
+<script type="text/javascript" src="/js/page.football.tools.tiersheet.js?v=18"></script>
+<script type="text/javascript">UI.render('marketing.beta.signup');</script>
+</body>
+</html>

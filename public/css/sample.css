@@ -1,0 +1,14 @@
+body {
+  background: #000;
+  color: #fff;
+}
+#main {
+  background: #f00;
+}
+a {
+  color: #ff0;
+  cursor: pointer;
+}
+a:hover {
+  color: #00f;
+}

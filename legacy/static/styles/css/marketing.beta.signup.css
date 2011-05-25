@@ -1,0 +1,110 @@
+/*  beta
+-------------------------------------------------*/
+#BETA {
+    padding: 50px 0 0 0;
+    }
+#BETA .all {
+    margin: auto;
+    width: 342px;
+    }
+#BETA .logo {
+    width: 93px;
+    height: 160px;
+    background: url('../img/logo.png') no-repeat;
+    margin-left: 100px;
+    cursor: pointer;
+    }
+#BETA .logo-text {
+    width: 342px;
+    height: 58px;
+    background: url('../img/logo_text_fb.png') no-repeat;
+    position: absolute;
+    top: 175px;
+    margin: auto;
+    z-index: 1000;
+    }
+#BETA .tagline {
+    font: 13px Verdana;
+    color: #666;
+    margin: 10px 0 0 0;
+    text-align: right;
+    }
+#BETA .links {
+    position: absolute;
+    margin: 0 0 0 230px;
+    padding: 10px 20px 10px 10px;
+    background: #eee;
+    font: 11px Verdana;
+    }
+#BETA .links a {
+    display: block;
+    margin: 5px 0 5px 0;
+    }
+#BETA .signin {
+    position: absolute;
+    margin: 75px 0 0 230px;
+    padding: 5px 20px 5px 10px;
+    background: #B7FFB4;
+    font: bold 11px Verdana;
+    }
+#BETA .signin a {
+    display: block;
+    margin: 5px 0 5px 0;
+    color: #006500;
+    }
+#BETA .error {
+    color: red;    
+    }
+/*  form
+-------------------------------------------------*/
+#BETA .form {
+    margin: 0 0 50px 0;
+    }
+#BETA .form h3 {
+    font: 16px Verdana;
+    margin: 30px 0 10px 0;
+    }
+#BETA .form label {
+    font-weight: bold;
+    padding: 10px 0 5px 0;
+    display: block;
+    }
+#BETA .form label span{
+    font-weight: normal;
+    display: block;
+    color: #666;
+    }
+#BETA .form input {
+    display: block;
+    width: 250px;
+    }
+#BETA .form input.small {
+    width: 75px;
+    }
+#BETA .form input.default {
+    color: #999;
+    font-style: italic;
+    }
+#BETA .form textarea {
+    width: 305px;
+    height: 100px;
+    padding: 5px;
+    }
+#BETA .form button {
+    margin: 10px 0 0 0;
+    }
+#BETA .form .button.login {
+    background-repeat: no-repeat;
+    background-image: url('../img/spritesheet.png?v=23');
+    background-position: 8px -118px;
+    margin: 20px 0 20px 0;
+    }
+#BETA .apply {
+    overflow: hidden;
+    margin: 20px 0 0 0;
+    }
+#BETA .apply .button{
+    background-repeat: no-repeat;
+    background-image: url('../img/spritesheet.png?v=23');
+    background-position: -572px -118px;    
+    }

@@ -1,0 +1,201 @@
+/*  football tiersheet
+-------------------------------------------------*/
+#FBTS {
+    padding: 20px;
+    }
+#FBTS > div.all {
+    width: 760px;
+    }
+#FBTS > div.all > h1 {
+    margin: 0 0 15px 0;
+    padding: 5px 0 5px 35px;
+    background: no-repeat url('../img/ico/sheet.png') left center;
+    }
+#FBTS > div.all > h1 > span {
+    font: 9px Arial;
+    color: #666;
+    }
+#FBTS > div.all > .logo {
+    width: 93px;
+    height: 160px;
+    position: absolute;
+    left: 680px;
+    top: 10px;
+    cursor: pointer;
+    background: url('../img/logo.png') no-repeat;
+    }
+#FBTS .tierset {
+    visibility: hidden;
+    position: fixed;
+    }
+    
+/*  instructions
+-------------------------------------------------*/
+#FBTS .instructions {
+    padding: 20px 0 10px 10px;
+    
+    }
+#FBTS .instructions li {
+    margin: 0 0 5px 0;
+    }
+#FBTS .instructions .draft-type {
+    float: right;
+    background: #eee;
+    padding: 5px;
+    }
+
+/*  savebox
+-------------------------------------------------*/
+#FBTS .save {
+    background: #eee;
+    border: 1px solid #ccc;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 15px;
+    }
+#FBTS .save .info {
+    margin: 0 0 10px 0;
+    line-height: 1.5em;
+    font-size: 14px;
+    }
+#FBTS .save label {
+    display: block;
+    margin: 5px 0 0 0;
+    }
+#FBTS .save input.default {
+    color: #666;
+    font-style: italic;
+    }
+#FBTS .save .error-box {
+    margin: 0 0 10px 0;
+    padding: 10px 10px 10px 30px;
+    background: #900006;
+    color: #fff;
+    font: 12px Verdana;
+    display: none;
+    width: 450px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    }
+#FBTS .save .error-box li {
+    padding: 3px 0 3px 0;
+    }
+
+/*  sentbox
+-------------------------------------------------*/
+#FBTS .sent {
+    background: #CEFCBF;
+    border: 1px solid #B3D3B3;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 15px;
+    display: none;
+    }
+#FBTS .sent h3 {
+    margin: 0 0 10px 0;
+    font: bold 15px 'Verdana';
+    }
+#FBTS .sent p {
+    line-height: 1.5em;
+    }
+
+/*  menu
+-------------------------------------------------*/
+#FBTS .menu {
+    margin: 10px 0 10px 0;
+    padding: 10px;
+    }
+#FBTS .menu a.on {
+    text-decoration: none;
+    font-weight: bold;
+    color: #000;
+    }
+#FBTS .menu .print {
+    display: block;
+    float: right;
+    padding: 5px 5px 5px 30px;
+    background: url('../img/ico/printer.png') no-repeat;
+    }
+#FBTS .menu .facebook {
+    float: right;
+    margin: 4px 0 5px 15px;
+    }
+    
+/*  sheet widget
+-------------------------------------------------*/
+#FBTS .sheet {
+    float: left;
+    margin: 0 10px 0 10px;
+    }
+#FBTS .sheet h1 {
+    border-bottom: 1px solid #000;
+    padding: 0 0 10px 0;
+    margin: 0 0 10px 0;
+    width: 230px;
+    }
+#FBTS .sheet .marker {
+    position: absolute;
+    }
+#FBTS .sheet .marker div {
+    width: 230px;
+    overflow: hidden;
+    cursor: move;
+    height: 25px;
+    position: absolute;
+    display: none;
+    }
+#FBTS .sheet .marker div.on {
+    border-top: 1px solid #000;
+    }
+#FBTS .sheet .marker span {
+    float: left;
+    font-weight: bold;
+    padding: 5px;
+    display: block;
+    background: #fff;
+    -webkit-border-bottom-right-radius: 3px;
+    -webkit-border-bottom-left-radius: 3px;
+    -moz-border-radius-bottomright: 3px;
+    -moz-border-radius-bottomleft: 3px;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+    }
+#FBTS .sheet .marker span:hover {
+    background: #ddd;
+    }
+#FBTS .sheet .marker div.on span:hover {
+    background: #000;
+    color: #fff;
+    }
+#FBTS .sheet ol {
+    margin: 0 0 0 50px;
+    width: 170px;
+    list-style: none;
+    padding: 0;
+    position: absolute;
+    }
+#FBTS .sheet ol li {
+    height: 25px;
+    cursor: move;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    }
+#FBTS .sheet ol li.picked {
+    background: #000;
+    color: #fff;
+    }
+#FBTS .sheet ol li:hover {
+    background: #000;
+    color: #fff;
+    }
+#FBTS .sheet ol li.on:hover {
+    color: #000;
+    }
+#FBTS .sheet ol li span {
+    display: block;
+    padding: 5px 5px 0 5px;
+    }

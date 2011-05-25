@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/css/marketing.beta.signup.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/football.tools.tiersheet.css?v=23">
+    <link rel="stylesheet" type="text/css" href="/styles/css/base.css?v=23">
+</head>
+<body id="BETA">
+<div class="all">
+    
+    <div id="logo-text" class="logo-text"></div>
+    <div id="logo" class="logo"></div>
+    <div class="tagline">real-time fantasy sports</div>
+    
+    <%
+        if (activated) {
+    %>
+    <div class="form">
+        <h3>Account Activated!</h3>
+        <p>
+            Please <strong><a href="/signin">sign in</a></strong> and enjoy SleeperBot!
+        </p>
+    </div>
+    <%
+        } else {
+    %>
+    <div class="form">
+        <h3>Invalid Activation Code</h3>
+        <p>
+            The activation code you used is no longer valid.
+            If you believe this to be a mistake, please contact SleeperBot support
+            at <a href="mailto:support@sleeperbot.com">support@sleeperbot.com</a>.
+        </p>
+    </div>
+    <%
+        }
+    %>
+
+</div>
+<script type="text/javascript" src="/js/jquery.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.ui.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.json.js?v=23"></script>
+<script type="text/javascript" src="/js/jquery.defaultText.js?v=23"></script>
+<script type="text/javascript" src="/js/underscore.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.js?v=23"></script>
+<script type="text/javascript" src="/js/ui.request.js?v=23"></script>
+<script type="text/javascript" src="/js/page.auth.signup.js?v=23"></script>
+<script type="text/javascript">UI.render('auth.signup');</script>
+</body>
+</html>
