@@ -6,7 +6,7 @@
         this.el = el;
         this.top = 0;
         this.left = 0;
-        this.change = 4;
+        this.change = 2;
       }
       Map.prototype.panStart = function(direction) {
         if (direction === 'left') {

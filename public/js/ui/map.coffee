@@ -5,7 +5,7 @@ MM.ui 'map', (opts) ->
     constructor: (@el) ->
       @top = 0
       @left = 0
-      @change = 4
+      @change = 2
       
     panStart: (direction) ->
       if direction == 'left'
