@@ -1,12 +1,14 @@
 (function($) {
+  var loop;
   $.loop = {
     count: 0,
     _construct : function() {
       if (($.loop.count += 1) > 9999999) {
         $.loop.count = 0;
       }
-      for(var i in $.loop.items) {
-        $.loop.items[i]();
+      var items = $.loop.items;
+      for(var i in items) {
+        items[i]();
       }
     },
     int : 20,
@@ -20,5 +22,5 @@
     stop : function() { clearInterval(loop); },
     start : function() { loop = setInterval($.loop._construct, $.loop.int); }
   };
-  var loop = setInterval($.loop._construct, $.loop.int);
+  loop = setInterval($.loop._construct, $.loop.int);
 })(jQuery);

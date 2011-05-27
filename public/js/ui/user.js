@@ -9,6 +9,12 @@
         this.imgpath = data.imgpath;
         this.id = data.id;
         this.anim = data.anim;
+        this.pressed = {
+          right: false,
+          left: false,
+          down: false,
+          up: false
+        };
         this.el.css({
           height: this.height,
           width: this.width,
@@ -30,15 +36,21 @@
       };
       User.prototype.move = function(direction) {
         var stub;
+        if (this.pressed[direction] === true) {
+          return;
+        }
+        this.pressed[direction] = true;
         MM.map.panStart(direction);
         stub = 'user_' + direction;
         MM.counter[stub] = 0;
         return $.loop.add(stub, function() {
-          MM.log(MM.counter[stub]);
+          if (0 !== $.loop.count % 4) {
+            return;
+          }
           MM.user.el.css({
             'background-position': MM.user.anim[direction][MM.counter[stub]]
           });
-          if (MM.counter[stub] === 3) {
+          if (MM.counter[stub] === 2) {
             return MM.counter[stub] = 0;
           } else {
             return MM.counter[stub] += 1;
@@ -46,10 +58,9 @@
         });
       };
       User.prototype.stop = function(direction) {
-        var stub;
+        this.pressed[direction] = false;
         MM.map.panStop(direction);
-        stub = 'user_' + direction;
-        return $.loop.remove(stub);
+        return $.loop.remove('user_' + direction);
       };
       return User;
     })();

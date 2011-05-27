@@ -8,7 +8,12 @@ MM.ui 'user', (opts) ->
       @imgpath = data.imgpath
       @id = data.id
       @anim = data.anim
-      
+      @pressed =
+        right: false
+        left: false
+        down: false
+        up: false
+        
       @el.css
         height: @height
         width: @width
@@ -24,24 +29,32 @@ MM.ui 'user', (opts) ->
         left: x
         top: y
     move: (direction) ->
+      # check to see if button is already pressed
+      if @pressed[ direction ] == true
+        return
+      @pressed[ direction ] = true
+      
       MM.map.panStart direction
+      
       # start an animation function
       stub = 'user_' + direction
       MM.counter[ stub ] = 0
       $.loop.add stub, ->
-        MM.log MM.counter[ stub ]
+        
+        if 0 != $.loop.count % 4
+          return
+          
         MM.user.el.css
           'background-position': MM.user.anim[direction][ MM.counter[ stub ] ]
-        if MM.counter[ stub ] == 3
+        if MM.counter[ stub ] == 2
           MM.counter[ stub ] = 0
         else
           MM.counter[ stub ] += 1
           
     stop: (direction) ->
+      @pressed[ direction ] = false
       MM.map.panStop direction
-      
-      stub = 'user_' + direction
-      $.loop.remove stub
+      $.loop.remove 'user_' + direction
   
   MM.require 'user', 'css'
   MM.require 'sprites', 'css'
