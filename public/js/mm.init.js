@@ -1,5 +1,6 @@
 (function() {
   WEB.namespace('MM');
+  MM.counter = {};
   MM.addRoute('/', function(tokens) {
     return MM.ui('page.main', {
       title: 'RPG Demo'

@@ -1,5 +1,8 @@
 WEB.namespace 'MM'
 
+# global counter dictionary
+MM.counter = {}
+
 MM.addRoute '/', (tokens) ->
   MM.ui 'page.main',
     title: 'RPG Demo'

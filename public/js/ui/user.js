@@ -29,10 +29,27 @@
         });
       };
       User.prototype.move = function(direction) {
-        return MM.map.panStart(direction);
+        var stub;
+        MM.map.panStart(direction);
+        stub = 'user_' + direction;
+        MM.counter[stub] = 0;
+        return $.loop.add(stub, function() {
+          MM.log(MM.counter[stub]);
+          MM.user.el.css({
+            'background-position': MM.user.anim[direction][MM.counter[stub]]
+          });
+          if (MM.counter[stub] === 3) {
+            return MM.counter[stub] = 0;
+          } else {
+            return MM.counter[stub] += 1;
+          }
+        });
       };
       User.prototype.stop = function(direction) {
-        return MM.map.panStop(direction);
+        var stub;
+        MM.map.panStop(direction);
+        stub = 'user_' + direction;
+        return $.loop.remove(stub);
       };
       return User;
     })();
@@ -46,54 +63,10 @@
         width: 24,
         imgpath: '/img/sprites.png',
         anim: {
-          right: [
-            {
-              l: "-72px",
-              t: "-32px"
-            }, {
-              l: "-96px",
-              t: "-32px"
-            }, {
-              l: "-120px",
-              t: "-32px"
-            }
-          ],
-          left: [
-            {
-              l: "-72px",
-              t: "-96px"
-            }, {
-              l: "-96px",
-              t: "-96px"
-            }, {
-              l: "-120px",
-              t: "-96px"
-            }
-          ],
-          up: [
-            {
-              l: "-72px",
-              t: "0"
-            }, {
-              l: "-96px",
-              t: "0"
-            }, {
-              l: "-120px",
-              t: "0"
-            }
-          ],
-          down: [
-            {
-              l: "-72px",
-              t: "-64px"
-            }, {
-              l: "-96px",
-              t: "-64px"
-            }, {
-              l: "-120px",
-              t: "-64px"
-            }
-          ]
+          right: ["-72px -32px", "-96px -32px", "-120px -32px"],
+          left: ["-72px -96px", "-96px -96px", "-120px -96px"],
+          up: ["-72px 0", "-96px 0", "-120px 0"],
+          down: ["-72px -64px", "-96px -64px", "-120px -64px"]
         }
       };
       MM.user = new User(data);

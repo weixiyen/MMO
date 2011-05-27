@@ -26,9 +26,22 @@ MM.ui 'user', (opts) ->
     move: (direction) ->
       MM.map.panStart direction
       # start an animation function
+      stub = 'user_' + direction
+      MM.counter[ stub ] = 0
+      $.loop.add stub, ->
+        MM.log MM.counter[ stub ]
+        MM.user.el.css
+          'background-position': MM.user.anim[direction][ MM.counter[ stub ] ]
+        if MM.counter[ stub ] == 3
+          MM.counter[ stub ] = 0
+        else
+          MM.counter[ stub ] += 1
+          
     stop: (direction) ->
       MM.map.panStop direction
-      # stop an animation function
+      
+      stub = 'user_' + direction
+      $.loop.remove stub
   
   MM.require 'user', 'css'
   MM.require 'sprites', 'css'
@@ -43,24 +56,24 @@ MM.ui 'user', (opts) ->
       imgpath: '/img/sprites.png'
       anim:
         right: [
-          {l:"-72px", t:"-32px"},
-          {l:"-96px", t:"-32px"},
-          {l:"-120px", t:"-32px"}
+          "-72px -32px",
+          "-96px -32px",
+          "-120px -32px"
         ],
         left: [
-            {l:"-72px", t:"-96px"},
-            {l:"-96px", t:"-96px"},
-            {l:"-120px", t:"-96px"}
+          "-72px -96px",
+          "-96px -96px",
+          "-120px -96px"
         ],
         up: [
-            {l:"-72px", t:"0"},
-            {l:"-96px", t:"0"},
-            {l:"-120px", t:"0"}
+          "-72px 0",
+          "-96px 0",
+          "-120px 0"
         ],
         down: [
-            {l:"-72px", t:"-64px"},
-            {l:"-96px", t:"-64px"},
-            {l:"-120px", t:"-64px"}
+          "-72px -64px",
+          "-96px -64px",
+          "-120px -64px"
         ]
     
     # make public data for others to use  
