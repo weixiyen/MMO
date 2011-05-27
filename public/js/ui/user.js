@@ -26,17 +26,28 @@
         e.preventDefault();
         code = e.keyCode;
         if (code === 37) {
-          return MM.map.pan('left');
+          return MM.map.panStart('left');
         } else if (code === 38) {
-          return MM.map.pan('up');
+          return MM.map.panStart('up');
         } else if (code === 39) {
-          return MM.map.pan('right');
+          return MM.map.panStart('right');
         } else if (code === 40) {
-          return MM.map.pan('down');
+          return MM.map.panStart('down');
         }
       });
       return $(document).keyup(function(e) {
-        return e.preventDefault();
+        var code;
+        e.preventDefault();
+        code = e.keyCode;
+        if (code === 37) {
+          return MM.map.panStop('left');
+        } else if (code === 38) {
+          return MM.map.panStop('up');
+        } else if (code === 39) {
+          return MM.map.panStop('right');
+        } else if (code === 40) {
+          return MM.map.panStop('down');
+        }
       });
     });
   });

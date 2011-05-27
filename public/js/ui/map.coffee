@@ -1,25 +1,33 @@
 MM.ui 'map', (opts) ->
   
   class Map
+    
     constructor: (@el) ->
       @top = 0
       @left = 0
-      @tick = 50
-    pan: (direction) ->
+      @change = 4
+      
+    panStart: (direction) ->
       if direction == 'left'
-        @left+=@tick
+        $.loop.add 'pan_map_left', ->
+          MM.map.el.css
+            left: MM.map.left += MM.map.change
       if direction == 'right'
-        @left-=@tick
+        $.loop.add 'pan_map_right', ->
+          MM.map.el.css
+            left: MM.map.left -= MM.map.change
       if direction == 'up'
-        @top+=@tick
+        $.loop.add 'pan_map_up', ->
+          MM.map.el.css
+            top: MM.map.top += MM.map.change
       if direction == 'down'
-        @top-=@tick
-      properties = 
-        left: @left
-        top: @top
-      @el.animate properties,
-        queue: false
-        easing: false
+        $.loop.add 'pan_map_down', ->
+          MM.map.el.css
+            top: MM.map.top -= MM.map.change
+
+    panStop: (direction) ->
+      handle = 'pan_map_' + direction
+      $.loop.remove handle
       
   ui_path = 'maps/map_' + opts.map_id
   MM.require ui_path, 'css'

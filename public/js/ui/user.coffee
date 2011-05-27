@@ -26,14 +26,23 @@ MM.ui 'user', (opts) ->
       e.preventDefault()
       code = e.keyCode
       if code == 37
-        MM.map.pan 'left'
+        MM.map.panStart 'left'
       else if code == 38
-        MM.map.pan 'up'
+        MM.map.panStart 'up'
       else if code == 39
-        MM.map.pan 'right'
+        MM.map.panStart 'right'
       else if code == 40
-        MM.map.pan 'down'
+        MM.map.panStart 'down'
         
     $(document).keyup (e) ->
       e.preventDefault()
+      code = e.keyCode
+      if code == 37
+        MM.map.panStop 'left'
+      else if code == 38
+        MM.map.panStop 'up'
+      else if code == 39
+        MM.map.panStop 'right'
+      else if code == 40
+        MM.map.panStop 'down'
   

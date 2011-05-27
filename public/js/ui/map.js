@@ -6,30 +6,42 @@
         this.el = el;
         this.top = 0;
         this.left = 0;
-        this.tick = 50;
+        this.change = 4;
       }
-      Map.prototype.pan = function(direction) {
-        var properties;
+      Map.prototype.panStart = function(direction) {
         if (direction === 'left') {
-          this.left += this.tick;
+          $.loop.add('pan_map_left', function() {
+            return MM.map.el.css({
+              left: MM.map.left += MM.map.change
+            });
+          });
         }
         if (direction === 'right') {
-          this.left -= this.tick;
+          $.loop.add('pan_map_right', function() {
+            return MM.map.el.css({
+              left: MM.map.left -= MM.map.change
+            });
+          });
         }
         if (direction === 'up') {
-          this.top += this.tick;
+          $.loop.add('pan_map_up', function() {
+            return MM.map.el.css({
+              top: MM.map.top += MM.map.change
+            });
+          });
         }
         if (direction === 'down') {
-          this.top -= this.tick;
+          return $.loop.add('pan_map_down', function() {
+            return MM.map.el.css({
+              top: MM.map.top -= MM.map.change
+            });
+          });
         }
-        properties = {
-          left: this.left,
-          top: this.top
-        };
-        return this.el.animate(properties, {
-          queue: false,
-          easing: false
-        });
+      };
+      Map.prototype.panStop = function(direction) {
+        var handle;
+        handle = 'pan_map_' + direction;
+        return $.loop.remove(handle);
       };
       return Map;
     })();
