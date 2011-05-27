@@ -1,11 +1,11 @@
 (function() {
-  SB.ui('login', function(opts) {
-    SB.require('sample', 'css');
-    return SB.run(function() {
+  MM.ui('login', function(opts) {
+    MM.require('sample', 'css');
+    return MM.run(function() {
       var title;
-      SB.render($('#main'), 'login');
+      MM.render($('#main'), 'login');
       title = prompt('Give page new title');
-      return SB.go({
+      return MM.go({
         title: title,
         path: '/',
         ui: 'feed'

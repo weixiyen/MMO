@@ -35,11 +35,11 @@ executed at a later time.
 
 Here's some example code:
 
-	SB.comet(channel, function( data ){
+	MM.comet(channel, function( data ){
 		// do stuff after getting data
 	});
 	
-	SB.comet(channel, function( data ){
+	MM.comet(channel, function( data ){
 		// do stuff after getting data
 	});
 

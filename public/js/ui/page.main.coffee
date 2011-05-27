@@ -1,9 +1,9 @@
-SB.ui 'page.main', (opts) ->
-  SB.require 'page.main', 'css'
-  SB.run ->
-    SB.log 'okay...'
-    ###
-    SB.render $('#main'), 'page.main'
-    SB.ui 'feed',
-      el: $('#feed')
-    ###
+MM.ui 'page.main', (opts) ->
+  MM.require 'page.main', 'css'
+  MM.run ->
+    MM.render $('#main'), 'page.main'
+    MM.ui 'map',
+      el: $('#map')
+      map_id: 1
+    MM.ui 'user'
+      el: $('#user')

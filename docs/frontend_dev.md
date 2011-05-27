@@ -36,9 +36,9 @@ declared.
 
 Here is a sample UI Module that will load the feed.
 
-	SB.ui 'feed', options
+	MM.ui 'feed', options
 
-When this SB.ui function is called, the module will load with options.
+When this MM.ui function is called, the module will load with options.
 
 Options:
 	
@@ -53,35 +53,35 @@ This is how you create a module
 
 in feed.coffee
 
-	SB.ui 'feed', (opts) ->
+	MM.ui 'feed', (opts) ->
 		# code goes here
 		# you will have access to 'opts.type' and 'opts.ctx' if the options are passed
 		# use your own logic to decide what to do with it
 
-Basically when you run SB.ui 'feed', options, the above function (opts) -> will execute.
+Basically when you run MM.ui 'feed', options, the above function (opts) -> will execute.
 
-SB.require
+MM.require
 --------
 Some modules depend on other modules.
 
-	SB.ui 'football', options, ->
-		SB.require 'account'
-		SB.require 'menu'
-		SB.require 'feed'
-		SB.run ->
-			SB.ui 'feed'
+	MM.ui 'football', options, ->
+		MM.require 'account'
+		MM.require 'menu'
+		MM.require 'feed'
+		MM.run ->
+			MM.ui 'feed'
 				el: $('#feed')
 				type: 'narrow'
-			SB.ui 'menu'
+			MM.ui 'menu'
 				el: $('#menu')
 				type: 'horizontal'
 
-SB.ajax
+MM.ajax
 --------
 Wrapper around jQuery's ajax function with default params set.
 Used to make requests to the server to fetch data but not reload the UI.
 
-	var result = SB.ajax options
+	var result = MM.ajax options
 	result.ok(function( data ){
 		# success code
 	});
@@ -89,7 +89,7 @@ Used to make requests to the server to fetch data but not reload the UI.
 		# fail code
 	});
 
-SB.comet
+MM.comet
 --------
 The web client interacts with the stream server
 by sending messages, and passing a callback to be 
@@ -97,22 +97,22 @@ executed at a later time.
 
 Here's some example code:
 
-	SB.comet(channel, function( data ){
+	MM.comet(channel, function( data ){
 		// do stuff after getting data
 	});
 	
-	SB.comet(channel, function( data ){
+	MM.comet(channel, function( data ){
 		// do stuff after getting data
 	});
 
 Whenever we receive data from certain channel, that function will run
 with the data.
 
-SB.render
+MM.render
 --------
 Renders a jade template with that name
 
-	SB.render 'feed/football/template', options
+	MM.render 'feed/football/template', options
 	# renders /tpl/feed/football/template.jade
 
 Handling CSS

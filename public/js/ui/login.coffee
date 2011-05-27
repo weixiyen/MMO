@@ -1,11 +1,11 @@
-SB.ui 'login', (opts) ->
+MM.ui 'login', (opts) ->
   
-  SB.require 'sample', 'css'
+  MM.require 'sample', 'css'
   
-  SB.run ->    
-    SB.render $('#main'), 'login'
+  MM.run ->    
+    MM.render $('#main'), 'login'
     title = prompt 'Give page new title'
-    SB.go
+    MM.go
       title: title
       path: '/'
       ui: 'feed'

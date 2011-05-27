@@ -99,6 +99,7 @@ start = function() {
   dev.coffee('bare', 'coffee -wcbl services/ lib/ scripts/ tmp/ test/ models/ handlers/ middleware/');
   dev.coffee('safe', 'coffee -wcl public/');
   dev.coffee('stylus', 'stylus -w public/css');
+  dev.coffee('stylus', 'stylus -w public/css/maps');
   dev.start('mongolock', 'rm /data/db/mongod.lock', 'silent');
   dev.start('redis', 'redis-server', 'silent');
   dev.start('brew', 'brew update', 'silent');
