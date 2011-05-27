@@ -96,7 +96,8 @@ MM.ui 'user', (opts) ->
     doc = $(document)
     
     doc.keydown (e) ->
-      #e.preventDefault()
+      e.preventDefault()
+      e.stopPropagation()
       code = e.keyCode
       if code == 37
         MM.user.move 'left'
@@ -108,7 +109,8 @@ MM.ui 'user', (opts) ->
         MM.user.move 'down'
         
     doc.keyup (e) ->
-      #e.preventDefault()
+      e.preventDefault()
+      e.stopPropagation()
       code = e.keyCode
       if code == 37
         MM.user.stop 'left'

@@ -84,6 +84,8 @@
       doc = $(document);
       doc.keydown(function(e) {
         var code;
+        e.preventDefault();
+        e.stopPropagation();
         code = e.keyCode;
         if (code === 37) {
           return MM.user.move('left');
@@ -97,6 +99,8 @@
       });
       doc.keyup(function(e) {
         var code;
+        e.preventDefault();
+        e.stopPropagation();
         code = e.keyCode;
         if (code === 37) {
           return MM.user.stop('left');

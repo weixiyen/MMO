@@ -1,5 +1,4 @@
 (function() {
-  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   MM.ui('map', function(opts) {
     var Map, ui_path;
     Map = (function() {
@@ -10,33 +9,35 @@
         this.change = 2;
       }
       Map.prototype.panStart = function(direction) {
+        var user;
+        user = this.el;
         if (direction === 'left') {
-          $.loop.add('pan_map_left', __bind(function() {
-            return this.el.css({
+          $.loop.add('pan_map_left', function() {
+            return user.css({
               left: MM.map.left += MM.map.change
             });
-          }, this));
+          });
         }
         if (direction === 'right') {
-          $.loop.add('pan_map_right', __bind(function() {
-            return this.el.css({
+          $.loop.add('pan_map_right', function() {
+            return user.css({
               left: MM.map.left -= MM.map.change
             });
-          }, this));
+          });
         }
         if (direction === 'up') {
-          $.loop.add('pan_map_up', __bind(function() {
-            return this.el.css({
+          $.loop.add('pan_map_up', function() {
+            return user.css({
               top: MM.map.top += MM.map.change
             });
-          }, this));
+          });
         }
         if (direction === 'down') {
-          return $.loop.add('pan_map_down', __bind(function() {
-            return this.el.css({
+          return $.loop.add('pan_map_down', function() {
+            return user.css({
               top: MM.map.top -= MM.map.change
             });
-          }, this));
+          });
         }
       };
       Map.prototype.panStop = function(direction) {

@@ -8,21 +8,22 @@ MM.ui 'map', (opts) ->
       @change = 2
       
     panStart: (direction) ->
+      user = @el
       if direction == 'left'
-        $.loop.add 'pan_map_left', =>
-          @el.css
+        $.loop.add 'pan_map_left', ->
+          user.css
             left: MM.map.left += MM.map.change
       if direction == 'right'
-        $.loop.add 'pan_map_right', =>
-          @el.css
+        $.loop.add 'pan_map_right', ->
+          user.css
             left: MM.map.left -= MM.map.change
       if direction == 'up'
-        $.loop.add 'pan_map_up', =>
-          @el.css
+        $.loop.add 'pan_map_up', ->
+          user.css
             top: MM.map.top += MM.map.change
       if direction == 'down'
-        $.loop.add 'pan_map_down', =>
-          @el.css
+        $.loop.add 'pan_map_down', ->
+          user.css
             top: MM.map.top -= MM.map.change
 
     panStop: (direction) ->
