@@ -22,7 +22,7 @@ MM.ui 'user', (opts) ->
       @center()
     center: ->
       left = $(window).width() / 2 - @width / 2
-      top = $(window).height() / 2 - @height / 2
+      top = 250 - @height / 2
       @put left, top
     put: (x, y) ->
       @el.css

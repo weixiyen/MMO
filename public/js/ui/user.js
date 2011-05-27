@@ -25,7 +25,7 @@
       User.prototype.center = function() {
         var left, top;
         left = $(window).width() / 2 - this.width / 2;
-        top = $(window).height() / 2 - this.height / 2;
+        top = 250 - this.height / 2;
         return this.put(left, top);
       };
       User.prototype.put = function(x, y) {
