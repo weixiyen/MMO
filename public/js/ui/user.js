@@ -21,11 +21,12 @@
           background: 'no-repeat url(' + this.imgpath + ')'
         });
         this.center();
+        this.face(data.facing);
       }
       User.prototype.center = function() {
         var left, top;
         left = $(window).width() / 2 - this.width / 2;
-        top = 250 - this.height / 2;
+        top = $(window).height() / 2 - this.height / 2;
         return this.put(left, top);
       };
       User.prototype.put = function(x, y) {
@@ -60,7 +61,16 @@
       User.prototype.stop = function(direction) {
         this.pressed[direction] = false;
         MM.map.panStop(direction);
-        return $.loop.remove('user_' + direction);
+        $.loop.remove('user_' + direction);
+        return this.face(direction);
+      };
+      User.prototype.teleport = function(xcoord, ycoord) {
+        return MM.map.goTo(xcoord, ycoord);
+      };
+      User.prototype.face = function(direction) {
+        return this.el.css({
+          'background-position': this.anim[direction][1]
+        });
       };
       return User;
     })();
@@ -73,6 +83,7 @@
         height: 32,
         width: 24,
         imgpath: '/img/sprites.png',
+        facing: 'right',
         anim: {
           right: ["-72px -32px", "-96px -32px", "-120px -32px"],
           left: ["-72px -96px", "-96px -96px", "-120px -96px"],

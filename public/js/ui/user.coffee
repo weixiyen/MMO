@@ -20,14 +20,19 @@ MM.ui 'user', (opts) ->
         background: 'no-repeat url(' + @imgpath + ')'
         
       @center()
+      @face data.facing
+      
     center: ->
       left = $(window).width() / 2 - @width / 2
-      top = 250 - @height / 2
+      top = $(window).height() / 2 - @height / 2
       @put left, top
+    
+    # relative to screen
     put: (x, y) ->
       @el.css
         left: x
         top: y
+    
     move: (direction) ->
       # check to see if button is already pressed
       if @pressed[ direction ] == true
@@ -55,6 +60,14 @@ MM.ui 'user', (opts) ->
       @pressed[ direction ] = false
       MM.map.panStop direction
       $.loop.remove 'user_' + direction
+      @face direction
+    
+    teleport: (xcoord, ycoord) ->
+      MM.map.goTo xcoord, ycoord
+    
+    face: (direction) ->
+      @el.css
+        'background-position': @anim[direction][1]
   
   MM.require 'user', 'css'
   MM.require 'sprites', 'css'
@@ -67,6 +80,7 @@ MM.ui 'user', (opts) ->
       height: 32
       width: 24
       imgpath: '/img/sprites.png'
+      facing: 'right'
       anim:
         right: [
           "-72px -32px",

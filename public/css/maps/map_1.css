@@ -1,8 +1,5 @@
 .ui-map-1 .bg {
-  width: 2500px;
-  height: 1200px;
-}
-.ui-map-1 .bg img.town {
-  width: 100%;
-  height: 100%;
+  width: 10000px;
+  height: 10000px;
+  background: url("/img/town.png");
 }
