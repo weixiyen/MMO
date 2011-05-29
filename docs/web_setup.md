@@ -36,14 +36,30 @@ Install Node.js
     cd ~/
     rm -rf node*
 
+Set up the REMOTE repository on your SERVER
+
+    cd ~/
+    mkdir mmo.git
+    cd mmo.git
+    git init --bare
+    mkdir ~/mmo
+    cat > hooks/post-receive
+    #!/bin/sh
+    GIT_WORK_TREE=/root/mmo git checkout -f
+    chmod +x hooks/post-receive
+
+In your LOCAL repository:
+
+    git remote add web ssh://root@96.126.102.183/root/mmo.git
+    git push web +master:refs/heads/master
+
+You can now use this command to push code to master
+
+    git push web
+
 Install NPM
 
     curl http://npmjs.org/install.sh | sh
-
-Install NPM Modules
-
-    npm install -g stylus 
-    npm install -g coffee-script
 
 Install in node_modules
 
