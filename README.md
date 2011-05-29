@@ -3,7 +3,8 @@ MMO
 
 Current Tasks
 ---
-- Create a person walking around on a map with dummy NPCs and such
+- Collision Detection
+- Adding NPCs
 
 Documentation
 ---
@@ -21,6 +22,8 @@ Documentation
 
 [Ideas][ideas]
 
+[Production Setup on Ubuntu 11][web_setup]
+
 [dev_setup]:https://github.com/weixiyen/mmo/blob/master/docs/dev_setup.md
 [web_server]:https://github.com/weixiyen/mmo/blob/master/docs/web_server.md
 [stream_server]:https://github.com/weixiyen/mmo/blob/master/docs/stream_server.md
@@ -28,3 +31,4 @@ Documentation
 [load_balancing]:https://github.com/weixiyen/mmo/blob/master/docs/load_balancing.md
 [frontend_dev]:https://github.com/weixiyen/mmo/blob/master/docs/frontend_dev.md
 [ideas]:https://github.com/weixiyen/mmo/blob/master/docs/ideas.md
+[web_setup]:https://github.com/weixiyen/mmo/blob/master/docs/web_server.md

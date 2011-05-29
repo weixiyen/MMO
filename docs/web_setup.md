@@ -5,6 +5,7 @@ On your blank Linode Ubuntu 11 server
 
     apt-get update
     apt-get install build-essential
+    apt-get install upstart
     apt-get install haproxy
     apt-get install nginx
     apt-get install git
@@ -24,7 +25,7 @@ ZeroMQ
     cd ~/
     rm -rf zeromq*
 
-Install Node.js
+Install Node.js (v4.6 works with zeromq node binding)
 
     cd ~/
     wget http://nodejs.org/dist/node-v0.4.6.tar.gz
@@ -78,13 +79,21 @@ Keep Node up and running forever
 
 Create a startup file to be run on server re-boot
 
-    cd /etc/init.d
-    vi mmo
+    cd /etc/init
+    vi mmo.conf
 
 Place the following contents inside
 
+    #!upstart
+    description     "MMORPG"
+    author          "Weixi Yen"
+    start on startup
+    stop on shutdown
+    exec sudo -u root sh -c "/root/mmo/startup"
+
+Now create /root/mmo/startup
+
     #!/bin/sh
-    cd /root/mmo
     forever start services/app.js 5000
     forever start services/app.js 5001
     forever start services/app.js 5002
@@ -97,7 +106,148 @@ Place the following contents inside
 
 Make it executable
 
-    chmod +x mmo
+    chmod +x /root/mmo/startup
+
+Edit /etc/nginx/nginx.conf
+
+    worker_processes  1;
+    events {
+        worker_connections  1024;
+    }
+    http {
+      ## MIME types
+      types {
+        application/xml xml;
+        application/javascript  js;
+        image/gif       gif;
+        image/jpeg      jpg;
+        image/png       png;
+        image/bmp       bmp;
+        image/x-icon    ico;
+        text/css        css;
+        text/html      html;
+        text/plain      bob;
+        text/plain      txt;
+      }
+      ## Compression
+      gzip              on;
+      gzip_types        text/plain text/html text/css image/x-icon image/bmp application/javascript;
+      server {
+        listen       4000;
+        server_name  localhost;
+        location ~ (favicon.ico|robots.txt|humans.txt) {
+         	expires 7d;
+        	log_not_found off;
+        	break;
+        }
+        location / {
+          proxy_pass http://127.0.0.1:5000;
+        }
+        location ~ ^/(css|tpl|img|js)/ {
+          root /root/mmo/public/;
+          expires max;
+        }
+      }
+      server {
+        listen       4001;
+        server_name  localhost;
+        location ~ (favicon.ico|robots.txt|humans.txt) {
+          expires 7d;
+          log_not_found off;
+          break;
+        }
+        location / {
+          proxy_pass http://127.0.0.1:5001;
+        }
+        location ~ ^/(css|tpl|img|js)/ {
+          root /root/mmo/public/;
+          expires max;
+        }
+      }
+      server {
+        listen       4002;
+        server_name  localhost;
+        location ~ (favicon.ico|robots.txt|humans.txt) {
+          expires 7d;
+          log_not_found off;
+          break;
+        }
+        location / {
+          proxy_pass http://127.0.0.1:5002;
+        }
+        location ~ ^/(css|tpl|img|js)/ {
+        	root /root/mmo/public/;
+        	expires max;
+        }
+      }
+      server {
+        listen       4003;
+        server_name  localhost;
+        location ~ (favicon.ico|robots.txt|humans.txt) {
+          expires 7d;
+          log_not_found off;
+          break;
+        }
+        location / {
+          proxy_pass http://127.0.0.1:5003;
+        }
+        location ~ ^/(css|tpl|img|js)/ {
+        	root /root/mmo/public/;
+        	expires max;
+        }
+      }
+      server {
+        listen 843;
+        server_name  localhost;
+        location / {
+          rewrite ^(.*)$ /crossdomain.xml;
+        }
+        error_page 400 /crossdomain.xml;
+        location = /crossdomain.xml {
+          root /root/mmo/public/;
+        }
+      }
+    }
+
+Edit /etc/haproxy/haproxy.cfg
+
+    global
+      maxconn     4096 # Total Max Connections. This is dependent on ulimit
+    defaults
+      mode        http
+      option http-server-close
+      option http-pretend-keepalive
+    frontend all 0.0.0.0:80
+      timeout client 86400000
+      default_backend web_servers
+      acl is_stream path_dir socket.io
+      use_backend stream_servers if is_stream
+    backend web_servers
+      balance source
+      option forwardfor # This sets X-Forwarded-For
+      timeout server 30000
+      timeout connect 4000
+      server web1 127.0.0.1:4000 weight 1 maxconn 1024 check
+      server web2 127.0.0.1:4001 weight 1 maxconn 1024 check
+      server web3 127.0.0.1:4002 weight 1 maxconn 1024 check
+      server web3 127.0.0.1:4003 weight 1 maxconn 1024 check
+    backend stream_servers
+      #balance roundrobin
+      balance source
+      option forwardfor # This sets X-Forwarded-For
+      timeout queue 5000
+      timeout server 86400000 # never
+      timeout connect 86400000 # never
+      server stream1 127.0.0.1:5100 weight 1 maxconn 1024 check
+      server stream1 127.0.0.1:5101 weight 1 maxconn 1024 check
+      server stream1 127.0.0.1:5102 weight 1 maxconn 1024 check
+      server stream1 127.0.0.1:5103 weight 1 maxconn 1024 check
+
+Enable haproxy
+    
+    cd /etc/defaults
+    vi haproxy
+    # change enabled from 0 to 1
 
 In your LOCAL repository:
 
