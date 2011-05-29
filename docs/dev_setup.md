@@ -73,6 +73,7 @@ Edit copy and paste the following into ~/.bash_profile where ~/sleeperbot
 	
 	#exports
 	export PATH=${PATH}:/usr/local/sbin
+	export ENV=dev
 
 Run the dev environment and visit localhost:5000
 
