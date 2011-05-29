@@ -51,7 +51,7 @@ Type this out and Ctrl+C when done
     #!/bin/sh
     forever stopall
     GIT_WORK_TREE=/root/mmo git checkout -f
-    /etc/init.d/mmo
+    sh /root/mmo/startup
 
 Make it executable
 
