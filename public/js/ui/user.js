@@ -44,10 +44,7 @@
         MM.map.panStart(direction);
         stub = 'user_' + direction;
         MM.counter[stub] = 0;
-        return $.loop.add(stub, function() {
-          if (0 !== $.loop.count % 2) {
-            return;
-          }
+        return $.loop.add(stub, 2, function() {
           MM.user.el.css({
             'background-position': MM.user.anim[direction][MM.counter[stub]]
           });

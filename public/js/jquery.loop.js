@@ -8,15 +8,21 @@
       }
       var items = $.loop.items;
       for(var i in items) {
-        items[i]();
+        if (0 === ($.loop.count % items[i].skip) ) {
+          items[i].fn();
+        }
       }
     },
     int : 40,
     items : {},
-    add : function(id, fn) {
-      if($.isFunction(fn)) {
-        $.loop.items[id] = fn;
+    add : function(id, skip, fn) {
+      $.loop.items[id] = {};
+      if($.isFunction(skip)) {
+        fn = skip;
+        skip = 1;
       }
+      $.loop.items[id].skip = skip;
+      $.loop.items[id].fn = fn;
     },
     remove : function(id) { delete $.loop.items[id]; },
     stop : function() { clearInterval(loop); },

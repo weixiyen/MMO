@@ -44,10 +44,7 @@ MM.ui 'user', (opts) ->
       # start an animation function
       stub = 'user_' + direction
       MM.counter[ stub ] = 0
-      $.loop.add stub, ->
-        
-        if 0 != $.loop.count % 2
-          return
+      $.loop.add stub, 2, ->
           
         MM.user.el.css
           'background-position': MM.user.anim[direction][ MM.counter[ stub ] ]
