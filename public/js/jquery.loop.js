@@ -1,3 +1,29 @@
+/*
+  jQuery.loop is an enhanced version of the original jQuery.timers plugin
+  
+  Example 1:
+    $.loop.add( 'myCustomId' , function() {
+      // I run once every second
+    });
+    
+    // now let's stop execution of the previous loop
+    $.loop.remove( 'myCustomId' );
+  
+  Example 2:
+    // set the interval to every 40 milliseconds
+    $.loop.setInterval( 40 );
+    
+    $.loop.add( 'spriteMoveLeft', function(){
+      // I run every 40 milliseconds
+    });
+    
+    $.loop.add( 'panMapLeft', 3, function(){
+      
+      // notice the 2nd parameter "3"
+      // I run every 120 milleseconds
+    
+    });
+*/
 (function($) {
   var loop;
   $.loop = {
