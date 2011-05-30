@@ -11,7 +11,7 @@
         items[i]();
       }
     },
-    int : 20,
+    int : 40,
     items : {},
     add : function(id, fn) {
       if($.isFunction(fn)) {

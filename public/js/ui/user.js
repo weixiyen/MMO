@@ -45,7 +45,7 @@
         stub = 'user_' + direction;
         MM.counter[stub] = 0;
         return $.loop.add(stub, function() {
-          if (0 !== $.loop.count % 4) {
+          if (0 !== $.loop.count % 2) {
             return;
           }
           MM.user.el.css({

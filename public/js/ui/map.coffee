@@ -50,5 +50,5 @@ MM.ui 'map', (opts) ->
       el: opts.el
       xcoord: 60
       ycoord: 1400
-      change: 2
+      change: 3
     MM.map = new Map data

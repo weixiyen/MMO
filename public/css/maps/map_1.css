@@ -1,4 +1,7 @@
 .ui-map-1 {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 10000px;
   height: 10000px;
   background: url("/img/town.png");
