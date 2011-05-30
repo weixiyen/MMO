@@ -1,5 +1,6 @@
 (function() {
   WEB.namespace('MM');
+  $.loop.setInt(40);
   MM.counter = {};
   MM.addRoute('/', function(tokens) {
     return MM.ui('page.main', {

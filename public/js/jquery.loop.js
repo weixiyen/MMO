@@ -13,7 +13,12 @@
         }
       }
     },
-    int : 40,
+    int : 1000,
+    setInt: function(interval) {
+      $.loop.int = interval;
+      $.loop.stop();
+      $.loop.start();
+    },
     items : {},
     add : function(id, skip, fn) {
       $.loop.items[id] = {};
