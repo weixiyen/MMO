@@ -1,6 +1,6 @@
 WEB.namespace 'MM'
 
-$.loop.setInt 40
+$.loop.setInterval 40
 
 # global counter dictionary
 MM.counter = {}

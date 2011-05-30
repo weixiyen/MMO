@@ -14,7 +14,7 @@
       }
     },
     int : 1000,
-    setInt: function(interval) {
+    setInterval: function(interval) {
       $.loop.int = interval;
       $.loop.stop();
       $.loop.start();
