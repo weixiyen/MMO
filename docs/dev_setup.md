@@ -101,6 +101,15 @@ Remember to run these commands every now and then:
 	brew upgrade
 	npm update
 
+In your LOCAL repository:
+
+    git remote add web ssh://root@96.126.102.183/root/mmo.git
+    git push web +master:refs/heads/master
+
+You can now use this command to push code to master
+
+    git push web
+
 [xcode]:http://developer.apple.com/technologies/xcode.html
 [homebrew]:https://github.com/mxcl/homebrew
 [nodejs]:http://nodejs.org/
