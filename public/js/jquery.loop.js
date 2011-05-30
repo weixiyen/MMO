@@ -20,6 +20,7 @@
     $.loop.add( 'panMapLeft', 3, function(){
       
       // notice the 2nd parameter "3"
+      // this means I run every 3 intervals (aka ticks)
       // I run every 120 milleseconds
     
     });
