@@ -10,15 +10,12 @@ MM.ui 'map', (opts) ->
       @tileMap = options.tileMap
       @generateTiles()
       @goTo options.xcoord, options.ycoord
-      @generateCollisionMap options.tileMap, options.collisionTypes
+      @collisionTypes = options.collisionTypes
+      @generateCollisionMap @tileMap
     
     accessible: (xcoord, ycoord) ->
-      tileSize = @tileSize
-      x = Math.floor( xcoord / @tileSize )
-      y = Math.floor( ycoord / @tileSize )
-      if undefined == @collisionMap[ y ]
-        return false
-      @collisionMap[ y ][ x ]
+      tileType = @getTileType xcoord, ycoord
+      -1 == $.inArray( tileType, @collisionTypes )
     
     canShift: (direction, xBound, yBound) ->
       newXcoord = @xcoord
@@ -37,13 +34,14 @@ MM.ui 'map', (opts) ->
       
       @accessible newXcoord, newYcoord
     
-    generateCollisionMap: (tiles, types) ->
+    generateCollisionMap: (tiles) ->
       collisionMap = []
+      collisionTypes = @collisionTypes
       x = y = 0
       len = tiles[0].length
 
       getAccessible = (type) ->
-        -1 == $.inArray( type, types )
+        -1 == $.inArray( type, collisionTypes )
       createRow = ( row ) ->
         collisionMap.push []
         createTile( tile ) for tile in row
@@ -78,6 +76,13 @@ MM.ui 'map', (opts) ->
       processRow( row ) for row in tiles
       
       @$tileMap.html mapHtml.join ''
+        
+    getTileType: (xcoord, ycoord) ->
+      x = Math.floor( xcoord / @tileSize )
+      y = Math.floor( ycoord / @tileSize )
+      if undefined == @tileMap[ y ] or undefined == @tileMap[ y ][ x ]
+        return false
+      @tileMap[ y ][ x ]
       
     goTo: (xcoord, ycoord) ->
       @setCoords xcoord, ycoord

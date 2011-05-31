@@ -10,17 +10,13 @@
         this.tileMap = options.tileMap;
         this.generateTiles();
         this.goTo(options.xcoord, options.ycoord);
-        this.generateCollisionMap(options.tileMap, options.collisionTypes);
+        this.collisionTypes = options.collisionTypes;
+        this.generateCollisionMap(this.tileMap);
       }
       Map.prototype.accessible = function(xcoord, ycoord) {
-        var tileSize, x, y;
-        tileSize = this.tileSize;
-        x = Math.floor(xcoord / this.tileSize);
-        y = Math.floor(ycoord / this.tileSize);
-        if (void 0 === this.collisionMap[y]) {
-          return false;
-        }
-        return this.collisionMap[y][x];
+        var tileType;
+        tileType = this.getTileType(xcoord, ycoord);
+        return -1 === $.inArray(tileType, this.collisionTypes);
       };
       Map.prototype.canShift = function(direction, xBound, yBound) {
         var newXcoord, newYcoord;
@@ -39,13 +35,14 @@
         }
         return this.accessible(newXcoord, newYcoord);
       };
-      Map.prototype.generateCollisionMap = function(tiles, types) {
-        var collisionMap, createRow, createTile, getAccessible, len, row, x, y, _i, _len;
+      Map.prototype.generateCollisionMap = function(tiles) {
+        var collisionMap, collisionTypes, createRow, createTile, getAccessible, len, row, x, y, _i, _len;
         collisionMap = [];
+        collisionTypes = this.collisionTypes;
         x = y = 0;
         len = tiles[0].length;
         getAccessible = function(type) {
-          return -1 === $.inArray(type, types);
+          return -1 === $.inArray(type, collisionTypes);
         };
         createRow = function(row) {
           var tile, _i, _len;
@@ -100,6 +97,15 @@
           processRow(row);
         }
         return this.$tileMap.html(mapHtml.join(''));
+      };
+      Map.prototype.getTileType = function(xcoord, ycoord) {
+        var x, y;
+        x = Math.floor(xcoord / this.tileSize);
+        y = Math.floor(ycoord / this.tileSize);
+        if (void 0 === this.tileMap[y] || void 0 === this.tileMap[y][x]) {
+          return false;
+        }
+        return this.tileMap[y][x];
       };
       Map.prototype.goTo = function(xcoord, ycoord) {
         this.setCoords(xcoord, ycoord);
