@@ -11,6 +11,8 @@
         this.generateTiles();
         this.goTo(options.xcoord, options.ycoord);
         this.generateCollisionMap(options.tileMap, options.collisionTypes);
+        this.userXBound = 12 + options.change;
+        this.userYBound = 16 + options.change;
       }
       Map.prototype.accessible = function(xcoord, ycoord) {
         var tileSize, x, y;
@@ -27,13 +29,13 @@
         newXcoord = this.xcoord;
         newYcoord = this.ycoord;
         if (direction === 'left') {
-          newXcoord -= this.change;
+          newXcoord -= this.userXBound;
         } else if (direction === 'right') {
-          newXcoord += this.change;
+          newXcoord += this.userXBound;
         } else if (direction === 'up') {
-          newYcoord -= this.change;
+          newYcoord -= this.userYBound;
         } else if (direction === 'down') {
-          newYcoord += this.change;
+          newYcoord += this.userYBound;
         }
         return this.accessible(newXcoord, newYcoord);
       };

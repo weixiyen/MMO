@@ -11,6 +11,8 @@ MM.ui 'map', (opts) ->
       @generateTiles()
       @goTo options.xcoord, options.ycoord
       @generateCollisionMap options.tileMap, options.collisionTypes
+      @userXBound = 12 + options.change
+      @userYBound = 16 + options.change
     
     accessible: (xcoord, ycoord) ->
       tileSize = @tileSize
@@ -25,13 +27,13 @@ MM.ui 'map', (opts) ->
       newYcoord = @ycoord
       
       if direction == 'left'
-        newXcoord -= @change
+        newXcoord -= @userXBound
       else if direction == 'right'
-        newXcoord += @change
+        newXcoord += @userXBound
       else if direction == 'up'
-        newYcoord -= @change
+        newYcoord -= @userYBound
       else if direction == 'down'
-        newYcoord += @change
+        newYcoord += @userYBound
       
       @accessible newXcoord, newYcoord
     
