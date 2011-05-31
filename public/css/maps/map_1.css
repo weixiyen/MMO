@@ -6,3 +6,12 @@
   height: 10000px;
   background: url("/img/town.png");
 }
+.ui-map-1 .tile {
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background: #fff;
+}
+.ui-map-1 .type-99 {
+  background: #000;
+}

@@ -13,9 +13,12 @@ WEB.namespace = (namespace) ->
   window[ namespace ] = WEB
 
 # WEB.log
-WEB.log = (thing) ->
+WEB.log = (label, print = null) ->
   if console?
-    console.log thing
+    if print? 
+      console.log label + ' => ' + print
+      return
+    console.log label
 
 # WEB.ui 
 # EXAMPLES:

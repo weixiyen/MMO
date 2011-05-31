@@ -13,9 +13,16 @@
   WEB.namespace = function(namespace) {
     return window[namespace] = WEB;
   };
-  WEB.log = function(thing) {
+  WEB.log = function(label, print) {
+    if (print == null) {
+      print = null;
+    }
     if (typeof console !== "undefined" && console !== null) {
-      return console.log(thing);
+      if (print != null) {
+        console.log(label + ' => ' + print);
+        return;
+      }
+      return console.log(label);
     }
   };
   ui = {};

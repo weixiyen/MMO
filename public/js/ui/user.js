@@ -74,8 +74,8 @@
     MM.require('user', 'css');
     MM.require('sprites', 'css');
     return MM.run(function() {
-      var data, doc;
-      data = {
+      var $doc;
+      MM.user = new User({
         el: opts.el,
         height: 32,
         width: 24,
@@ -87,10 +87,9 @@
           up: ["-72px 0", "-96px 0", "-120px 0"],
           down: ["-72px -64px", "-96px -64px", "-120px -64px"]
         }
-      };
-      MM.user = new User(data);
-      doc = $(document);
-      doc.keydown(function(e) {
+      });
+      $doc = $(document);
+      $doc.keydown(function(e) {
         var code;
         e.preventDefault();
         e.stopPropagation();
@@ -105,7 +104,7 @@
           return MM.user.move('down');
         }
       });
-      doc.keyup(function(e) {
+      $doc.keyup(function(e) {
         var code;
         e.preventDefault();
         e.stopPropagation();

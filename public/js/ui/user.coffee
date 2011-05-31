@@ -71,8 +71,8 @@ MM.ui 'user', (opts) ->
   
   MM.run ->
     
-    # pull from DB in production
-    data = 
+    # make public data for others to use  
+    MM.user = new User 
       el: opts.el
       height: 32
       width: 24
@@ -100,13 +100,10 @@ MM.ui 'user', (opts) ->
           "-120px -64px"
         ]
     
-    # make public data for others to use  
-    MM.user = new User data
-    
     # bind some controls for movement
-    doc = $(document)
+    $doc = $(document)
     
-    doc.keydown (e) ->
+    $doc.keydown (e) ->
       e.preventDefault()
       e.stopPropagation()
       code = e.keyCode
@@ -119,7 +116,7 @@ MM.ui 'user', (opts) ->
       else if code == 40
         MM.user.move 'down'
         
-    doc.keyup (e) ->
+    $doc.keyup (e) ->
       e.preventDefault()
       e.stopPropagation()
       code = e.keyCode
