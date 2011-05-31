@@ -36,12 +36,14 @@
         });
       };
       User.prototype.move = function(direction) {
-        var stub;
+        var stub, xBound, yBound;
         if (this.pressed[direction] === true) {
           return;
         }
         this.pressed[direction] = true;
-        MM.map.panStart(direction);
+        xBound = Math.floor(this.width / 2);
+        yBound = Math.floor(this.height / 2);
+        MM.map.panStart(direction, xBound, yBound);
         stub = 'user_' + direction;
         MM.counter[stub] = 0;
         return $.loop.add(stub, 2, function() {

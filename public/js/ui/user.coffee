@@ -39,7 +39,10 @@ MM.ui 'user', (opts) ->
         return
       @pressed[ direction ] = true
       
-      MM.map.panStart direction
+      xBound = Math.floor( @width/2 )
+      yBound = Math.floor( @height/2 )
+      
+      MM.map.panStart direction, xBound, yBound
       
       # start an animation function
       stub = 'user_' + direction

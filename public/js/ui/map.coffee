@@ -19,21 +19,23 @@ MM.ui 'map', (opts) ->
       x = Math.floor( xcoord / @tileSize )
       y = Math.floor( ycoord / @tileSize )
       if undefined == @collisionMap[ y ]
-        return true
+        return false
       @collisionMap[ y ][ x ]
     
-    canShift: (direction) ->
+    canShift: (direction, xBound, yBound) ->
       newXcoord = @xcoord
       newYcoord = @ycoord
+      xBound += @change
+      yBound += @change
       
       if direction == 'left'
-        newXcoord -= @userXBound
+        newXcoord -= xBound
       else if direction == 'right'
-        newXcoord += @userXBound
+        newXcoord += xBound
       else if direction == 'up'
-        newYcoord -= @userYBound
+        newYcoord -= yBound
       else if direction == 'down'
-        newYcoord += @userYBound
+        newYcoord += yBound
       
       @accessible newXcoord, newYcoord
     
@@ -85,11 +87,11 @@ MM.ui 'map', (opts) ->
         left: @left
         top: @top
       
-    panStart: (direction) ->
+    panStart: (direction, xBound=0, yBound=0) ->
       map = @$map
       loopId = 'pan_map_' + direction
       $.loop.add loopId, ->
-        if MM.map.canShift direction
+        if MM.map.canShift direction, xBound, yBound
           map.css MM.map.shift direction
 
     panStop: (direction) ->

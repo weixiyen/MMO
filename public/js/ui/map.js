@@ -20,22 +20,24 @@
         x = Math.floor(xcoord / this.tileSize);
         y = Math.floor(ycoord / this.tileSize);
         if (void 0 === this.collisionMap[y]) {
-          return true;
+          return false;
         }
         return this.collisionMap[y][x];
       };
-      Map.prototype.canShift = function(direction) {
+      Map.prototype.canShift = function(direction, xBound, yBound) {
         var newXcoord, newYcoord;
         newXcoord = this.xcoord;
         newYcoord = this.ycoord;
+        xBound += this.change;
+        yBound += this.change;
         if (direction === 'left') {
-          newXcoord -= this.userXBound;
+          newXcoord -= xBound;
         } else if (direction === 'right') {
-          newXcoord += this.userXBound;
+          newXcoord += xBound;
         } else if (direction === 'up') {
-          newYcoord -= this.userYBound;
+          newYcoord -= yBound;
         } else if (direction === 'down') {
-          newYcoord += this.userYBound;
+          newYcoord += yBound;
         }
         return this.accessible(newXcoord, newYcoord);
       };
@@ -108,12 +110,18 @@
           top: this.top
         });
       };
-      Map.prototype.panStart = function(direction) {
+      Map.prototype.panStart = function(direction, xBound, yBound) {
         var loopId, map;
+        if (xBound == null) {
+          xBound = 0;
+        }
+        if (yBound == null) {
+          yBound = 0;
+        }
         map = this.$map;
         loopId = 'pan_map_' + direction;
         return $.loop.add(loopId, function() {
-          if (MM.map.canShift(direction)) {
+          if (MM.map.canShift(direction, xBound, yBound)) {
             return map.css(MM.map.shift(direction));
           }
         });

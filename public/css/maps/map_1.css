@@ -11,6 +11,7 @@
   height: 50px;
   width: 50px;
   background: #fff;
+  opacity: 0.5;
 }
 .ui-map-1 .type-99 {
   background: #000;
