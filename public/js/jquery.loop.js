@@ -40,7 +40,7 @@
         }
       }
     },
-    int : 40,
+    int : 1000,
     setInterval: function(interval) {
       $.loop.int = interval;
       $.loop.stop();
