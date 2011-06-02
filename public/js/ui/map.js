@@ -11,6 +11,7 @@
         this.generateTiles();
         this.goTo(options.xcoord, options.ycoord);
         this.collisionTypes = options.collisionTypes;
+        this.generateCollisionMap(this.tileMap);
       }
       Map.prototype.accessible = function(xcoord, ycoord) {
         var tileType;
@@ -124,9 +125,7 @@
         map = this.$map;
         loopId = 'pan_map_' + direction;
         return $.loop.add(loopId, function() {
-          if (MM.map.canShift(direction, xBound, yBound)) {
-            return map.css(MM.map.shift(direction));
-          }
+          return map.css(MM.map.shift(direction));
         });
       };
       Map.prototype.panStop = function(direction) {

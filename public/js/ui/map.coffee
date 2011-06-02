@@ -11,7 +11,7 @@ MM.ui 'map', (opts) ->
       @generateTiles()
       @goTo options.xcoord, options.ycoord
       @collisionTypes = options.collisionTypes
-      #@generateCollisionMap @tileMap
+      @generateCollisionMap @tileMap
     
     accessible: (xcoord, ycoord) ->
       tileType = @getTileType xcoord, ycoord
@@ -94,8 +94,8 @@ MM.ui 'map', (opts) ->
       map = @$map
       loopId = 'pan_map_' + direction
       $.loop.add loopId, ->
-        if MM.map.canShift direction, xBound, yBound
-          map.css MM.map.shift direction
+        #if MM.map.canShift direction, xBound, yBound
+        map.css MM.map.shift direction
 
     panStop: (direction) ->
       $.loop.remove 'pan_map_' + direction
