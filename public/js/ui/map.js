@@ -67,7 +67,7 @@
         return this.collisionMap = collisionMap;
       };
       Map.prototype.generateTiles = function() {
-        var createTile, len, mapHtml, processRow, row, tileSize, tiles, x, y, _i, _len;
+        var createTile, len, mapHtml, processRow, row, tileSize, tiles, x, y, _i, _len, _results;
         tileSize = this.tileSize;
         tiles = this.tileMap;
         mapHtml = [];
@@ -92,11 +92,12 @@
             return x = 0;
           }
         };
+        _results = [];
         for (_i = 0, _len = tiles.length; _i < _len; _i++) {
           row = tiles[_i];
-          processRow(row);
+          _results.push(processRow(row));
         }
-        return this.$tileMap.html(mapHtml.join(''));
+        return _results;
       };
       Map.prototype.getTileType = function(xcoord, ycoord) {
         var x, y;
@@ -125,7 +126,9 @@
         map = this.$map;
         loopId = 'pan_map_' + direction;
         return $.loop.add(loopId, function() {
-          return map.css(MM.map.shift(direction));
+          if (MM.map.canShift(direction, xBound, yBound)) {
+            return map.css(MM.map.shift(direction));
+          }
         });
       };
       Map.prototype.panStop = function(direction) {

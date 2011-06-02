@@ -75,7 +75,7 @@ MM.ui 'map', (opts) ->
           
       processRow( row ) for row in tiles
       
-      @$tileMap.html mapHtml.join ''
+      #@$tileMap.html mapHtml.join ''
         
     getTileType: (xcoord, ycoord) ->
       x = Math.floor( xcoord / @tileSize )
@@ -94,8 +94,8 @@ MM.ui 'map', (opts) ->
       map = @$map
       loopId = 'pan_map_' + direction
       $.loop.add loopId, ->
-        #if MM.map.canShift direction, xBound, yBound
-        map.css MM.map.shift direction
+        if MM.map.canShift direction, xBound, yBound
+          map.css MM.map.shift direction
 
     panStop: (direction) ->
       $.loop.remove 'pan_map_' + direction
