@@ -67,12 +67,13 @@
         return this.collisionMap = collisionMap;
       };
       Map.prototype.generateTiles = function() {
-        var createTile, len, mapHtml, processRow, row, tileSize, tiles, x, y, _i, _len;
+        var count, createTile, len, mapHtml, processRow, row, tileSize, tiles, x, y, _i, _len;
         tileSize = this.tileSize;
         tiles = this.tileMap;
         mapHtml = [];
         x = y = 0;
         len = tiles[0].length;
+        count = 0;
         processRow = function(row) {
           var tile, _i, _len;
           for (_i = 0, _len = row.length; _i < _len; _i++) {
@@ -85,9 +86,12 @@
           var left, tileHtml, top;
           left = (x * tileSize) + 'px';
           top = (y * tileSize) + 'px';
-          tileHtml = '<div class="tile type-' + tile + '" style="left:' + left + ';top:' + top + ';"></div>';
-          mapHtml.push(tileHtml);
+          if (count < 1000) {
+            tileHtml = '<div class="tile type-' + tile + '" style="left:' + left + ';top:' + top + ';"></div>';
+            mapHtml.push(tileHtml);
+          }
           x += 1;
+          count += 1;
           if (x === len) {
             return x = 0;
           }

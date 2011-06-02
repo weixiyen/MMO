@@ -61,15 +61,19 @@ MM.ui 'map', (opts) ->
       x = y = 0
       len = tiles[0].length
       
+      count = 0
+      
       processRow = (row) ->
         createTile( tile ) for tile in row
         y += 1
       createTile = (tile) ->
         left = (x * tileSize) + 'px'
         top = (y * tileSize) + 'px'
-        tileHtml = '<div class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
-        mapHtml.push tileHtml 
+        if count < 1000
+          tileHtml = '<div class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
+          mapHtml.push tileHtml 
         x += 1
+        count += 1
         if x == len
           x = 0
           
