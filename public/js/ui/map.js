@@ -15,7 +15,6 @@
       }
       Map.prototype.accessible = function(xcoord, ycoord) {
         var tileType;
-        return true;
         tileType = this.getTileType(xcoord, ycoord);
         return -1 === $.inArray(tileType, this.collisionTypes);
       };
