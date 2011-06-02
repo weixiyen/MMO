@@ -69,7 +69,7 @@ MM.ui 'map', (opts) ->
       createTile = (tile) ->
         left = (x * tileSize) + 'px'
         top = (y * tileSize) + 'px'
-        if count < 750
+        if count < 825
           tileHtml = '<div class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
           mapHtml.push tileHtml 
         x += 1
