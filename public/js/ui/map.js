@@ -86,7 +86,7 @@
           var left, tileHtml, top;
           left = (x * tileSize) + 'px';
           top = (y * tileSize) + 'px';
-          if (count < 825) {
+          if (count < 787) {
             tileHtml = '<div class="tile type-' + tile + '" style="left:' + left + ';top:' + top + ';"></div>';
             mapHtml.push(tileHtml);
           }
