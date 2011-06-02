@@ -14,6 +14,7 @@ MM.ui 'map', (opts) ->
       @generateCollisionMap @tileMap
     
     accessible: (xcoord, ycoord) ->
+      return true
       tileType = @getTileType xcoord, ycoord
       -1 == $.inArray( tileType, @collisionTypes )
     
