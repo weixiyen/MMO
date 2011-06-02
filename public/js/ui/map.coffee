@@ -7,11 +7,12 @@ MM.ui 'map', (opts) ->
       @$map = options.$map
       @$tileMap = options.$tileMap
       @tileSize = options.tileSize
+      @halfTileSize = Math.floor( options.tileSize / 2 )
       @tileMap = options.tileMap
       @generateTiles()
       @goTo options.xcoord, options.ycoord
       @collisionTypes = options.collisionTypes
-      @generateCollisionMap @tileMap
+      @generateCollisionGraph @tileMap
     
     accessible: (xcoord, ycoord) ->
       tileType = @getTileType xcoord, ycoord
@@ -23,25 +24,25 @@ MM.ui 'map', (opts) ->
       xBound += @change
       yBound += @change
       
-      if direction == 'left'
+      if direction == 'w'
         newXcoord -= xBound
-      else if direction == 'right'
+      else if direction == 'e'
         newXcoord += xBound
-      else if direction == 'up'
+      else if direction == 'n'
         newYcoord -= yBound
-      else if direction == 'down'
+      else if direction == 's'
         newYcoord += yBound
       
       @accessible newXcoord, newYcoord
     
-    generateCollisionMap: (tiles) ->
+    generateCollisionGraph: (tiles) ->
       collisionMap = []
       collisionTypes = @collisionTypes
       x = y = 0
       len = tiles[0].length
 
       getAccessible = (type) ->
-        -1 == $.inArray( type, collisionTypes )
+        if -1 == $.inArray( type, collisionTypes ) then 0 else 1
       createRow = ( row ) ->
         collisionMap.push []
         createTile( tile ) for tile in row
@@ -52,7 +53,7 @@ MM.ui 'map', (opts) ->
         if x == len
           x = 0
       createRow( row ) for row in tiles
-      @collisionMap = collisionMap
+      @collisionGraph = new Graph collisionMap
     
     generateTiles: ->
       tileSize = @tileSize
@@ -61,25 +62,38 @@ MM.ui 'map', (opts) ->
       x = y = 0
       len = tiles[0].length
       
-      count = 0
-      
       processRow = (row) ->
         createTile( tile ) for tile in row
         y += 1
       createTile = (tile) ->
         left = (x * tileSize) + 'px'
         top = (y * tileSize) + 'px'
-        if count < 787
-          tileHtml = '<div class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
-          mapHtml.push tileHtml 
+        tileHtml = '<div class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
+        mapHtml.push tileHtml 
         x += 1
-        count += 1
         if x == len
           x = 0
           
       processRow( row ) for row in tiles
       
       @$tileMap.html mapHtml.join ''
+    
+    getDirection: (from, to) ->
+      direction = ''
+      if from[1] > to[1]
+        direction += 'n'
+      else if from[1] < to[1]
+        direction += 's'
+      if from[0] > to[0]
+        direction += 'w'
+      else if from[0] < to[0]
+        direction += 'e'
+      return direction
+    
+    getPath: (start, end) ->
+      a = @collisionGraph.nodes[ start[0] ][ start[1] ]
+      b = @collisionGraph.nodes[ end[0] ][ end[1] ]
+      astar.search @collisionGraph.nodes, a, b
         
     getTileType: (xcoord, ycoord) ->
       x = Math.floor( xcoord / @tileSize )
@@ -93,6 +107,36 @@ MM.ui 'map', (opts) ->
       @$map.css
         left: @left
         top: @top
+    
+    pannedPast: (coord, direction) ->
+      destX = coord[0]
+      destY = coord[1]
+      return true
+    
+    panSequence: (start, end) ->
+      path = @getPath start, end
+      halfTileSize = @halfTileSize
+      $.loop.add 'pan_map_sequence', 5, =>
+        
+        start = path.shift().pos
+        end = if path[0] then path[0].pos else null
+        a = [start.x * 100 + halfTileSize, start.y * 100 + halfTileSize]
+        b = [end.x * 100 + halfTileSize, end.y * 100 + halfTileSize]
+        
+        direction = @getDirection a, b
+        
+        # arrived at destination
+        if b == null
+          MM.user.stop MM.global['panning_direction']
+          return
+
+        # go another direction
+        if @pannedPast b, direction
+          MM.user.stop MM.global['panning_direction']
+          @panSequence start, end
+          return
+
+        MM.global['panning_direction'] = MM.user.move direction
       
     panStart: (direction, xBound=0, yBound=0) ->
       map = @$map
@@ -112,18 +156,38 @@ MM.ui 'map', (opts) ->
     
     shift: (direction) ->
       change = @change
-      if direction == 'left'
+      if direction == 'w'
         @xcoord -= change
         @left += change
-      else if direction == 'right'
+      else if direction == 'e'
         @xcoord += change
         @left -= change
-      else if direction == 'up'
+      else if direction == 'n'
         @ycoord -= change
         @top += change
-      else if direction == 'down'
+      else if direction == 's'
         @ycoord += change
         @top -= change
+      else if direction == 'nw'
+        @xcoord -= change
+        @left += change
+        @ycoord -= change
+        @top += change
+      else if direction == 'ne'
+        @ycoord -= change
+        @top += change
+        @xcoord += change
+        @left -= change
+      else if direction == 'sw'
+        @ycoord += change
+        @top -= change
+        @xcoord -= change
+        @left += change
+      else if direction == 'se'
+        @ycoord += change
+        @top -= change
+        @xcoord += change
+        @left -= change
       pos = 
         left: @left
         top: @top
@@ -143,7 +207,7 @@ MM.ui 'map', (opts) ->
       xcoord: 50
       ycoord: 450
       change: 3
-      tileSize: 50
+      tileSize: 100
       tileMap: [
         [0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5]
         [0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5]

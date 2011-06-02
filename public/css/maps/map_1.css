@@ -8,8 +8,8 @@
 }
 .ui-map-1 .tile {
   position: absolute;
-  height: 50px;
-  width: 50px;
+  height: 100px;
+  width: 100px;
   opacity: 0.5;
 }
 .ui-map-1 .type-99 {

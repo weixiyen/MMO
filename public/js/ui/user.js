@@ -10,10 +10,10 @@
         this.id = data.id;
         this.anim = data.anim;
         this.pressed = {
-          right: false,
-          left: false,
-          down: false,
-          up: false
+          n: false,
+          e: false,
+          s: false,
+          w: false
         };
         this.el.css({
           height: this.height,
@@ -44,18 +44,20 @@
         xBound = Math.floor(this.width / 2);
         yBound = Math.floor(this.height / 2);
         MM.map.panStart(direction, xBound, yBound);
+        direction = this.getSimpleDirection(direction);
         stub = 'user_' + direction;
-        MM.counter[stub] = 0;
-        return $.loop.add(stub, 2, function() {
+        MM.global[stub] = 0;
+        $.loop.add(stub, 2, function() {
           MM.user.el.css({
-            'background-position': MM.user.anim[direction][MM.counter[stub]]
+            'background-position': MM.user.anim[direction][MM.global[stub]]
           });
-          if (MM.counter[stub] === 2) {
-            return MM.counter[stub] = 0;
+          if (MM.global[stub] === 2) {
+            return MM.global[stub] = 0;
           } else {
-            return MM.counter[stub] += 1;
+            return MM.global[stub] += 1;
           }
         });
+        return direction;
       };
       User.prototype.stop = function(direction) {
         this.pressed[direction] = false;
@@ -66,7 +68,15 @@
       User.prototype.teleport = function(xcoord, ycoord) {
         return MM.map.goTo(xcoord, ycoord);
       };
+      User.prototype.getSimpleDirection = function(direction) {
+        if (direction.length === 2) {
+          return direction.substr(0, 1);
+        } else {
+          return direction;
+        }
+      };
       User.prototype.face = function(direction) {
+        direction = this.getSimpleDirection(direction);
         return this.el.css({
           'background-position': this.anim[direction][1]
         });
@@ -82,12 +92,12 @@
         height: 32,
         width: 24,
         imgpath: '/img/sprites.png',
-        facing: 'right',
+        facing: 'e',
         anim: {
-          right: ["-72px -32px", "-96px -32px", "-120px -32px"],
-          left: ["-72px -96px", "-96px -96px", "-120px -96px"],
-          up: ["-72px 0", "-96px 0", "-120px 0"],
-          down: ["-72px -64px", "-96px -64px", "-120px -64px"]
+          e: ["-72px -32px", "-96px -32px", "-120px -32px"],
+          w: ["-72px -96px", "-96px -96px", "-120px -96px"],
+          n: ["-72px 0", "-96px 0", "-120px 0"],
+          s: ["-72px -64px", "-96px -64px", "-120px -64px"]
         }
       });
       $doc = $(document);
@@ -97,13 +107,13 @@
         e.stopPropagation();
         code = e.keyCode;
         if (code === 37) {
-          return MM.user.move('left');
+          return MM.user.move('w');
         } else if (code === 38) {
-          return MM.user.move('up');
+          return MM.user.move('n');
         } else if (code === 39) {
-          return MM.user.move('right');
+          return MM.user.move('e');
         } else if (code === 40) {
-          return MM.user.move('down');
+          return MM.user.move('s');
         }
       });
       $doc.keyup(function(e) {
@@ -112,20 +122,20 @@
         e.stopPropagation();
         code = e.keyCode;
         if (code === 37) {
-          return MM.user.stop('left');
+          return MM.user.stop('w');
         } else if (code === 38) {
-          return MM.user.stop('up');
+          return MM.user.stop('n');
         } else if (code === 39) {
-          return MM.user.stop('right');
+          return MM.user.stop('e');
         } else if (code === 40) {
-          return MM.user.stop('down');
+          return MM.user.stop('s');
         }
       });
       return $(window).blur(function() {
-        MM.user.stop('left');
-        MM.user.stop('up');
-        MM.user.stop('right');
-        return MM.user.stop('down');
+        MM.user.stop('w');
+        MM.user.stop('n');
+        MM.user.stop('e');
+        return MM.user.stop('s');
       });
     });
   });
