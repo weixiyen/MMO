@@ -35,9 +35,9 @@
       }
       var items = $.loop.items;
       for(var i in items) {
-        if (0 === ($.loop.count % items[i].skip) ) {
+        //if (0 === ($.loop.count % items[i].skip) ) {
           items[i].fn();
-        }
+        //}
       }
     },
     int : 1000,
