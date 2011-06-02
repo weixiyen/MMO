@@ -75,7 +75,7 @@ MM.ui 'map', (opts) ->
           
       processRow( row ) for row in tiles
       
-      #@$tileMap.html mapHtml.join ''
+      @$tileMap.html mapHtml.join ''
         
     getTileType: (xcoord, ycoord) ->
       x = Math.floor( xcoord / @tileSize )
