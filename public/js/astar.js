@@ -48,7 +48,7 @@ var astar = {
 			    var ret = [];
 			    while(curr.parent) {
 			      // XXX ret.push(curr);
-				    ret.push([curr.pos.x, curr.pos.y]); 
+				    ret.push([curr.pos.y, curr.pos.x]); 
 				    curr = curr.parent;
 			    }
 			    return ret.reverse();

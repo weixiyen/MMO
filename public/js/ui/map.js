@@ -134,8 +134,8 @@
       };
       Map.prototype.getPath = function(start, end) {
         var a, b, halfTileSize, html, left, node, nodepath, path, tileHtml, tileSize, top, x, y, _i, _len;
-        a = this.collisionGraph.nodes[start[0]][start[1]];
-        b = this.collisionGraph.nodes[end[0]][end[1]];
+        a = this.collisionGraph.nodes[start[1]][start[0]];
+        b = this.collisionGraph.nodes[end[1]][end[0]];
         path = astar.search(this.collisionGraph.nodes, a, b);
         nodepath = [];
         tileSize = this.tileSize;
