@@ -111,20 +111,22 @@ MM.ui 'map', (opts) ->
       tileSize = @tileSize
       halfTileSize = @halfTileSize
       
+      # XXX
       @$tileMap.find('.path').remove()
-      html = [] # XXX
+      html = [] 
+      
       for node in path
         # XXX
         left = node[0] * tileSize + 'px'
         top = node[1] * tileSize + 'px'
         tileHtml = '<div class="tile path" style="left:'+left+';top:'+top+';"></div>'
         html.push tileHtml
-        # XXX
-        
+
         x = node[0] * tileSize + halfTileSize
         y = node[1] * tileSize + halfTileSize
         nodepath.push [x, y]
       
+      #XXX
       @$tileMap.append html.join ''
       
       return nodepath
