@@ -35,6 +35,18 @@ MM.ui 'map', (opts) ->
       
       @accessible newXcoord, newYcoord
     
+    completedPath: (node1, node2) ->
+      direction = MM.user.getSimpleDirection @getDirection node1, node2
+      if direction == 'w' and @xcoord <= node2[0]
+        return true
+      else if direction == 'e' and @xcoord >= node2[0]
+        return true
+      else if direction == 'n' and @ycoord <= node2[1]
+        return true
+      else if direction == 's' and @ycoord >= node2[1]
+        return true
+      return false
+    
     generateCollisionGraph: (tiles) ->
       collisionMap = []
       collisionTypes = @collisionTypes
@@ -54,7 +66,7 @@ MM.ui 'map', (opts) ->
           x = 0
       createRow( row ) for row in tiles
       @collisionGraph = new Graph collisionMap
-    
+        
     generateTiles: ->
       tileSize = @tileSize
       tiles = @tileMap
@@ -93,7 +105,29 @@ MM.ui 'map', (opts) ->
     getPath: (start, end) ->
       a = @collisionGraph.nodes[ start[0] ][ start[1] ]
       b = @collisionGraph.nodes[ end[0] ][ end[1] ]
-      astar.search @collisionGraph.nodes, a, b
+      path = astar.search @collisionGraph.nodes, a, b
+      
+      nodepath = []
+      tileSize = @tileSize
+      halfTileSize = @halfTileSize
+      
+      @$tileMap.find('.path').remove()
+      html = [] # XXX
+      for node in path
+        # XXX
+        left = node[0] * tileSize + 'px'
+        top = node[1] * tileSize + 'px'
+        tileHtml = '<div class="tile path" style="left:'+left+';top:'+top+';"></div>'
+        html.push tileHtml
+        # XXX
+        
+        x = node[0] * tileSize + halfTileSize
+        y = node[1] * tileSize + halfTileSize
+        nodepath.push [x, y]
+      
+      @$tileMap.append html.join ''
+      
+      return nodepath
         
     getTileType: (xcoord, ycoord) ->
       x = Math.floor( xcoord / @tileSize )
@@ -108,36 +142,6 @@ MM.ui 'map', (opts) ->
         left: @left
         top: @top
     
-    pannedPast: (coord, direction) ->
-      destX = coord[0]
-      destY = coord[1]
-      return true
-    
-    panSequence: (start, end) ->
-      path = @getPath start, end
-      halfTileSize = @halfTileSize
-      $.loop.add 'pan_map_sequence', 5, =>
-        
-        start = path.shift().pos
-        end = if path[0] then path[0].pos else null
-        a = [start.x * 100 + halfTileSize, start.y * 100 + halfTileSize]
-        b = [end.x * 100 + halfTileSize, end.y * 100 + halfTileSize]
-        
-        direction = @getDirection a, b
-        
-        # arrived at destination
-        if b == null
-          MM.user.stop MM.global['panning_direction']
-          return
-
-        # go another direction
-        if @pannedPast b, direction
-          MM.user.stop MM.global['panning_direction']
-          @panSequence start, end
-          return
-
-        MM.global['panning_direction'] = MM.user.move direction
-      
     panStart: (direction, xBound=0, yBound=0) ->
       map = @$map
       loopId = 'pan_map_' + direction
@@ -204,10 +208,10 @@ MM.ui 'map', (opts) ->
     MM.map = new Map 
       $map: opts.el
       $tileMap: $('#ui-map-1')
-      xcoord: 50
-      ycoord: 450
+      xcoord: 20
+      ycoord: 20
       change: 3
-      tileSize: 100
+      tileSize: 50
       tileMap: [
         [0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5]
         [0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5, 0, 0, 99, 0, 0, 2, 99, 3, 1, 5, 5]

@@ -32,6 +32,47 @@ MM.ui 'user', (opts) ->
         left: x
         top: y
     
+    runTo: (coords) ->
+      loopId = 'user:run:to'
+      $.loop.remove loopId
+      
+      divisor = MM.map.tileSize
+      x1 = Math.floor( MM.map.xcoord / divisor )
+      y1 = Math.floor( MM.map.ycoord / divisor )
+      x2 = Math.floor( coords[0] / divisor )
+      y2 = Math.floor( coords[1] / divisor )
+      path = MM.map.getPath [x1,y1], [x2,y2]
+      
+      # check for bad path
+      if path.length < 2
+        return
+      
+      NODE1 = 'user_path_node_1'
+      NODE2 = 'user_path_node_2'
+      
+      # get new path segment & move the user
+      run = -> 
+        if path.length < 2
+          $.loop.remove loopId
+          stop()
+        MM.global[NODE1] = path.shift() 
+        MM.global[NODE2] = path[0]
+        MM.log 'Attempted run', MM.global[NODE2]
+        MM.log 'Direction', MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
+        MM.user.move MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
+      
+      # stop the user from walking around
+      stop = ->
+        MM.user.stop MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
+      
+      run()
+      $.loop.add loopId, ->
+        # detect if current path segment is completed
+        # if so, then stop the user, then run new direction
+        if MM.map.completedPath MM.global[NODE1], MM.global[NODE2]
+          stop()
+          run()
+    
     move: (direction) ->
       # check to see if button is already pressed
       if @pressed[ direction ] == true

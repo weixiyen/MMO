@@ -47,7 +47,8 @@ var astar = {
 			    var curr = currentNode;
 			    var ret = [];
 			    while(curr.parent) {
-				    ret.push(curr);
+			      // XXX ret.push(curr);
+				    ret.push([curr.pos.x, curr.pos.y]); 
 				    curr = curr.parent;
 			    }
 			    return ret.reverse();

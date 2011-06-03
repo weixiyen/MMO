@@ -56,7 +56,7 @@
       $.loop.items[id].skip = skip;
       $.loop.items[id].fn = fn;
     },
-    remove : function(id) { delete $.loop.items[id]; },
+    remove : function(id) { try{ delete $.loop.items[id]; } catch(e) {} },
     stop : function() { clearInterval(loop); },
     start : function() { loop = setInterval($.loop._construct, $.loop.int); }
   };

@@ -8,10 +8,14 @@
 }
 .ui-map-1 .tile {
   position: absolute;
-  height: 100px;
-  width: 100px;
+  height: 48px;
+  width: 48px;
+  border: 1px solid #000;
   opacity: 0.5;
 }
 .ui-map-1 .type-99 {
   background: #000;
+}
+.ui-map-1 .path {
+  background: #ff0;
 }

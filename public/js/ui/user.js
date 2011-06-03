@@ -35,6 +35,43 @@
           top: y
         });
       };
+      User.prototype.runTo = function(coords) {
+        var NODE1, NODE2, divisor, loopId, path, run, stop, x1, x2, y1, y2;
+        loopId = 'user:run:to';
+        $.loop.remove(loopId);
+        divisor = MM.map.tileSize;
+        x1 = Math.floor(MM.map.xcoord / divisor);
+        y1 = Math.floor(MM.map.ycoord / divisor);
+        x2 = Math.floor(coords[0] / divisor);
+        y2 = Math.floor(coords[1] / divisor);
+        path = MM.map.getPath([x1, y1], [x2, y2]);
+        if (path.length < 2) {
+          return;
+        }
+        NODE1 = 'user_path_node_1';
+        NODE2 = 'user_path_node_2';
+        run = function() {
+          if (path.length < 2) {
+            $.loop.remove(loopId);
+            stop();
+          }
+          MM.global[NODE1] = path.shift();
+          MM.global[NODE2] = path[0];
+          MM.log('Attempted run', MM.global[NODE2]);
+          MM.log('Direction', MM.map.getDirection(MM.global[NODE1], MM.global[NODE2]));
+          return MM.user.move(MM.map.getDirection(MM.global[NODE1], MM.global[NODE2]));
+        };
+        stop = function() {
+          return MM.user.stop(MM.map.getDirection(MM.global[NODE1], MM.global[NODE2]));
+        };
+        run();
+        return $.loop.add(loopId, function() {
+          if (MM.map.completedPath(MM.global[NODE1], MM.global[NODE2])) {
+            stop();
+            return run();
+          }
+        });
+      };
       User.prototype.move = function(direction) {
         var stub, xBound, yBound;
         if (this.pressed[direction] === true) {
