@@ -51,6 +51,8 @@ var astar = {
 				    ret.push([curr.pos.y, curr.pos.x]); 
 				    curr = curr.parent;
 			    }
+			    // XXX push the first coordinate as well
+			    ret.push( [curr.pos.y, curr.pos.x] );
 			    return ret.reverse();
 		    }
 

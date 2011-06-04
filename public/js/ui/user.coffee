@@ -33,8 +33,13 @@ MM.ui 'user', (opts) ->
         top: y
     
     runTo: (coords) ->
-      loopId = 'user:run:to'
-      $.loop.remove loopId
+      
+      LOOPID = 'user:path:loop'
+      NODE1 = 'user:path:node:1'
+      NODE2 = 'user:path:node:2'
+      DIRECTION = 'user:path:direction'
+      
+      $.loop.remove LOOPID
       
       divisor = MM.map.tileSize
       x1 = Math.floor( MM.map.xcoord / divisor )
@@ -42,31 +47,29 @@ MM.ui 'user', (opts) ->
       x2 = Math.floor( coords[0] / divisor )
       y2 = Math.floor( coords[1] / divisor )
       path = MM.map.getPath [x1,y1], [x2,y2]
-      
+
       # check for bad path
       if path.length < 2
         return
       
-      NODE1 = 'user_path_node_1'
-      NODE2 = 'user_path_node_2'
-      
       # get new path segment & move the user
       run = -> 
         if path.length < 2
-          $.loop.remove loopId
-          stop()
+          $.loop.remove LOOPID
+          return stop()
         MM.global[NODE1] = path.shift() 
         MM.global[NODE2] = path[0]
-        MM.log 'Attempted run', MM.global[NODE2]
-        MM.log 'Direction', MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
-        MM.user.move MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
+        MM.user.move MM.global[DIRECTION] = MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
       
       # stop the user from walking around
       stop = ->
-        MM.user.stop MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
+        MM.user.stop MM.global[DIRECTION]
       
+      if MM.global[DIRECTION]
+        stop()
       run()
-      $.loop.add loopId, ->
+      
+      $.loop.add LOOPID, ->
         # detect if current path segment is completed
         # if so, then stop the user, then run new direction
         if MM.map.completedPath MM.global[NODE1], MM.global[NODE2]
