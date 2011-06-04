@@ -90,6 +90,11 @@ MM.ui 'map', (opts) ->
       
       @$tileMap.html mapHtml.join ''
     
+    getCoordsByPos: (left, top) ->
+      xcoord = Math.floor( left / @tileSize )
+      ycoord = Math.floor( top / @tileSize )
+      return [ xcoord, ycoord ]
+    
     getDirection: (from, to) ->
       direction = ''
       if from[1] > to[1]
@@ -255,5 +260,8 @@ MM.ui 'map', (opts) ->
       collisionTypes: [99, 98]
     
     MM.map.$tileMap.delegate '.tile', 'click', (e) ->
-      MM.log $(e.target)
-      MM.log $(e.target).css('top')
+      tgt = $(e.target)
+      left = parseInt tgt.css('left'), 10
+      top = parseInt tgt.css('top'), 10
+      MM.user.runTo [left, top]
+      

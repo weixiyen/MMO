@@ -117,6 +117,12 @@
         }
         return this.$tileMap.html(mapHtml.join(''));
       };
+      Map.prototype.getCoordsByPos = function(left, top) {
+        var xcoord, ycoord;
+        xcoord = Math.floor(left / this.tileSize);
+        ycoord = Math.floor(top / this.tileSize);
+        return [xcoord, ycoord];
+      };
       Map.prototype.getDirection = function(from, to) {
         var direction;
         direction = '';
@@ -255,8 +261,11 @@
         collisionTypes: [99, 98]
       });
       return MM.map.$tileMap.delegate('.tile', 'click', function(e) {
-        MM.log($(e.target));
-        return MM.log($(e.target).css('top'));
+        var left, tgt, top;
+        tgt = $(e.target);
+        left = parseInt(tgt.css('left'), 10);
+        top = parseInt(tgt.css('top'), 10);
+        return MM.user.runTo([left, top]);
       });
     });
   });
