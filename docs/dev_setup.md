@@ -1,4 +1,4 @@
-SleeperBot Development Environment Setup (Mac OSX)
+MMO Development Environment Setup (Mac OSX)
 ==================================================
 
 Install XCode Tools
@@ -57,19 +57,19 @@ Getting Started
 Clone the SleeperBot Repository
 
 	cd ~/
-	mkdir sleeperbot
-	cd sleeperbot
-	git clone git@github.com:weixiyen/sleeperbot.git
+	mkdir mmo
+	cd mmo
+	git clone git@github.com:weixiyen/mmo.git
 
 Create the following empty directories as GIT does not track empty ones
 
 	mkdir tmp
 	mkdir test
 	
-Edit copy and paste the following into ~/.bash_profile where ~/sleeperbot
+Edit copy and paste the following into ~/.bash_profile where ~/mmo
 
 	# aliases
-	alias dev='cd ~/sleeperbot && sudo node scripts/dev_start.js && cd -'
+	alias dev='cd ~/mmo && sudo node scripts/dev_start.js && cd -'
 	
 	#exports
 	export PATH=${PATH}:/usr/local/sbin

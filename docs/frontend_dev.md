@@ -1,20 +1,20 @@
 Overview
 =======
 
-SB is the global namespace (window.SB or this.SB)
+WEB is the global namespace (window.WEB or this.WEB)
 
-SleeperBot is an application that does not require refreshing the browser.
+MMO is an application that does not require refreshing the browser.
 It uses html5 pushState to swap from page to page.  
-SB to the user is not a network of pages, but one single online application.
+MMO to the user is not a network of pages, but one single online application.
 
-SleeperBot's front-end consists of the following concepts
+MMO's front-end consists of the following concepts
 
 - UI modules
 - Helper Functions
 
 UI Modules
 ------
-Everything in SleeperBot is a UI Module.
+Everything in MMO is a UI Module.
 The page layout is 1 UI Module.
 The feed widget is another UI Module.
 The account bar at the top is another UI Module.

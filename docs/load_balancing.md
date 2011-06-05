@@ -1,9 +1,9 @@
-SleeperBot Load Balancing
+App Load Balancing
 =========================
 
 Overview
 -------------------------
-SleeperBot's load balancing is handled by an HAProxy front-end.
+MMO's load balancing is handled by an HAProxy front-end.
 
 Stream server requests are proxied directly to node.js.
 

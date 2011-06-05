@@ -1,14 +1,35 @@
+Combat Mechanics
+==========
+
+The "Final Fantasy 11" encounter
+------------------
+- Each battle lasts about 1-2 minutes (but can last 3)
+- fast kills = experience point chains (bonus exp if killing 2 mobs withn 1:30 of eachother)
+- MP is typically depleted by end of 6 straight mobs
+- A leveling session is divided up into chain sequences
+- Each chain sequence lasts about 7-10 minutes
+- players take breaks between chains.
+- Player Abilities are typically on 30 second -> 5 minute timers
+- Within each encounter, melees can build up TP to use weapon skills 
+- Weapon skills used in conjunction on 1 mob create skillchains, which do bonus dmg
+- Magic users participate in Skillchains for magic bursts (bonus damage)
+- The goal of each battle is to create a skillchain to kill the mob (otherwise EXP chain is lost)
+
+Boss encounters (each boss server is unique)
+------------------
+
+
 Map Notes
 ==========
 Use MongoDB's Geospatial Indexing as a way of storing Map Data
 
 Each map is a collection of '2D' geo-spatial indexed items
 
-Each tile is 100px by 100px.  The coordinate of the tile is the upper left point at which it begins.
+Each tile is 50px by 50px.  The coordinate of the tile is the upper left point at which it begins.
 
 Each player coordinate translates to 1px on the screen.
 
-Thus, if a player is at coordinate 200,200, they are actually on map tile 2,2.
+Thus, if a player is at coordinate 200,200, they are actually on map tile index 4,4.
 
 We can then query the tile map (client side) for the closest 625 map tiles (25x25) to the player and preload the UI for the player.  Everytime the player moves 200px, we subtract out older tiles and get a new boundary of tiles.
 
@@ -51,5 +72,3 @@ The game will have a map editor.  The options will look like this.
 Front-end Map Notes
 ==========
 Seems 850 50x50 tiles are the max we can have as DOM elements moving around on IE at any given time.
-
-Needs testing with 700 100x100 tiles to see if that will slow down IE (surface area based??)

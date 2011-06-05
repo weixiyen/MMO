@@ -3,8 +3,8 @@ MMO
 
 Current Tasks
 ---
-- Collision Detection
 - Adding NPCs
+- NPC walking / pathfinding
 
 Documentation
 ---
