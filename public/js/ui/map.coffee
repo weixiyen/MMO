@@ -74,7 +74,7 @@ MM.ui 'map', (opts) ->
         if x == len
           x = 0
       createRow( row ) for row in tiles
-      @collisionGraph = new Graph collisionMap
+      @collisionGraph = $.astar.graph collisionMap
         
     generateTiles: ->
       tileSize = @tileSize
@@ -119,7 +119,7 @@ MM.ui 'map', (opts) ->
     getPath: (start, end) ->
       a = @collisionGraph.nodes[ start[1] ][ start[0] ]
       b = @collisionGraph.nodes[ end[1] ][ end[0] ]
-      path = astar.search @collisionGraph.nodes, a, b
+      path = $.astar.search @collisionGraph.nodes, a, b
       nodepath = []
       tileSize = @tileSize
       halfTileSize = @halfTileSize

@@ -93,7 +93,7 @@
           row = tiles[_i];
           createRow(row);
         }
-        return this.collisionGraph = new Graph(collisionMap);
+        return this.collisionGraph = $.astar.graph(collisionMap);
       };
       Map.prototype.generateTiles = function() {
         var createTile, len, mapHtml, processRow, row, tileSize, tiles, x, y, _i, _len;
@@ -152,7 +152,7 @@
         var a, b, halfTileSize, html, left, node, nodepath, path, tileHtml, tileSize, top, x, y, _i, _len;
         a = this.collisionGraph.nodes[start[1]][start[0]];
         b = this.collisionGraph.nodes[end[1]][end[0]];
-        path = astar.search(this.collisionGraph.nodes, a, b);
+        path = $.astar.search(this.collisionGraph.nodes, a, b);
         nodepath = [];
         tileSize = this.tileSize;
         halfTileSize = this.halfTileSize;
