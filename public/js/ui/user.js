@@ -20,6 +20,10 @@
           width: this.width,
           background: 'no-repeat url(' + this.imgpath + ')'
         });
+        this.tag = {
+          automove: 'user:path:automove',
+          pathloop: 'user:path:loop'
+        };
         this.center();
         this.face(data.facing);
       }
@@ -36,12 +40,12 @@
         });
       };
       User.prototype.runTo = function(coords) {
-        var DIRECTION, LOOPID, NODE1, NODE2, divisor, path, run, stop, x1, x2, y1, y2;
-        LOOPID = 'user:path:loop';
+        var LOOPID, NODE1, NODE2, divisor, path, run, x1, x2, y1, y2;
+        LOOPID = this.tag.pathloop;
         NODE1 = 'user:path:node:1';
         NODE2 = 'user:path:node:2';
-        DIRECTION = 'user:path:direction';
         $.loop.remove(LOOPID);
+        MM.user.stopAll();
         divisor = MM.map.tileSize;
         x1 = Math.floor(MM.map.xcoord / divisor);
         y1 = Math.floor(MM.map.ycoord / divisor);
@@ -54,32 +58,36 @@
         run = function() {
           if (path.length < 2) {
             $.loop.remove(LOOPID);
-            return stop();
+            MM.user.stopAll();
+            return;
           }
           MM.global[NODE1] = path.shift();
           MM.global[NODE2] = path[0];
-          return MM.user.move(MM.global[DIRECTION] = MM.map.getDirection(MM.global[NODE1], MM.global[NODE2]));
+          return MM.user.move(MM.map.getDirection(MM.global[NODE1], MM.global[NODE2]));
         };
-        stop = function() {
-          return MM.user.stop(MM.global[DIRECTION]);
-        };
-        if (MM.global[DIRECTION]) {
-          stop();
-        }
+        MM.global[this.tag.automove] = true;
         run();
         return $.loop.add(LOOPID, function() {
           if (MM.map.completedPath(MM.global[NODE1], MM.global[NODE2])) {
-            stop();
+            MM.user.stopAll();
             return run();
           }
         });
       };
-      User.prototype.move = function(direction) {
-        var stub, xBound, yBound;
+      User.prototype.keyMove = function(direction) {
+        $.loop.remove(this.tag.pathloop);
+        if (MM.global[this.tag.automove] === true) {
+          MM.user.stopAll();
+          MM.global[this.tag.automove] = false;
+        }
         if (this.pressed[direction] === true) {
           return;
         }
         this.pressed[direction] = true;
+        return this.move(direction);
+      };
+      User.prototype.move = function(direction) {
+        var stub, xBound, yBound;
         xBound = Math.floor(this.width / 2);
         yBound = Math.floor(this.height / 2);
         MM.map.panStart(direction, xBound, yBound);
@@ -156,13 +164,13 @@
         e.stopPropagation();
         code = e.keyCode;
         if (code === 37) {
-          return MM.user.move('w');
+          return MM.user.keyMove('w');
         } else if (code === 38) {
-          return MM.user.move('n');
+          return MM.user.keyMove('n');
         } else if (code === 39) {
-          return MM.user.move('e');
+          return MM.user.keyMove('e');
         } else if (code === 40) {
-          return MM.user.move('s');
+          return MM.user.keyMove('s');
         }
       });
       $doc.keyup(function(e) {

@@ -17,6 +17,9 @@ MM.ui 'user', (opts) ->
         height: @height
         width: @width
         background: 'no-repeat url(' + @imgpath + ')'
+      @tag = 
+        automove: 'user:path:automove'
+        pathloop: 'user:path:loop'
         
       @center()
       @face data.facing
@@ -34,12 +37,12 @@ MM.ui 'user', (opts) ->
     
     runTo: (coords) ->
       
-      LOOPID = 'user:path:loop'
+      LOOPID = @tag.pathloop
       NODE1 = 'user:path:node:1'
       NODE2 = 'user:path:node:2'
-      DIRECTION = 'user:path:direction'
       
       $.loop.remove LOOPID
+      MM.user.stopAll()
       
       divisor = MM.map.tileSize
       x1 = Math.floor( MM.map.xcoord / divisor )
@@ -56,31 +59,37 @@ MM.ui 'user', (opts) ->
       run = -> 
         if path.length < 2
           $.loop.remove LOOPID
-          return stop()
+          MM.user.stopAll()
+          return
         MM.global[NODE1] = path.shift() 
         MM.global[NODE2] = path[0]
-        MM.user.move MM.global[DIRECTION] = MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
+        MM.user.move MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
       
-      # stop the user from walking around
-      stop = ->
-        MM.user.stop MM.global[DIRECTION]
-      
-      if MM.global[DIRECTION]
-        stop()
+      # GO!!!
+      MM.global[ @tag.automove ] = true
       run()
       
       $.loop.add LOOPID, ->
         # detect if current path segment is completed
         # if so, then stop the user, then run new direction
         if MM.map.completedPath MM.global[NODE1], MM.global[NODE2]
-          stop()
+          MM.user.stopAll()
           run()
-    
-    move: (direction) ->
+          
+    keyMove: (direction) ->
+      
+      $.loop.remove @tag.pathloop
+      if MM.global[ @tag.automove ] == true
+        MM.user.stopAll()
+        MM.global[ @tag.automove ] = false
+      
       # check to see if button is already pressed
       if @pressed[ direction ] == true
         return
       @pressed[ direction ] = true
+      @move (direction)
+      
+    move: (direction) ->
       
       xBound = Math.floor( @width/2 )
       yBound = Math.floor( @height/2 )
@@ -165,13 +174,13 @@ MM.ui 'user', (opts) ->
       e.stopPropagation()
       code = e.keyCode
       if code == 37
-        MM.user.move 'w'
+        MM.user.keyMove 'w'
       else if code == 38
-        MM.user.move 'n'
+        MM.user.keyMove 'n'
       else if code == 39
-        MM.user.move 'e'
+        MM.user.keyMove 'e'
       else if code == 40
-        MM.user.move 's'
+        MM.user.keyMove 's'
         
     $doc.keyup (e) ->
       e.preventDefault()
