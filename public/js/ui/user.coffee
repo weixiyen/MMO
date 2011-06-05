@@ -107,6 +107,11 @@ MM.ui 'user', (opts) ->
       $.loop.remove 'user_' + direction
       @face direction
     
+    stopAll: ->
+      directions = MM.map.dir
+      for key, direction of directions
+        @stop direction
+    
     teleport: (xcoord, ycoord) ->
       MM.map.goTo xcoord, ycoord
       
@@ -129,7 +134,7 @@ MM.ui 'user', (opts) ->
       height: 32
       width: 24
       imgpath: '/img/sprites.png'
-      facing: 'e'
+      facing: 's'
       anim:
         e: [
           "-72px -32px",
@@ -182,7 +187,4 @@ MM.ui 'user', (opts) ->
         MM.user.stop 's'
     
     $(window).blur ->
-      MM.user.stop 'w'
-      MM.user.stop 'n'
-      MM.user.stop 'e'
-      MM.user.stop 's'
+      MM.user.stopAll()

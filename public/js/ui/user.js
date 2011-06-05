@@ -104,6 +104,16 @@
         $.loop.remove('user_' + direction);
         return this.face(direction);
       };
+      User.prototype.stopAll = function() {
+        var direction, directions, key, _results;
+        directions = MM.map.dir;
+        _results = [];
+        for (key in directions) {
+          direction = directions[key];
+          _results.push(this.stop(direction));
+        }
+        return _results;
+      };
       User.prototype.teleport = function(xcoord, ycoord) {
         return MM.map.goTo(xcoord, ycoord);
       };
@@ -131,7 +141,7 @@
         height: 32,
         width: 24,
         imgpath: '/img/sprites.png',
-        facing: 'e',
+        facing: 's',
         anim: {
           e: ["-72px -32px", "-96px -32px", "-120px -32px"],
           w: ["-72px -96px", "-96px -96px", "-120px -96px"],
@@ -171,10 +181,7 @@
         }
       });
       return $(window).blur(function() {
-        MM.user.stop('w');
-        MM.user.stop('n');
-        MM.user.stop('e');
-        return MM.user.stop('s');
+        return MM.user.stopAll();
       });
     });
   });

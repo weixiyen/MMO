@@ -13,6 +13,15 @@ MM.ui 'map', (opts) ->
       @goTo options.xcoord, options.ycoord
       @collisionTypes = options.collisionTypes
       @generateCollisionGraph @tileMap
+      @dir = 
+        N: 'n'
+        E: 'e'
+        S: 's'
+        W: 'w'
+        NE: 'ne'
+        NW: 'nw'
+        SE: 'se'
+        SW: 'sw'
     
     accessible: (xcoord, ycoord) ->
       tileType = @getTileType xcoord, ycoord
@@ -24,26 +33,26 @@ MM.ui 'map', (opts) ->
       xBound += @change
       yBound += @change
       
-      if direction == 'w'
+      if direction == @dir.W
         newXcoord -= xBound
-      else if direction == 'e'
+      else if direction == @dir.E
         newXcoord += xBound
-      else if direction == 'n'
+      else if direction == @dir.N
         newYcoord -= yBound
-      else if direction == 's'
+      else if direction == @dir.S
         newYcoord += yBound
       
       @accessible newXcoord, newYcoord
     
     completedPath: (node1, node2) ->
       direction = MM.user.getSimpleDirection @getDirection node1, node2
-      if direction == 'w' and @xcoord <= node2[0]
+      if direction == @dir.W and @xcoord <= node2[0]
         return true
-      else if direction == 'e' and @xcoord >= node2[0]
+      else if direction == @dir.E and @xcoord >= node2[0]
         return true
-      else if direction == 'n' and @ycoord <= node2[1]
+      else if direction == @dir.N and @ycoord <= node2[1]
         return true
-      else if direction == 's' and @ycoord >= node2[1]
+      else if direction == @dir.S and @ycoord >= node2[1]
         return true
       return false
     
@@ -98,13 +107,13 @@ MM.ui 'map', (opts) ->
     getDirection: (from, to) ->
       direction = ''
       if from[1] > to[1]
-        direction += 'n'
+        direction += @dir.N
       else if from[1] < to[1]
-        direction += 's'
+        direction += @dir.S
       if from[0] > to[0]
-        direction += 'w'
+        direction += @dir.W
       else if from[0] < to[0]
-        direction += 'e'
+        direction += @dir.E
       return direction
     
     getPath: (start, end) ->
@@ -166,34 +175,34 @@ MM.ui 'map', (opts) ->
     
     shift: (direction) ->
       change = @change
-      if direction == 'w'
+      if direction == @dir.W
         @xcoord -= change
         @left += change
-      else if direction == 'e'
+      else if direction == @dir.E
         @xcoord += change
         @left -= change
-      else if direction == 'n'
+      else if direction == @dir.N
         @ycoord -= change
         @top += change
-      else if direction == 's'
+      else if direction == @dir.S
         @ycoord += change
         @top -= change
-      else if direction == 'nw'
+      else if direction == @dir.NW
         @xcoord -= change
         @left += change
         @ycoord -= change
         @top += change
-      else if direction == 'ne'
+      else if direction == @dir.NE
         @ycoord -= change
         @top += change
         @xcoord += change
         @left -= change
-      else if direction == 'sw'
+      else if direction == @dir.SW
         @ycoord += change
         @top -= change
         @xcoord -= change
         @left += change
-      else if direction == 'se'
+      else if direction == @dir.SE
         @ycoord += change
         @top -= change
         @xcoord += change
@@ -214,8 +223,8 @@ MM.ui 'map', (opts) ->
     MM.map = new Map 
       $map: opts.el
       $tileMap: $('#ui-map-1')
-      xcoord: 20
-      ycoord: 20
+      xcoord: 930
+      ycoord: 550
       change: 3
       tileSize: 50
       tileMap: [
