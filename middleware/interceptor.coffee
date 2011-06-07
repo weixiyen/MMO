@@ -18,7 +18,7 @@ app.createFrontend 'interceptor', (mw) ->
   # if the path IS NOT of the no_intercept_list
   if -1 == no_intercept_list.indexOf dir
     html = app.render 'base',
-      uuid: 'lol'
+      uuid: uuid
     return mw.res.html html
 
   # otherwise continue
