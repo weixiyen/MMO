@@ -14,7 +14,7 @@ app.createFrontend('interceptor', function(mw) {
   var dir, html;
   dir = mw.req.pathname.split('/')[1];
   if (-1 === no_intercept_list.indexOf(dir)) {
-    html = app.render('marketing/homepage', {
+    html = app.render('base', {
       uuid: uuid
     });
     return mw.res.html(html);
