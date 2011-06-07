@@ -243,15 +243,3 @@ class AsyncLoop
 # -------------------------------------------------
 log = (thing) ->
   util.log util.inspect thing, true, 3
-
-# memory consumption of this process
-oldheap = 0
-printMemory = ->
-  usage = process.memoryUsage()
-  newheap = usage.heapUsed
-  log usage
-  log ''
-  log '>>>>>>>' + (newheap - oldheap) + '<<<<<<'
-  log ''
-  oldheap = newheap
-#setInterval printMemory, 2000
