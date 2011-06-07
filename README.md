@@ -5,6 +5,7 @@ Current Tasks
 ---
 - Adding NPCs
 - NPC walking / pathfinding
+- add NPC pop / depop
 
 Documentation
 ---
