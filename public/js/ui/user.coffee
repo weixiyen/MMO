@@ -114,7 +114,6 @@ MM.ui 'user', (opts) ->
       @pressed[ direction ] = false
       MM.map.panStop direction
       $.loop.remove 'user_' + direction
-      @face direction
     
     stopAll: ->
       directions = MM.map.dir

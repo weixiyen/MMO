@@ -109,8 +109,7 @@
       User.prototype.stop = function(direction) {
         this.pressed[direction] = false;
         MM.map.panStop(direction);
-        $.loop.remove('user_' + direction);
-        return this.face(direction);
+        return $.loop.remove('user_' + direction);
       };
       User.prototype.stopAll = function() {
         var direction, directions, key, _results;
