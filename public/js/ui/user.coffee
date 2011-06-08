@@ -139,9 +139,9 @@ MM.ui 'user', (opts) ->
     # make public data for others to use  
     MM.user = new User 
       el: opts.el
-      height: 63
-      width: 35
-      imgpath: '/img/sprite-user.png'
+      height: 32
+      width: 24
+      imgpath: '/img/sprites.png'
       facing: 's'
       anim:
         e: [
