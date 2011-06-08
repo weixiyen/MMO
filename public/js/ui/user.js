@@ -145,9 +145,9 @@
       var $doc;
       MM.user = new User({
         el: opts.el,
-        height: 32,
-        width: 24,
-        imgpath: '/img/sprites.png',
+        height: 63,
+        width: 35,
+        imgpath: '/img/sprite-user.png',
         facing: 's',
         anim: {
           e: ["-72px -32px", "-96px -32px", "-120px -32px"],
