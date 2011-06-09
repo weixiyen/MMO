@@ -154,30 +154,30 @@ MM.ui 'user', (opts) ->
     # make public data for others to use  
     MM.user = new User 
       el: opts.el
-      height: 32
-      width: 24
-      imgpath: '/img/sprites.png'
+      height: 64
+      width: 40
+      imgpath: '/img/sprite_user.png'
       facing: 's'
       anim:
-        e: [
-          "-72px -32px",
-          "-96px -32px",
-          "-120px -32px"
-        ],
         w: [
-          "-72px -96px",
-          "-96px -96px",
-          "-120px -96px"
+          "0 0",
+          "-50px 0",
+          "-100px 0"
         ],
         n: [
-          "-72px 0",
-          "-96px 0",
-          "-120px 0"
+          "-150px 0",
+          "-200px 0",
+          "-250px 0"
         ],
         s: [
-          "-72px -64px",
-          "-96px -64px",
-          "-120px -64px"
+          "-300px 0",
+          "-350px 0",
+          "-400px 0"
+        ],
+        e: [
+          "-450px 0",
+          "-500px 0",
+          "-550px 0"
         ]
     
     # bind some controls for movement

@@ -1,6 +1,6 @@
 WEB.namespace 'MM'
 
-$.loop.setInterval 40
+$.loop.setInterval 35
 
 # global dictionary
 MM.global = {}
