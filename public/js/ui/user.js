@@ -9,12 +9,13 @@
         this.imgpath = data.imgpath;
         this.id = data.id;
         this.anim = data.anim;
-        this.pressed = {
+        this.moving = {
           n: false,
           e: false,
           s: false,
           w: false
         };
+        this.moveQueue = [];
         this.el.css({
           height: this.height,
           width: this.width,
@@ -80,18 +81,20 @@
           MM.user.stopAll();
           MM.global[this.tag.automove] = false;
         }
-        if (this.pressed[direction] === true) {
-          return;
-        }
-        this.pressed[direction] = true;
         return this.move(direction);
       };
       User.prototype.move = function(direction) {
         var stub, xBound, yBound;
+        if (this.moving[direction] === true) {
+          return;
+        } else {
+          this.moving[direction] = true;
+          this.moveQueue.push(direction);
+        }
         xBound = Math.floor(this.width / 2);
         yBound = Math.floor(this.height / 2);
         MM.map.panStart(direction, xBound, yBound);
-        direction = this.getSimpleDirection(direction);
+        direction = this.getSimpleDirection(this.moveQueue[0]);
         stub = 'user_' + direction;
         MM.global[stub] = 0;
         $.loop.add(stub, 2, function() {
@@ -100,24 +103,33 @@
           });
           if (MM.global[stub] === 2) {
             return MM.global[stub] = 0;
-          } else {
-            return MM.global[stub] += 1;
           }
+          return MM.global[stub] += 1;
         });
         return direction;
       };
       User.prototype.stop = function(direction) {
-        this.pressed[direction] = false;
+        var index;
+        this.moving[direction] = false;
+        index = this.moveQueue.indexOf(direction);
+        this.moveQueue.splice(index, 1);
+        if (this.moveQueue.length) {
+          this.stop(this.moveQueue[0]);
+          this.move(this.moveQueue[0]);
+        }
         MM.map.panStop(direction);
-        return $.loop.remove('user_' + direction);
+        $.loop.remove('user_' + direction);
+        if (MM.global[this.tag.automove] === false) {
+          return this.face(direction);
+        }
       };
       User.prototype.stopAll = function() {
-        var direction, directions, key, _results;
-        directions = MM.map.dir;
+        var k, v, _ref, _results;
+        _ref = this.moving;
         _results = [];
-        for (key in directions) {
-          direction = directions[key];
-          _results.push(this.stop(direction));
+        for (k in _ref) {
+          v = _ref[k];
+          _results.push(this.moving[k] === true ? this.stop(k) : void 0);
         }
         return _results;
       };

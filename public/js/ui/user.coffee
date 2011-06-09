@@ -8,11 +8,12 @@ MM.ui 'user', (opts) ->
       @imgpath = data.imgpath
       @id = data.id
       @anim = data.anim
-      @pressed =
+      @moving =
         n: false
         e: false
         s: false
         w: false
+      @moveQueue = []
       @el.css
         height: @height
         width: @width
@@ -82,14 +83,18 @@ MM.ui 'user', (opts) ->
       if MM.global[ @tag.automove ] == true
         MM.user.stopAll()
         MM.global[ @tag.automove ] = false
-      
-      # check to see if button is already pressed
-      if @pressed[ direction ] == true
-        return
-      @pressed[ direction ] = true
+        
       @move (direction)
       
     move: (direction) ->
+      # check to see if button is already pressed
+      if @moving[ direction ] == true
+        return
+      else 
+        @moving[ direction ] = true
+        ### 
+        @moveQueue.push direction
+        ###
       
       xBound = Math.floor( @width/2 )
       yBound = Math.floor( @height/2 )
@@ -97,28 +102,38 @@ MM.ui 'user', (opts) ->
       MM.map.panStart direction, xBound, yBound
       
       # start an animation function
-      direction = @getSimpleDirection direction
+      direction = @getSimpleDirection @moveQueue[0]
       stub = 'user_' + direction
       MM.global[ stub ] = 0
       $.loop.add stub, 2, ->
-          
         MM.user.el.css
           'background-position': MM.user.anim[direction][ MM.global[ stub ] ]
         if MM.global[ stub ] == 2
-          MM.global[ stub ] = 0
-        else
-          MM.global[ stub ] += 1
+          return MM.global[ stub ] = 0
+        MM.global[ stub ] += 1
+          
       return direction
           
     stop: (direction) ->
-      @pressed[ direction ] = false
+      @moving[ direction ] = false
+      
+      ###
+      index = @moveQueue.indexOf direction
+      @moveQueue.splice index, 1
+      if @moveQueue.length
+        @stop @moveQueue[0]
+        @move @moveQueue[0]
+      ###
+      
       MM.map.panStop direction
       $.loop.remove 'user_' + direction
+      if MM.global[ @tag.automove ] == false
+        @face direction
     
     stopAll: ->
-      directions = MM.map.dir
-      for key, direction of directions
-        @stop direction
+      for k, v of @moving
+        if @moving[ k ] == true
+          @stop k
     
     teleport: (xcoord, ycoord) ->
       MM.map.goTo xcoord, ycoord
