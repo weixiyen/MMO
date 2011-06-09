@@ -89,12 +89,14 @@
           return;
         } else {
           this.moving[direction] = true;
-          this.moveQueue.push(direction);
+          /* 
+          @moveQueue.push direction
+          */
         }
         xBound = Math.floor(this.width / 2);
         yBound = Math.floor(this.height / 2);
         MM.map.panStart(direction, xBound, yBound);
-        direction = this.getSimpleDirection(this.moveQueue[0]);
+        direction = this.getSimpleDirection(direction);
         stub = 'user_' + direction;
         MM.global[stub] = 0;
         $.loop.add(stub, 2, function() {
@@ -109,14 +111,14 @@
         return direction;
       };
       User.prototype.stop = function(direction) {
-        var index;
         this.moving[direction] = false;
-        index = this.moveQueue.indexOf(direction);
-        this.moveQueue.splice(index, 1);
-        if (this.moveQueue.length) {
-          this.stop(this.moveQueue[0]);
-          this.move(this.moveQueue[0]);
-        }
+        /*
+              index = @moveQueue.indexOf direction
+              @moveQueue.splice index, 1
+              if @moveQueue.length
+                @stop @moveQueue[0]
+                @move @moveQueue[0]
+              */
         MM.map.panStop(direction);
         $.loop.remove('user_' + direction);
         if (MM.global[this.tag.automove] === false) {

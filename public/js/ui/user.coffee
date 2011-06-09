@@ -102,7 +102,7 @@ MM.ui 'user', (opts) ->
       MM.map.panStart direction, xBound, yBound
       
       # start an animation function
-      direction = @getSimpleDirection @moveQueue[0]
+      direction = @getSimpleDirection direction
       stub = 'user_' + direction
       MM.global[ stub ] = 0
       $.loop.add stub, 2, ->
