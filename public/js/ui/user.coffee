@@ -105,7 +105,7 @@ MM.ui 'user', (opts) ->
       direction = @getSimpleDirection direction
       stub = 'user_' + direction
       MM.global[ stub ] = 0
-      $.loop.add stub, 2, ->
+      $.loop.add stub, 3, ->
         MM.user.el.css
           'background-position': MM.user.anim[direction][ MM.global[ stub ] ]
         if MM.global[ stub ] == 2
