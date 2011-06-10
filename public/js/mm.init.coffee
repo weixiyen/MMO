@@ -6,11 +6,11 @@ $.loop.setInterval 20
 MM.global = {}
 
 MM.addRoute '/', (tokens) ->
-  MM.ui 'page.main',
+  MM.use 'page.main',
     title: 'RPG Demo'
 
 MM.addRoute '/login', (tokens) ->
-  MM.ui 'login',
+  MM.use 'login',
     title: 'Login'
     fancy: true
 

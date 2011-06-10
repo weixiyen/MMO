@@ -1,5 +1,5 @@
 (function() {
-  var History, WEB, ajax, css_queue, getPatternRegex, jade, js_queue, paths_list, routes, tokenize, ui;
+  var History, WEB, ajax, css_queue, extensions, getPatternRegex, jade, js_queue, module, paths_list, routes, tokenize;
   WEB = {};
   WEB.VERSION = guid();
   WEB.options = {
@@ -7,7 +7,7 @@
       tpl: '/tpl/',
       css: '/css/',
       js: '/js/',
-      ui: '/js/ui/'
+      modules: '/js/modules/'
     }
   };
   WEB.namespace = function(namespace) {
@@ -25,21 +25,27 @@
       return console.log(label);
     }
   };
-  ui = {};
-  WEB.ui = function(name, opts) {
-    if (opts == null) {
-      opts = {};
+  module = {};
+  WEB.add = function(name, fn) {
+    if (!(module[name] != null)) {
+      return module[name] = fn;
     }
-    if (typeof opts === 'function' && !(ui[name] != null)) {
-      return ui[name] = opts;
-    }
-    if (!(ui[name] != null)) {
+  };
+  WEB.use = function(name, opts) {
+    if (!(module[name] != null)) {
       WEB.require(name);
       return WEB.run(function() {
-        return ui[name](opts);
+        return module[name](opts);
       });
     } else {
-      return ui[name](opts);
+      return module[name](opts);
+    }
+  };
+  extensions = [];
+  WEB.extend = function(name, ext) {
+    if (!(WEB[name] != null)) {
+      WEB[name] = ext;
+      return extensions.push(name);
     }
   };
   ajax = function(options) {
@@ -65,8 +71,8 @@
   History.Adapter.bind(window, 'statechange', function() {
     var data;
     data = History.getState().data;
-    if ((data != null) && (data.ui != null)) {
-      return WEB.ui(data.ui, data);
+    if ((data != null) && (data.module != null)) {
+      return WEB.use(data.module, data);
     }
   });
   WEB.go = function(opts) {
@@ -86,7 +92,7 @@
     }
     paths_list[key] = true;
     if (type === 'js') {
-      src = WEB.options.paths.ui + name + '.js?v=' + WEB.VERSION;
+      src = WEB.options.paths.modules + name + '.js?v=' + WEB.VERSION;
       return js_queue.push(src);
     } else {
       src = WEB.options.paths.css + name + '.css?v=' + WEB.VERSION;

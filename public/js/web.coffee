@@ -7,7 +7,7 @@ WEB.options =
     tpl: '/tpl/'
     css: '/css/'
     js: '/js/'
-    ui: '/js/ui/'
+    modules: '/js/modules/'
 
 WEB.namespace = (namespace) ->
   window[ namespace ] = WEB
@@ -20,24 +20,28 @@ WEB.log = (label, print = null) ->
       return
     console.log label
 
-# WEB.ui 
+# WEB.use
 # EXAMPLES:
-# 	WEB.ui 'feed'		--->	lazyloads /js/ui/feed.js
-#										--->	then runs WEB.ui 'feed', (opts)->
-#										--->	then runs WEB.ui 'feed', options
-ui = {}
-WEB.ui = (name, opts={}) ->
-  # creating a ui
-  if typeof opts == 'function' && !ui[name]?
-    return ui[name] = opts
-
-  # give it a history
-  if !ui[name]?
+# 	WEB.use 'feed'		--->	lazyloads /js/ui/feed.js
+#										--->	then runs WEB.add 'feed', (opts)->
+#										--->	then runs WEB.use 'feed', options
+module = {}
+WEB.add = (name, fn) ->
+  if !module[name]?
+    module[name] = fn
+WEB.use = (name, opts) ->
+  if !module[name]?
     WEB.require name
     WEB.run ->
-      ui[name] opts
+      module[name] opts
   else
-    ui[name] opts
+    module[name] opts
+
+extensions = []
+WEB.extend = (name, ext) ->
+  if !WEB[name]?
+    WEB[name] = ext
+    extensions.push name
 
 # ajax calls
 ajax = (options) ->
@@ -59,8 +63,8 @@ WEB.del = (options) ->
 History = window.History
 History.Adapter.bind window, 'statechange', ->
   data = History.getState().data
-  if data? and data.ui?
-	  WEB.ui data.ui, data
+  if data? and data.module?
+	  WEB.use data.module, data
 WEB.go = (opts) ->
   History.pushState opts, opts.title, opts.path
 
@@ -79,7 +83,7 @@ WEB.require = (name, type='js') ->
   paths_list[key] = true
   
   if type == 'js'
-    src = WEB.options.paths.ui + name + '.js?v=' + WEB.VERSION
+    src = WEB.options.paths.modules + name + '.js?v=' + WEB.VERSION
     js_queue.push src
   else
     src = WEB.options.paths.css + name + '.css?v=' + WEB.VERSION
