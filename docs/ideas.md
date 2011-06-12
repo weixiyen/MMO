@@ -59,21 +59,28 @@ Mage
 Advanced Classes
 ----------------
 Warrior
-	- Paladin (Tank) 
-	- Gladiator (melee dps) 
-	- Knight (melee dps)
+
+	Paladin (Tank) 
+	Gladiator (melee dps) 
+	Knight (melee dps)
+
 Scout
-	- Thief (melee dps)
-	- Ninja (Tank)
-	- Ranger (ranged dps)
+
+	Thief (melee dps)
+	Ninja (Tank)
+	Ranger (ranged dps)
+
 Performer
-	- Bard (buff)
-	- Dancer (buff)
-	- Illusionist (Debuff)
+
+	Bard (buff)
+	Dancer (buff)
+	Illusionist (Debuff)
+
 Mage
-	- Priest (healer)
-	- Elementalist (ranged dps)
-	- Time Shifter (debuff)
+
+	Priest (healer)
+	Elementalist (ranged dps)
+	Time Shifter (debuff)
 
 Boss encounters (each boss server is unique)
 ------------------
