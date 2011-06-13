@@ -9,13 +9,14 @@ MM.add 'user', (opts) ->
       @id = data.id
       @anim = data.anim
       @sprite = data.sprite
+      @spriteQueue = []
       @stub = 'user-'
       @moving =
         n: false
         e: false
         s: false
         w: false
-      @moveQueue = []
+      
       @el.css
         height: @height
         width: @width
@@ -85,7 +86,6 @@ MM.add 'user', (opts) ->
       if MM.global[ @tag.automove ] == true
         MM.user.stopAll()
         MM.global[ @tag.automove ] = false
-        
       @move (direction)
       
     move: (direction) ->
@@ -94,55 +94,58 @@ MM.add 'user', (opts) ->
         return
       else 
         @moving[ direction ] = true
-        ### 
-        @moveQueue.push direction
-        ###
       
       xBound = Math.floor( @width/2 )
       yBound = Math.floor( @height/2 )
       
       MM.map.panStart direction, xBound, yBound
       
-      # stop all other animations
-      for k, dir of MM.map.dir
-        @sprite.stop @stub + dir
-        
-      # start an animation function
-      direction = @getSimpleDirection direction
-      loopid = @stub + direction
-      opts =
-        el: @el
-        queue: @anim[direction]
-        skip: 3
-
-      @sprite.start loopid, opts 
-      ###
-      stub = 'user_' + direction
-      MM.global[ stub ] = 0
-      $.loop.add stub, 3, ->
-        MM.user.el.css
-          'background-position': MM.user.anim[direction][ MM.global[ stub ] ]
-        if MM.global[ stub ] == 2
-          return MM.global[ stub ] = 0
-        MM.global[ stub ] += 1
-      ###
-      return direction
+      @stopAllSprites direction
+      
+      # begin animation
+      @spriteStart @getSimpleDirection direction
+      
           
     stop: (direction) ->
       @moving[ direction ] = false
-      
-      ###
-      index = @moveQueue.indexOf direction
-      @moveQueue.splice index, 1
-      if @moveQueue.length
-        @stop @moveQueue[0]
-        @move @moveQueue[0]
-      ###
-      
       MM.map.panStop direction
-      @sprite.stop @stub + direction
+      @spriteStop direction
+    
+    spriteStart: (direction) ->
+      loopid = @stub + direction
+      @sprite.start loopid,
+        el: @el
+        queue: @anim[direction]
+        skip: 3
+      @spriteQueueAdd direction
+    
+    spriteStop: (direction) ->
+      @sprite.stop @stub+direction
+      @spriteQueueRemove direction
+      if @spriteQueue.length
+        @spriteStart @spriteQueue[0]
+        
       if MM.global[ @tag.automove ] == false
         @face direction
+      
+    spriteQueueAdd: (direction) ->
+      if !@spriteQueueHas(direction)
+        @spriteQueue.push direction
+    
+    spriteQueueRemove: (direction) ->
+      index = @getSpriteQueueIndex direction
+      @spriteQueue.splice index, 1
+    
+    getSpriteQueueIndex: (direction) ->
+      return $.inArray direction, @spriteQueue
+    
+    spriteQueueHas: (direction) ->
+      -1 != @getSpriteQueueIndex direction
+
+    stopAllSprites: (direction) ->
+      for k, v of @moving
+        if @moving[ k ] == true
+          @sprite.stop (@stub+k)
     
     stopAll: ->
       for k, v of @moving
