@@ -262,6 +262,7 @@
         return pos;
       };
       Map.prototype.startTileGenerator = function() {
+        this.generateTiles();
         return $.loop.add('map:tileGenerator', 40, __bind(function() {
           return this.generateTiles();
         }, this));
