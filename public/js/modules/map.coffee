@@ -233,6 +233,7 @@ MM.add 'map', (opts) ->
       return pos
     
     startTileGenerator: ->
+      @generateTiles()
       $.loop.add 'map:tileGenerator', 40, =>
         @generateTiles()
     
