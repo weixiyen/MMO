@@ -3,26 +3,26 @@ MM.add 'map', (opts) ->
   class Map
         
     constructor: (options) ->
+      
       @change = options.change
       @$map = options.$map
       @$tileMap = options.$tileMap
       @tileSize = options.tileSize
       @halfTileSize = Math.floor( options.tileSize / 2 )
       @tileMap = options.tileMap
-      @generateTiles()
-      @goTo options.xcoord, options.ycoord
+      @viewableTiles = {}
       @collisionTypes = options.collisionTypes
-      @generateCollisionGraph @tileMap
       @dir = 
         N: 'n'
         E: 'e'
         S: 's'
         W: 'w'
-        NE: 'ne'
-        NW: 'nw'
-        SE: 'se'
-        SW: 'sw'
-    
+      
+      @setViewportInfo()
+      @goTo options.xcoord, options.ycoord
+      @startTileGenerator()
+      @generateCollisionGraph @tileMap
+      
     accessible: (xcoord, ycoord) ->
       tileType = @getTileType xcoord, ycoord
       -1 == $.inArray( tileType, @collisionTypes )
@@ -75,29 +75,55 @@ MM.add 'map', (opts) ->
           x = 0
       createRow( row ) for row in tiles
       @collisionGraph = $.astar.graph collisionMap
-        
+    
     generateTiles: ->
       tileSize = @tileSize
-      tiles = @tileMap
       mapHtml = []
-      x = y = 0
-      len = tiles[0].length
+      purgeList = []
+      newViewableTiles = {}
+      x2max = @tileMap[0].length
+      y2max = @tileMap.length
       
-      processRow = (row) ->
-        createTile( tile ) for tile in row
-        y += 1
-      createTile = (tile) ->
-        left = (x * tileSize) + 'px'
-        top = (y * tileSize) + 'px'
-        tileHtml = '<div class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
-        mapHtml.push tileHtml 
-        x += 1
-        if x == len
-          x = 0
+      x1 = @xcoord - @viewportHalfWidth
+      y1 = @ycoord - @viewportHalfHeight
+      x2 = @xcoord + @viewportHalfWidth
+      y2 = @ycoord + @viewportHalfHeight
+      
+      x1 = Math.floor( x1 / tileSize )
+      y1 = Math.floor( y1 / tileSize )
+      x2 = Math.floor( x2 / tileSize )
+      y2 = Math.floor( y2 / tileSize )
+      
+      x1 = if x1 < 0 then 0 else x1
+      y1 = if y1 < 0 then 0 else y1
+      x2 = if x2 > x2max then x2max else x2
+      y2 = if y2 > y2max then y2max else y2
+      
+      y = y1
+      while y <= y2
+        x = x1
+        while x <= x2
           
-      processRow( row ) for row in tiles
+          stub = 't_'+x+'_'+y
+          tile = @tileMap[y][x]
+          newViewableTiles[stub] = tile
+          
+          if !@viewableTiles[stub]?
+            @viewableTiles[stub] = tile
+            left = (x * tileSize) + 'px'
+            top = (y * tileSize) + 'px'
+            mapHtml.push '<div id="'+stub+'" class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
+              
+          x++
+        y++
       
-      @$tileMap.html mapHtml.join ''
+      for k, v of @viewableTiles
+        if !newViewableTiles[k]?
+          delete @viewableTiles[k]
+          purgeList.push('#'+k)
+      
+      @$tileMap.append mapHtml.join ''
+      $( purgeList.join(',') ).remove()
     
     getCoordsByPos: (left, top) ->
       xcoord = Math.floor( left / @tileSize )
@@ -170,8 +196,14 @@ MM.add 'map', (opts) ->
     setCoords: (xcoord, ycoord) ->
       @xcoord = xcoord
       @ycoord = ycoord
-      @left = xcoord * -1 + $(window).width() / 2
-      @top = ycoord * -1 + $(window).height() / 2
+      @left = xcoord * -1 + @viewportHalfWidth 
+      @top = ycoord * -1 + @viewportHalfHeight
+    
+    setViewportInfo: ->
+      @viewportWidth = $(window).width()
+      @viewportHeight = $(window).height()
+      @viewportHalfWidth = parseInt @viewportWidth / 2, 10
+      @viewportHalfHeight = parseInt @viewportHeight / 2, 10
     
     shift: (direction) ->
 
@@ -192,32 +224,15 @@ MM.add 'map', (opts) ->
       else if direction == @dir.S
         @ycoord += change
         @top -= change
-      
-      if direction == @dir.NW
-        @xcoord -= change
-        @left += change
-        @ycoord -= change
-        @top += change
-      else if direction == @dir.NE
-        @ycoord -= change
-        @top += change
-        @xcoord += change
-        @left -= change
-      else if direction == @dir.SW
-        @ycoord += change
-        @top -= change
-        @xcoord -= change
-        @left += change
-      else if direction == @dir.SE
-        @ycoord += change
-        @top -= change
-        @xcoord += change
-        @left -= change
-        
+
       pos = 
         left: @left
         top: @top
       return pos
+    
+    startTileGenerator: ->
+      $.loop.add 'map:tileGenerator', 30, =>
+        @generateTiles()
     
       
   ui_path = 'maps/map_' + opts.map_id

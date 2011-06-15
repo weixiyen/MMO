@@ -4,14 +4,13 @@
   left: 0;
   width: 10000px;
   height: 10000px;
-  background: url("/img/sand.jpg");
   cursor: pointer;
 }
 .ui-map-1 .tile {
   position: absolute;
   height: 75px;
   width: 75px;
-  opacity: 0.5;
+  background: #008000;
 }
 .ui-map-1 .type-99 {
   background: #000;

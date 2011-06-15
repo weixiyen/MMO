@@ -10,20 +10,18 @@
         this.tileSize = options.tileSize;
         this.halfTileSize = Math.floor(options.tileSize / 2);
         this.tileMap = options.tileMap;
-        this.generateTiles();
-        this.goTo(options.xcoord, options.ycoord);
+        this.viewableTiles = {};
         this.collisionTypes = options.collisionTypes;
-        this.generateCollisionGraph(this.tileMap);
         this.dir = {
           N: 'n',
           E: 'e',
           S: 's',
-          W: 'w',
-          NE: 'ne',
-          NW: 'nw',
-          SE: 'se',
-          SW: 'sw'
+          W: 'w'
         };
+        this.setViewportInfo();
+        this.goTo(options.xcoord, options.ycoord);
+        this.startTileGenerator();
+        this.generateCollisionGraph(this.tileMap);
       }
       Map.prototype.accessible = function(xcoord, ycoord) {
         var tileType;
@@ -97,36 +95,52 @@
         return this.collisionGraph = $.astar.graph(collisionMap);
       };
       Map.prototype.generateTiles = function() {
-        var createTile, len, mapHtml, processRow, row, tileSize, tiles, x, y, _i, _len;
+        var k, left, mapHtml, newViewableTiles, purgeList, stub, tile, tileSize, top, v, x, x1, x2, x2max, y, y1, y2, y2max, _ref;
         tileSize = this.tileSize;
-        tiles = this.tileMap;
         mapHtml = [];
-        x = y = 0;
-        len = tiles[0].length;
-        processRow = function(row) {
-          var tile, _i, _len;
-          for (_i = 0, _len = row.length; _i < _len; _i++) {
-            tile = row[_i];
-            createTile(tile);
+        purgeList = [];
+        newViewableTiles = {};
+        x2max = this.tileMap[0].length;
+        y2max = this.tileMap.length;
+        x1 = this.xcoord - this.viewportHalfWidth;
+        y1 = this.ycoord - this.viewportHalfHeight;
+        x2 = this.xcoord + this.viewportHalfWidth;
+        y2 = this.ycoord + this.viewportHalfHeight;
+        x1 = Math.floor(x1 / tileSize);
+        y1 = Math.floor(y1 / tileSize);
+        x2 = Math.floor(x2 / tileSize);
+        y2 = Math.floor(y2 / tileSize);
+        x1 = x1 < 0 ? 0 : x1;
+        y1 = y1 < 0 ? 0 : y1;
+        x2 = x2 > x2max ? x2max : x2;
+        y2 = y2 > y2max ? y2max : y2;
+        y = y1;
+        while (y <= y2) {
+          x = x1;
+          while (x <= x2) {
+            stub = 't_' + x + '_' + y;
+            tile = this.tileMap[y][x];
+            newViewableTiles[stub] = tile;
+            if (!(this.viewableTiles[stub] != null)) {
+              this.viewableTiles[stub] = tile;
+              left = (x * tileSize) + 'px';
+              top = (y * tileSize) + 'px';
+              mapHtml.push('<div id="' + stub + '" class="tile type-' + tile + '" style="left:' + left + ';top:' + top + ';"></div>');
+            }
+            x++;
           }
-          return y += 1;
-        };
-        createTile = function(tile) {
-          var left, tileHtml, top;
-          left = (x * tileSize) + 'px';
-          top = (y * tileSize) + 'px';
-          tileHtml = '<div class="tile type-' + tile + '" style="left:' + left + ';top:' + top + ';"></div>';
-          mapHtml.push(tileHtml);
-          x += 1;
-          if (x === len) {
-            return x = 0;
-          }
-        };
-        for (_i = 0, _len = tiles.length; _i < _len; _i++) {
-          row = tiles[_i];
-          processRow(row);
+          y++;
         }
-        return this.$tileMap.html(mapHtml.join(''));
+        _ref = this.viewableTiles;
+        for (k in _ref) {
+          v = _ref[k];
+          if (!(newViewableTiles[k] != null)) {
+            delete this.viewableTiles[k];
+            purgeList.push('#' + k);
+          }
+        }
+        this.$tileMap.append(mapHtml.join(''));
+        return $(purgeList.join(',')).remove();
       };
       Map.prototype.getCoordsByPos = function(left, top) {
         var xcoord, ycoord;
@@ -210,8 +224,14 @@
       Map.prototype.setCoords = function(xcoord, ycoord) {
         this.xcoord = xcoord;
         this.ycoord = ycoord;
-        this.left = xcoord * -1 + $(window).width() / 2;
-        return this.top = ycoord * -1 + $(window).height() / 2;
+        this.left = xcoord * -1 + this.viewportHalfWidth;
+        return this.top = ycoord * -1 + this.viewportHalfHeight;
+      };
+      Map.prototype.setViewportInfo = function() {
+        this.viewportWidth = $(window).width();
+        this.viewportHeight = $(window).height();
+        this.viewportHalfWidth = parseInt(this.viewportWidth / 2, 10);
+        return this.viewportHalfHeight = parseInt(this.viewportHeight / 2, 10);
       };
       Map.prototype.shift = function(direction) {
         var change, pos;
@@ -232,32 +252,16 @@
           this.ycoord += change;
           this.top -= change;
         }
-        if (direction === this.dir.NW) {
-          this.xcoord -= change;
-          this.left += change;
-          this.ycoord -= change;
-          this.top += change;
-        } else if (direction === this.dir.NE) {
-          this.ycoord -= change;
-          this.top += change;
-          this.xcoord += change;
-          this.left -= change;
-        } else if (direction === this.dir.SW) {
-          this.ycoord += change;
-          this.top -= change;
-          this.xcoord -= change;
-          this.left += change;
-        } else if (direction === this.dir.SE) {
-          this.ycoord += change;
-          this.top -= change;
-          this.xcoord += change;
-          this.left -= change;
-        }
         pos = {
           left: this.left,
           top: this.top
         };
         return pos;
+      };
+      Map.prototype.startTileGenerator = function() {
+        return $.loop.add('map:tileGenerator', 30, __bind(function() {
+          return this.generateTiles();
+        }, this));
       };
       return Map;
     })();
