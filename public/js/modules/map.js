@@ -26,6 +26,9 @@
       Map.prototype.accessible = function(xcoord, ycoord) {
         var tileType;
         tileType = this.getTileType(xcoord, ycoord);
+        if (tileType === false) {
+          return false;
+        }
         return -1 === $.inArray(tileType, this.collisionTypes);
       };
       Map.prototype.canShift = function(direction, xBound, yBound) {

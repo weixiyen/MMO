@@ -25,6 +25,8 @@ MM.add 'map', (opts) ->
       
     accessible: (xcoord, ycoord) ->
       tileType = @getTileType xcoord, ycoord
+      if tileType == false
+        return false
       -1 == $.inArray( tileType, @collisionTypes )
     
     canShift: (direction, xBound, yBound) ->
