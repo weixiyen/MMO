@@ -98,6 +98,18 @@
         this.stopAllSprites(direction);
         return this.spriteStart(this.getSimpleDirection(direction));
       };
+      User.prototype.movingDiagonally = function() {
+        var i, k, v, _ref;
+        i = 0;
+        _ref = this.moving;
+        for (k in _ref) {
+          v = _ref[k];
+          if (v === true) {
+            i += 1;
+          }
+        }
+        return i >= 2;
+      };
       User.prototype.stop = function(direction) {
         this.moving[direction] = false;
         MM.map.panStop(direction);

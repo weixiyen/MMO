@@ -1,4 +1,5 @@
 (function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   MM.add('map', function(opts) {
     var Map, ui_path;
     Map = (function() {
@@ -197,11 +198,11 @@
         }
         map = this.$map;
         loopId = 'pan_map_' + direction;
-        return $.loop.add(loopId, function() {
-          if (MM.map.canShift(direction, xBound, yBound)) {
-            return map.css(MM.map.shift(direction));
+        return $.loop.add(loopId, __bind(function() {
+          if (this.canShift(direction, xBound, yBound)) {
+            return map.css(this.shift(direction));
           }
-        });
+        }, this));
       };
       Map.prototype.panStop = function(direction) {
         return $.loop.remove('pan_map_' + direction);
@@ -215,6 +216,9 @@
       Map.prototype.shift = function(direction) {
         var change, pos;
         change = this.change;
+        if (MM.user.movingDiagonally()) {
+          change = 2;
+        }
         if (direction === this.dir.W) {
           this.xcoord -= change;
           this.left += change;
@@ -227,7 +231,8 @@
         } else if (direction === this.dir.S) {
           this.ycoord += change;
           this.top -= change;
-        } else if (direction === this.dir.NW) {
+        }
+        if (direction === this.dir.NW) {
           this.xcoord -= change;
           this.left += change;
           this.ycoord -= change;

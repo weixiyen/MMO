@@ -104,8 +104,14 @@ MM.add 'user', (opts) ->
       
       # begin animation
       @spriteStart @getSimpleDirection direction
+    
+    movingDiagonally: ->
+      i = 0
+      for k, v of @moving
+        if v is true
+          i+=1
+      return i >= 2
       
-          
     stop: (direction) ->
       @moving[ direction ] = false
       MM.map.panStop direction

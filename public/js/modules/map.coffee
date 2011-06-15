@@ -160,9 +160,9 @@ MM.add 'map', (opts) ->
     panStart: (direction, xBound=0, yBound=0) ->
       map = @$map
       loopId = 'pan_map_' + direction
-      $.loop.add loopId, ->
-        if MM.map.canShift direction, xBound, yBound
-          map.css MM.map.shift direction
+      $.loop.add loopId, =>
+        if @canShift direction, xBound, yBound
+          map.css @shift direction
 
     panStop: (direction) ->
       $.loop.remove 'pan_map_' + direction
@@ -174,7 +174,12 @@ MM.add 'map', (opts) ->
       @top = ycoord * -1 + $(window).height() / 2
     
     shift: (direction) ->
+
       change = @change
+      
+      if MM.user.movingDiagonally()
+        change = 2
+        
       if direction == @dir.W
         @xcoord -= change
         @left += change
@@ -187,7 +192,8 @@ MM.add 'map', (opts) ->
       else if direction == @dir.S
         @ycoord += change
         @top -= change
-      else if direction == @dir.NW
+      
+      if direction == @dir.NW
         @xcoord -= change
         @left += change
         @ycoord -= change
@@ -207,6 +213,7 @@ MM.add 'map', (opts) ->
         @top -= change
         @xcoord += change
         @left -= change
+        
       pos = 
         left: @left
         top: @top
