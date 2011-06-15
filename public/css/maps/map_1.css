@@ -2,8 +2,8 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 10000px;
-  height: 10000px;
+  width: 0;
+  height: 0;
   cursor: pointer;
 }
 .ui-map-1 .tile {

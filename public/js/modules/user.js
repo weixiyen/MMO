@@ -121,7 +121,7 @@
         this.sprite.start(loopid, {
           el: this.el,
           queue: this.anim[direction],
-          skip: 3
+          skip: 4
         });
         return this.spriteQueueAdd(direction);
       };

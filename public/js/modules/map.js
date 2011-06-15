@@ -106,10 +106,10 @@
         y1 = this.ycoord - this.viewportHalfHeight;
         x2 = this.xcoord + this.viewportHalfWidth;
         y2 = this.ycoord + this.viewportHalfHeight;
-        x1 = Math.floor(x1 / tileSize);
-        y1 = Math.floor(y1 / tileSize);
-        x2 = Math.floor(x2 / tileSize);
-        y2 = Math.floor(y2 / tileSize);
+        x1 = Math.floor(x1 / tileSize) - 3;
+        y1 = Math.floor(y1 / tileSize) - 3;
+        x2 = Math.floor(x2 / tileSize) + 3;
+        y2 = Math.floor(y2 / tileSize) + 3;
         x1 = x1 < 0 ? 0 : x1;
         y1 = y1 < 0 ? 0 : y1;
         x2 = x2 > x2max ? x2max : x2;
@@ -237,7 +237,7 @@
         var change, pos;
         change = this.change;
         if (MM.user.movingDiagonally()) {
-          change = 2;
+          change -= 1;
         }
         if (direction === this.dir.W) {
           this.xcoord -= change;
@@ -259,7 +259,7 @@
         return pos;
       };
       Map.prototype.startTileGenerator = function() {
-        return $.loop.add('map:tileGenerator', 30, __bind(function() {
+        return $.loop.add('map:tileGenerator', 40, __bind(function() {
           return this.generateTiles();
         }, this));
       };

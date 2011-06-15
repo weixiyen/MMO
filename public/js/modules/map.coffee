@@ -89,10 +89,10 @@ MM.add 'map', (opts) ->
       x2 = @xcoord + @viewportHalfWidth
       y2 = @ycoord + @viewportHalfHeight
       
-      x1 = Math.floor( x1 / tileSize )
-      y1 = Math.floor( y1 / tileSize )
-      x2 = Math.floor( x2 / tileSize )
-      y2 = Math.floor( y2 / tileSize )
+      x1 = Math.floor( x1 / tileSize ) - 3
+      y1 = Math.floor( y1 / tileSize ) - 3
+      x2 = Math.floor( x2 / tileSize ) + 3
+      y2 = Math.floor( y2 / tileSize ) + 3
       
       x1 = if x1 < 0 then 0 else x1
       y1 = if y1 < 0 then 0 else y1
@@ -210,7 +210,7 @@ MM.add 'map', (opts) ->
       change = @change
       
       if MM.user.movingDiagonally()
-        change = 2
+        change -= 1
         
       if direction == @dir.W
         @xcoord -= change
@@ -231,7 +231,7 @@ MM.add 'map', (opts) ->
       return pos
     
     startTileGenerator: ->
-      $.loop.add 'map:tileGenerator', 30, =>
+      $.loop.add 'map:tileGenerator', 40, =>
         @generateTiles()
     
       

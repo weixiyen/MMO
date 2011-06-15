@@ -122,7 +122,7 @@ MM.add 'user', (opts) ->
       @sprite.start loopid,
         el: @el
         queue: @anim[direction]
-        skip: 3
+        skip: 4
       @spriteQueueAdd direction
     
     spriteStop: (direction) ->
