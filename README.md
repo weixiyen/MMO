@@ -31,4 +31,4 @@ Documentation
 [load_balancing]:https://github.com/weixiyen/mmo/blob/master/docs/load_balancing.md
 [frontend_dev]:https://github.com/weixiyen/mmo/blob/master/docs/frontend_dev.md
 [ideas]:https://github.com/weixiyen/mmo/blob/master/docs/ideas.md
-[web_setup]:https://github.com/weixiyen/mmo/blob/master/docs/web_server.md
+[web_setup]:https://github.com/weixiyen/mmo/blob/master/docs/web_setup.md

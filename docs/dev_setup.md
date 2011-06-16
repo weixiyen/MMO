@@ -23,33 +23,8 @@ automatically after restart.
 	brew install zeromq
 	brew install redis
 	brew install mongo
+	brew install node
 	mkdir -p /data/db # for mongodb
-	
-Install Node.js & NPM (Node Package Manager)
---------------------------------------------------
-Follow instructions on [http://nodejs.org/][nodejs] (Do not use Homebrew for Node.js or NPM)
-
-Download & install Node.js
-
-	tar xzvf node-tarball-name.tgz
-	cd node-folder/
-	./configure
-	make
-	make install
-
-Download & install npm, coffee-script, and stylus
-	
-	curl http://npmjs.org/install.sh | sh
-	npm install stylus -g
-	npm install coffee-script -g
-	npm install email
-	npm install mongodb
-	npm install mongoose
-	npm install redis
-	npm install socket.io
-	npm install uuid
-	npm install zeromq
-	npm install jade
 
 Getting Started
 --------------------------------------------------
@@ -65,7 +40,28 @@ Create the following empty directories as GIT does not track empty ones
 
 	mkdir tmp
 	mkdir test
-	
+
+Install Node.js & NPM (Node Package Manager)
+--------------------------------------------------
+Follow instructions on [http://nodejs.org/][nodejs] (Do not use Homebrew for Node.js or NPM)
+
+Download & install npm, coffee-script, and stylus
+
+	curl http://npmjs.org/install.sh | sh
+	npm install stylus -g
+	npm install coffee-script -g
+	npm install email
+	npm install mongodb
+	npm install mongoose
+	npm install redis
+	npm install socket.io
+	npm install uuid
+	npm install zeromq
+	npm install jade
+
+Setup
+--------------------------------------------------
+
 Edit copy and paste the following into ~/.bash_profile where ~/mmo
 
 	# aliases
