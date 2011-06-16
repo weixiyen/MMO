@@ -17,7 +17,8 @@ MM.add 'map', (opts) ->
         E: 'e'
         S: 's'
         W: 'w'
-      
+
+      # initialize functions
       @setViewportInfo()
       @goTo options.xcoord, options.ycoord
       @startTileGenerator()
