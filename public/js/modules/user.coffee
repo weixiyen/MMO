@@ -85,7 +85,7 @@ MM.add 'user', (opts) ->
       $.loop.remove @tag.pathloop
       if MM.global[ @tag.automove ] == true
         MM.user.stopAll()
-        MM.global[ @tag.automove ] = false
+      MM.global[ @tag.automove ] = false
       @move (direction)
       
     move: (direction) ->
@@ -130,7 +130,7 @@ MM.add 'user', (opts) ->
       @spriteQueueRemove direction
       if @spriteQueue.length
         @spriteStart @spriteQueue[0]
-        
+
       if MM.global[ @tag.automove ] == false
         @face direction
       

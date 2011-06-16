@@ -81,8 +81,8 @@
         $.loop.remove(this.tag.pathloop);
         if (MM.global[this.tag.automove] === true) {
           MM.user.stopAll();
-          MM.global[this.tag.automove] = false;
         }
+        MM.global[this.tag.automove] = false;
         return this.move(direction);
       };
       User.prototype.move = function(direction) {
