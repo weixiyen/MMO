@@ -386,8 +386,8 @@
           width: 65,
           imgpath: '/img/sprite_monster.png',
           pos: pos,
-          speed: id === 1 ? 3 : id % 2 === 0 ? 2 : 1,
-          name: id === 1 ? 'Leaping Lizzy' : id % 2 === 0 ? 'Rock Lizard' : 'Lizard',
+          speed: id === 1 ? 3 : id < 11 ? 2 : 1,
+          name: id === 1 ? 'Leaping Lizzy' : id < 11 ? 'Fast Lizard' : 'Lizard',
           skip: 4,
           anim: {
             s: ["0 0", "-65px 0", "-130px 0"],

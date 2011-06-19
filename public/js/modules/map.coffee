@@ -403,8 +403,8 @@ MM.add 'map', (opts) ->
         width: 65
         imgpath: '/img/sprite_monster.png'
         pos: pos
-        speed: if id == 1 then 3 else if id % 2 == 0 then 2 else 1
-        name: if id == 1 then 'Leaping Lizzy' else if id % 2 == 0 then 'Rock Lizard' else 'Lizard'
+        speed: if id == 1 then 3 else if id < 11 then 2 else 1
+        name: if id == 1 then 'Leaping Lizzy' else if id < 11 then 'Fast Lizard' else 'Lizard'
         skip: 4
         anim:
           s: [
