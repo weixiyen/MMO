@@ -459,6 +459,7 @@ MM.add 'map', (opts) ->
             "-715px 0"
           ]
       id++
+    MM.log 'total sprites', id
     
     MM.map.$tileMap.delegate '.tile', 'click', (e) ->
       tgt = $(e.target)

@@ -367,6 +367,7 @@
         });
         id++;
       }
+      MM.log('total sprites', id);
       return MM.map.$tileMap.delegate('.tile', 'click', function(e) {
         var left, tgt, top;
         tgt = $(e.target);
