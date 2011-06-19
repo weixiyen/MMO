@@ -385,7 +385,7 @@
           width: 65,
           imgpath: '/img/sprite_monster.png',
           pos: pos,
-          speed: 2,
+          speed: 1,
           skip: 4,
           anim: {
             s: ["0 0", "-65px 0", "-130px 0"],

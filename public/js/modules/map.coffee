@@ -400,7 +400,7 @@ MM.add 'map', (opts) ->
         width: 65
         imgpath: '/img/sprite_monster.png'
         pos: pos
-        speed: 2
+        speed: 1
         skip: 4
         anim:
           s: [
