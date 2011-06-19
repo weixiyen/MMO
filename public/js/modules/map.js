@@ -348,10 +348,10 @@
       }));
       MM.use('user');
       arrPos = [];
-      totalSprites = 100;
+      totalSprites = 1000;
       i = 0;
-      while (i < 100) {
-        x = MM.random(400, 1200);
+      while (i < totalSprites) {
+        x = MM.random(300, 1200);
         y = MM.random(300, 900);
         arrPos.push([x, y]);
         i++;
