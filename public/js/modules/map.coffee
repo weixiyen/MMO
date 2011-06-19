@@ -22,10 +22,11 @@ MM.add 'map', (opts) ->
       @npcs = {}
       @players = {}
       @unitStub = 'unit-'
+      @pos = [options.xcoord, options.ycoord]
 
       # initialize functions
       @setViewportInfo()
-      @goTo options.xcoord, options.ycoord
+      @goTo @pos[0], @pos[1]
       @startUIGenerator()
       @generateCollisionGraph @tileMap
       
@@ -62,8 +63,8 @@ MM.add 'map', (opts) ->
             @addPlayer data
     
     canShift: (direction, xBound, yBound) ->
-      newXcoord = @xcoord
-      newYcoord = @ycoord
+      newXcoord = @pos[0]
+      newYcoord = @pos[1]
       xBound += @change
       yBound += @change
       
@@ -81,7 +82,7 @@ MM.add 'map', (opts) ->
     completedPath: (node1, node2, coords) ->
 
       if !coords?
-        coords = [@xcoord, @ycoord]
+        coords = [@pos[0], @pos[1]]
 
       direction = @getSimpleDirection @getDirection node1, node2
       if direction == @dir.W and coords[0] <= node2[0]
@@ -120,10 +121,10 @@ MM.add 'map', (opts) ->
       x2max = @tileMap[0].length
       y2max = @tileMap.length
       
-      x1 = @xcoord - @viewportHalfWidth
-      y1 = @ycoord - @viewportHalfHeight
-      x2 = @xcoord + @viewportHalfWidth
-      y2 = @ycoord + @viewportHalfHeight
+      x1 = @pos[0] - @viewportHalfWidth
+      y1 = @pos[1] - @viewportHalfHeight
+      x2 = @pos[0] + @viewportHalfWidth
+      y2 = @pos[1] + @viewportHalfHeight
 
       x1 = Math.floor( x1 / tileSize ) - 3
       y1 = Math.floor( y1 / tileSize ) - 3
@@ -246,14 +247,14 @@ MM.add 'map', (opts) ->
         if @canShift direction, xBound, yBound
           @$map.css @shift direction
           MM.user.el.css
-            zIndex: @ycoord
+            zIndex: @pos[1]
 
     panStop: (direction) ->
       $.loop.remove 'pan_map_' + direction
     
     setCoords: (xcoord, ycoord) ->
-      @xcoord = xcoord
-      @ycoord = ycoord
+      @pos[0] = xcoord
+      @pos[1] = ycoord
       @left = xcoord * -1 + @viewportHalfWidth 
       @top = ycoord * -1 + @viewportHalfHeight
     
@@ -271,16 +272,16 @@ MM.add 'map', (opts) ->
         change -= 1
         
       if direction == @dir.W
-        @xcoord -= change
+        @pos[0] -= change
         @left += change
       else if direction == @dir.E
-        @xcoord += change
+        @pos[0] += change
         @left -= change
       else if direction == @dir.N
-        @ycoord -= change
+        @pos[1] -= change
         @top += change
       else if direction == @dir.S
-        @ycoord += change
+        @pos[1] += change
         @top -= change
 
       pos = 
@@ -376,14 +377,16 @@ MM.add 'map', (opts) ->
     Testing purposes!!! BELOW
     ###
 
-    alert('gotta catch em all!')
+    alert('zomg run away!!!!')
 
     arrPos = []
     totalSprites = 100
+    xMax = MM.map.tileMap[0].length * 50
+    yMax = MM.map.tileMap.length * 50
     i = 0
     while i < totalSprites
-      x = MM.random(300, 1200)
-      y = MM.random(300, 900)
+      x = MM.random 0, xMax
+      y = MM.random 0, yMax
       arrPos.push [x, y]
       i++
     id = 0
@@ -419,14 +422,10 @@ MM.add 'map', (opts) ->
             "-650px 0",
             "-715px 0"
           ]
-
-      xMax = MM.map.tileMap[0].length * 50
-      yMax = MM.map.tileMap.length * 50
-
       x = MM.random 0, xMax
       y = MM.random 0, yMax
 
-      MM.map.npcs['npc-'+id].walkTo [x,y]
+      MM.map.npcs['npc-'+id].chase()
 
     MM.log 'total sprites', id
     

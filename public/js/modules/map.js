@@ -23,8 +23,9 @@
         this.npcs = {};
         this.players = {};
         this.unitStub = 'unit-';
+        this.pos = [options.xcoord, options.ycoord];
         this.setViewportInfo();
-        this.goTo(options.xcoord, options.ycoord);
+        this.goTo(this.pos[0], this.pos[1]);
         this.startUIGenerator();
         this.generateCollisionGraph(this.tileMap);
       }
@@ -65,8 +66,8 @@
       };
       Map.prototype.canShift = function(direction, xBound, yBound) {
         var newXcoord, newYcoord;
-        newXcoord = this.xcoord;
-        newYcoord = this.ycoord;
+        newXcoord = this.pos[0];
+        newYcoord = this.pos[1];
         xBound += this.change;
         yBound += this.change;
         if (direction === this.dir.W) {
@@ -83,7 +84,7 @@
       Map.prototype.completedPath = function(node1, node2, coords) {
         var direction;
         if (!(coords != null)) {
-          coords = [this.xcoord, this.ycoord];
+          coords = [this.pos[0], this.pos[1]];
         }
         direction = this.getSimpleDirection(this.getDirection(node1, node2));
         if (direction === this.dir.W && coords[0] <= node2[0]) {
@@ -137,10 +138,10 @@
         tileSize = this.tileSize;
         x2max = this.tileMap[0].length;
         y2max = this.tileMap.length;
-        x1 = this.xcoord - this.viewportHalfWidth;
-        y1 = this.ycoord - this.viewportHalfHeight;
-        x2 = this.xcoord + this.viewportHalfWidth;
-        y2 = this.ycoord + this.viewportHalfHeight;
+        x1 = this.pos[0] - this.viewportHalfWidth;
+        y1 = this.pos[1] - this.viewportHalfHeight;
+        x2 = this.pos[0] + this.viewportHalfWidth;
+        y2 = this.pos[1] + this.viewportHalfHeight;
         x1 = Math.floor(x1 / tileSize) - 3;
         y1 = Math.floor(y1 / tileSize) - 3;
         x2 = Math.floor(x2 / tileSize) + 3;
@@ -267,7 +268,7 @@
           if (this.canShift(direction, xBound, yBound)) {
             this.$map.css(this.shift(direction));
             return MM.user.el.css({
-              zIndex: this.ycoord
+              zIndex: this.pos[1]
             });
           }
         }, this));
@@ -276,8 +277,8 @@
         return $.loop.remove('pan_map_' + direction);
       };
       Map.prototype.setCoords = function(xcoord, ycoord) {
-        this.xcoord = xcoord;
-        this.ycoord = ycoord;
+        this.pos[0] = xcoord;
+        this.pos[1] = ycoord;
         this.left = xcoord * -1 + this.viewportHalfWidth;
         return this.top = ycoord * -1 + this.viewportHalfHeight;
       };
@@ -294,16 +295,16 @@
           change -= 1;
         }
         if (direction === this.dir.W) {
-          this.xcoord -= change;
+          this.pos[0] -= change;
           this.left += change;
         } else if (direction === this.dir.E) {
-          this.xcoord += change;
+          this.pos[0] += change;
           this.left -= change;
         } else if (direction === this.dir.N) {
-          this.ycoord -= change;
+          this.pos[1] -= change;
           this.top += change;
         } else if (direction === this.dir.S) {
-          this.ycoord += change;
+          this.pos[1] += change;
           this.top -= change;
         }
         pos = {
@@ -360,13 +361,15 @@
       /*
           Testing purposes!!! BELOW
           */
-      alert('gotta catch em all!');
+      alert('zomg run away!!!!');
       arrPos = [];
       totalSprites = 100;
+      xMax = MM.map.tileMap[0].length * 50;
+      yMax = MM.map.tileMap.length * 50;
       i = 0;
       while (i < totalSprites) {
-        x = MM.random(300, 1200);
-        y = MM.random(300, 900);
+        x = MM.random(0, xMax);
+        y = MM.random(0, yMax);
         arrPos.push([x, y]);
         i++;
       }
@@ -390,11 +393,9 @@
             e: ["-585px 0", "-650px 0", "-715px 0"]
           }
         });
-        xMax = MM.map.tileMap[0].length * 50;
-        yMax = MM.map.tileMap.length * 50;
         x = MM.random(0, xMax);
         y = MM.random(0, yMax);
-        MM.map.npcs['npc-' + id].walkTo([x, y]);
+        MM.map.npcs['npc-' + id].chase();
       }
       return MM.log('total sprites', id);
     });

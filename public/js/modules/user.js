@@ -53,8 +53,8 @@
         $.loop.remove(LOOPID);
         this.stopAll();
         divisor = MM.map.tileSize;
-        x1 = Math.floor(MM.map.xcoord / divisor);
-        y1 = Math.floor(MM.map.ycoord / divisor);
+        x1 = Math.floor(MM.map.pos[0] / divisor);
+        y1 = Math.floor(MM.map.pos[1] / divisor);
         x2 = Math.floor(coords[0] / divisor);
         y2 = Math.floor(coords[1] / divisor);
         path = MM.map.getPath([x1, y1], [x2, y2]);

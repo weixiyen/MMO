@@ -26,7 +26,8 @@
           node1: 'unit:' + this.id + ':path:node:1',
           node2: 'unit:' + this.id + ':path:node:2',
           move: 'unit:' + this.id + ':move',
-          anim: 'unit:' + this.id + ':anim'
+          anim: 'unit:' + this.id + ':anim',
+          chase: 'unit:' + this.id + ':chase'
         };
         this.elBody = this.el.append('<div class="body"></div>').find('.body:first');
         this.create();
@@ -126,11 +127,16 @@
       Unit.prototype.target = function(id) {
         return MM.log('target');
       };
-      Unit.prototype.chase = function(id) {
-        return MM.log('chase');
+      Unit.prototype.chase = function(obj) {
+        if (!(obj instanceof Unit)) {
+          obj = MM.map;
+        }
+        return $.loop.add(this.tag.chase, 35, __bind(function() {
+          return this.walkTo(MM.map.pos);
+        }, this));
       };
       Unit.prototype.stopChase = function() {
-        return MM.log('stopchase');
+        return $.loop.stop(this.tag.chase);
       };
       return Unit;
     })();

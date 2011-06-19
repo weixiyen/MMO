@@ -20,6 +20,7 @@ MM.add 'class/unit', (opts) ->
         node2: 'unit:'+@id+':path:node:2'
         move: 'unit:'+@id+':move'
         anim: 'unit:'+@id+':anim'
+        chase: 'unit:'+@id+':chase'
         
       @elBody = @el.append('<div class="body"></div>').find('.body:first')
 
@@ -108,18 +109,28 @@ MM.add 'class/unit', (opts) ->
 
     doAbility: ->
       MM.log 'do ability'
+      
     teleport: ->
       MM.log 'teleport'
+
     show: ->
       MM.log 'show'
+
     remove: ->
       MM.log 'remove'
+
     target: (id)->
       MM.log 'target'
-    chase: (id)->
-      MM.log 'chase'
+
+    chase: ( obj ) ->
+      if !( obj instanceof Unit )
+        obj = MM.map
+
+      $.loop.add @tag.chase, 35, =>
+        @walkTo MM.map.pos
+
     stopChase: ->
-      MM.log 'stopchase'
+      $.loop.stop @tag.chase
 
   class PC extends Unit
     eat: ->
