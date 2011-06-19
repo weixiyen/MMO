@@ -362,7 +362,7 @@ MM.add 'map', (opts) ->
     MM.use 'user'
 
     arrPos = []
-    totalSprites = 1000
+    totalSprites = 50
     i = 0
     while i < totalSprites
       x = MM.random(300, 1200)
