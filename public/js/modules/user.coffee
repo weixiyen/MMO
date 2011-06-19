@@ -2,7 +2,7 @@ MM.add 'user', (opts) ->
   
   class User
     constructor: (data) ->
-      @el = data.el
+      @el = $('<div id="user" class="user ui-sprite"></div>').appendTo(MM.map.$map)
       @height = data.height
       @width = data.width
       @imgpath = data.imgpath
@@ -21,6 +21,9 @@ MM.add 'user', (opts) ->
         height: @height
         width: @width
         background: 'no-repeat url(' + @imgpath + ')'
+        position: 'fixed'
+        zIndex: MM.map.ycoord
+        
       @tag = 
         automove: 'user:path:automove'
         pathloop: 'user:path:loop'

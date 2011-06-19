@@ -17,11 +17,16 @@ MM.add 'map', (opts) ->
         E: 'e'
         S: 's'
         W: 'w'
+      @NPC = options.NPC
+      @Player = options.Player
+      @npcs = {}
+      @players = {}
+      @unitStub = 'unit-'
 
       # initialize functions
       @setViewportInfo()
       @goTo options.xcoord, options.ycoord
-      @startTileGenerator()
+      @startUIGenerator()
       @generateCollisionGraph @tileMap
       
     accessible: (xcoord, ycoord) ->
@@ -29,6 +34,31 @@ MM.add 'map', (opts) ->
       if tileType == false
         return false
       -1 == $.inArray( tileType, @collisionTypes )
+
+    addNpc: (data) ->
+
+      tag = @unitStub + data.id
+      data.el = $('<div id="'+ tag + '" class="unit"></div>')
+      @npcs[data.id] = new @NPC data
+      @$map.append @npcs[data.id].el
+      
+    addPlayer: (data) ->
+
+      tag = @unitStub + data.id
+      data.el = $('<div id="'+ tag + '" class="unit"></div>')
+      @npcs[data.id] = new @NPC data
+      @$map.append @npcs[data.id].el
+
+    addUnits: (arrData) ->
+      addHtml = []
+      if false == arrData instanceof Array
+        arrData = [ arrData ]
+      for data in arrData
+        if !@npcs[data.id]? and !@players[data.id]
+          if data.type == 'npc'
+            @addNpc data
+          if data.type == 'player'
+            @addPlayer data
     
     canShift: (direction, xBound, yBound) ->
       newXcoord = @xcoord
@@ -79,11 +109,9 @@ MM.add 'map', (opts) ->
       createRow( row ) for row in tiles
       @collisionGraph = $.astar.graph collisionMap
     
-    generateTiles: ->
+    generateUI: ->
+      
       tileSize = @tileSize
-      mapHtml = []
-      purgeList = []
-      newViewableTiles = {}
       x2max = @tileMap[0].length
       y2max = @tileMap.length
       
@@ -91,42 +119,26 @@ MM.add 'map', (opts) ->
       y1 = @ycoord - @viewportHalfHeight
       x2 = @xcoord + @viewportHalfWidth
       y2 = @ycoord + @viewportHalfHeight
-      
+
       x1 = Math.floor( x1 / tileSize ) - 3
       y1 = Math.floor( y1 / tileSize ) - 3
       x2 = Math.floor( x2 / tileSize ) + 3
       y2 = Math.floor( y2 / tileSize ) + 3
-      
+
       x1 = if x1 < 0 then 0 else x1
       y1 = if y1 < 0 then 0 else y1
       x2 = if x2 > x2max then x2max else x2
       y2 = if y2 > y2max then y2max else y2
+
+      topLeftCoord = [x1,y1]
+      bottomRightCoord = [x2,y2]
+
+      tiles = @getTilesToAddAndRemove topLeftCoord, bottomRightCoord
+      addHtml = tiles[0]
+      purgeIds = tiles[1]
       
-      y = y1
-      while y <= y2
-        x = x1
-        while x <= x2
-          
-          stub = 't_'+x+'_'+y
-          tile = @tileMap[y][x]
-          newViewableTiles[stub] = tile
-          
-          if !@viewableTiles[stub]?
-            @viewableTiles[stub] = tile
-            left = (x * tileSize) + 'px'
-            top = (y * tileSize) + 'px'
-            mapHtml.push '<div id="'+stub+'" class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
-              
-          x++
-        y++
-      
-      for k, v of @viewableTiles
-        if !newViewableTiles[k]?
-          delete @viewableTiles[k]
-          purgeList.push('#'+k)
-      
-      @$tileMap.append mapHtml.join ''
-      $( purgeList.join(',') ).remove()
+      @$tileMap.append addHtml.join ''
+      $( purgeIds.join(',') ).remove()
     
     getCoordsByPos: (left, top) ->
       xcoord = Math.floor( left / @tileSize )
@@ -172,6 +184,43 @@ MM.add 'map', (opts) ->
       @$tileMap.append html.join ''
       
       return nodepath
+
+    getTilesToAddAndRemove: (topLeftCoord, bottomRightCoord) ->
+
+      x1 = topLeftCoord[0]
+      y1 = topLeftCoord[1]
+      x2 = bottomRightCoord[0]
+      y2 = bottomRightCoord[1]
+
+      tileSize = @tileSize
+      addHtml = []
+      purgeIds = []
+      newViewableTiles = {}
+
+      y = y1
+      while y <= y2
+        x = x1
+        while x <= x2
+
+          stub = 't_'+x+'_'+y
+          tile = @tileMap[y][x]
+          newViewableTiles[stub] = tile
+
+          if !@viewableTiles[stub]?
+            @viewableTiles[stub] = tile
+            left = (x * tileSize) + 'px'
+            top = (y * tileSize) + 'px'
+            addHtml.push '<div id="'+stub+'" class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
+
+          x++
+        y++
+
+      for k, v of @viewableTiles
+        if !newViewableTiles[k]?
+          delete @viewableTiles[k]
+          purgeIds.push('#'+k)
+
+      return [addHtml, purgeIds]
         
     getTileType: (xcoord, ycoord) ->
       x = Math.floor( xcoord / @tileSize )
@@ -187,11 +236,12 @@ MM.add 'map', (opts) ->
         top: @top
     
     panStart: (direction, xBound=0, yBound=0) ->
-      map = @$map
       loopId = 'pan_map_' + direction
       $.loop.add loopId, =>
         if @canShift direction, xBound, yBound
-          map.css @shift direction
+          @$map.css @shift direction
+          MM.user.el.css
+            zIndex: @ycoord
 
     panStop: (direction) ->
       $.loop.remove 'pan_map_' + direction
@@ -232,21 +282,32 @@ MM.add 'map', (opts) ->
         left: @left
         top: @top
       return pos
-    
-    startTileGenerator: ->
-      @generateTiles()
-      $.loop.add 'map:tileGenerator', 40, =>
-        @generateTiles()
+
+    removeUnit: (id) ->
+      delete @npcs[id]
+      delete @players[id]
+      $('#' + @unitStub + id).remove()
+
+    startUIGenerator: ->
+      @generateUI()
+      $.loop.add 'map:ui:generator', 40, =>
+        @generateUI()
     
       
   ui_path = 'maps/map_' + opts.map_id
   MM.require ui_path, 'css'
+  MM.require 'map', 'css'
+
+  # require units
+  MM.require 'class/unit'
   
   MM.run ->
-  
+
+    NPC = MM.use 'class/unit', 'npc'
+    Player = MM.use 'class/unit', 'pc'
+
     MM.render opts.el, ui_path
-        
-    MM.map = new Map 
+    MM.extend 'map', new Map
       $map: opts.el
       $tileMap: $('#ui-map-1')
       xcoord: 700
@@ -292,10 +353,68 @@ MM.add 'map', (opts) ->
         [0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5, 0, 0, 99, 99, 0, 2, 2, 2, 1, 3, 5]
       ]
       collisionTypes: [99, 98]
+      NPC: NPC
+      Player: Player
+
+    MM.map.addUnits
+      id: 'npc-1'
+      type: 'npc'
+      height: 60
+      width: 65
+      imgpath: '/img/sprite_monster.png'
+      pos: [600, 600]
+      anim:
+        s: [
+          "0 0",
+          "-65px 0",
+          "-130px 0"
+        ],
+        n: [
+          "-195px 0",
+          "-260px 0",
+          "-325px 0"
+        ],
+        w: [
+          "-390px 0",
+          "-455px 0",
+          "-520px 0"
+        ],
+        e: [
+          "-585px 0",
+          "-650px 0",
+          "-715px 0"
+        ]
+    MM.map.addUnits
+      id: 'npc-2'
+      type: 'npc'
+      height: 60
+      width: 65
+      imgpath: '/img/sprite_monster.png'
+      pos: [750, 750]
+      anim:
+        s: [
+          "0 0",
+          "-65px 0",
+          "-130px 0"
+        ],
+        n: [
+          "-195px 0",
+          "-260px 0",
+          "-325px 0"
+        ],
+        w: [
+          "-390px 0",
+          "-455px 0",
+          "-520px 0"
+        ],
+        e: [
+          "-585px 0",
+          "-650px 0",
+          "-715px 0"
+        ]
     
     MM.map.$tileMap.delegate '.tile', 'click', (e) ->
       tgt = $(e.target)
       left = parseInt tgt.css('left'), 10
       top = parseInt tgt.css('top'), 10
       MM.user.runTo [left, top]
-      

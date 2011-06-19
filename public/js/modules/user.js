@@ -3,7 +3,7 @@
     var User;
     User = (function() {
       function User(data) {
-        this.el = data.el;
+        this.el = $('<div id="user" class="user ui-sprite"></div>').appendTo(MM.map.$map);
         this.height = data.height;
         this.width = data.width;
         this.imgpath = data.imgpath;
@@ -21,7 +21,9 @@
         this.el.css({
           height: this.height,
           width: this.width,
-          background: 'no-repeat url(' + this.imgpath + ')'
+          background: 'no-repeat url(' + this.imgpath + ')',
+          position: 'fixed',
+          zIndex: MM.map.ycoord
         });
         this.tag = {
           automove: 'user:path:automove',

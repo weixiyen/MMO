@@ -139,3 +139,22 @@ The game will have a map editor.  The options will look like this.
 Front-end Map Notes
 ==========
 Seems 850 50x50 tiles are the max we can have as DOM elements moving around on IE at any given time.
+
+PC/NPC Networking
+==========
+
+Server Side
+---------
+When mobs move, send data to map:userid if within certain distance
+When mobs spawn, send data to map:userid if within certain distance
+When mobs despawn, send data to map:userid if within certain distance
+When mobs do an action, send data to map:userid if within certain distance
+When userid moves, push list of IDs back to client to map:userid
+
+Client side
+---------
+First load gets all npc within certain distance
+
+If no npc, then create the npc on the spot via Ajax query, then perform action
+If npc, then perform action
+Delete any npc from memory more than x distance away

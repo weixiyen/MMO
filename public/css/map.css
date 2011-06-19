@@ -1,0 +1,6 @@
+.map .unit {
+  position: absolute;
+}
+.map .unit .body {
+  position: relative;
+}
