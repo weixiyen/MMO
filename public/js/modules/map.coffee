@@ -380,7 +380,7 @@ MM.add 'map', (opts) ->
     alert('zomg run away!!!!')
 
     arrPos = []
-    totalSprites = 100
+    totalSprites = 25
     xMax = MM.map.tileMap[0].length * 50
     yMax = MM.map.tileMap.length * 50
     i = 0
