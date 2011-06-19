@@ -3,8 +3,22 @@ MMO
 
 Current Tasks
 ---
-- Adding NPCs
-- NPC walking / pathfinding
+
+Weixi & Sunny
+
+- Game UI
+
+Stan
+
+- Map Maker
+
+Derek
+
+- Combat
+
+Dave & Wife
+
+- 3D Models
 
 Documentation
 ---

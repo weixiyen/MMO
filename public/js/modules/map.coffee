@@ -328,7 +328,7 @@ MM.add 'map', (opts) ->
       tileMap.push []
       w = 0
       while w < wMax
-        random = MM.random 0, 3
+        random = MM.random 0, 2
         if 0 == random
           tileMap[h][w] = 99
         else
