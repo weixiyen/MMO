@@ -378,6 +378,7 @@ MM.add 'map', (opts) ->
     ###
 
     alert('zomg run away!!!!')
+    $(document).focus()
 
     arrPos = []
     totalSprites = 25

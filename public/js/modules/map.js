@@ -362,6 +362,7 @@
           Testing purposes!!! BELOW
           */
       alert('zomg run away!!!!');
+      $(document).focus();
       arrPos = [];
       totalSprites = 25;
       xMax = MM.map.tileMap[0].length * 50;
