@@ -430,7 +430,7 @@ MM.add 'map', (opts) ->
       x = MM.random 0, xMax
       y = MM.random 0, yMax
 
-      MM.map.npcs['npc-'+id].chase()
+      MM.map.npcs['npc-'+id].chase MM.map.npcs['npc-'+ (id-1)]
 
     MM.log 'total sprites', id
     

@@ -398,7 +398,7 @@
         });
         x = MM.random(0, xMax);
         y = MM.random(0, yMax);
-        MM.map.npcs['npc-' + id].chase();
+        MM.map.npcs['npc-' + id].chase(MM.map.npcs['npc-' + (id - 1)]);
       }
       return MM.log('total sprites', id);
     });

@@ -138,11 +138,12 @@
           obj = MM.map;
         }
         return $.loop.add(this.tag.chase, 35, __bind(function() {
-          return this.walkTo(MM.map.pos);
+          return this.walkTo(obj.pos);
         }, this));
       };
       Unit.prototype.stopChase = function() {
-        return $.loop.stop(this.tag.chase);
+        $.loop.stop(this.tag.chase);
+        return this.stop();
       };
       return Unit;
     })();

@@ -129,14 +129,16 @@ MM.add 'class/unit', (opts) ->
       MM.log 'target'
 
     chase: ( obj ) ->
+      
       if !( obj instanceof Unit )
         obj = MM.map
 
       $.loop.add @tag.chase, 35, =>
-        @walkTo MM.map.pos
+        @walkTo obj.pos
 
     stopChase: ->
       $.loop.stop @tag.chase
+      @stop()
 
   class PC extends Unit
     eat: ->
