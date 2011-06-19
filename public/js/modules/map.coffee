@@ -360,9 +360,12 @@ MM.add 'map', (opts) ->
 
     MM.map.$tileMap.delegate '.tile', 'click', (e) ->
       tgt = $(e.target)
+      tgt.parent().find('.path').removeClass('path')
+      tgt.addClass('path')
       left = parseInt tgt.css('left'), 10
       top = parseInt tgt.css('top'), 10
       MM.user.runTo [left, top]
+
 
 
     ###

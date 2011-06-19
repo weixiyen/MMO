@@ -379,6 +379,8 @@
       MM.map.$tileMap.delegate('.tile', 'click', function(e) {
         var left, tgt, top;
         tgt = $(e.target);
+        tgt.parent().find('.path').removeClass('path');
+        tgt.addClass('path');
         left = parseInt(tgt.css('left'), 10);
         top = parseInt(tgt.css('top'), 10);
         return MM.user.runTo([left, top]);
