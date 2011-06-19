@@ -309,6 +309,11 @@ MM.add 'map', (opts) ->
   
   MM.run ->
 
+    ###
+    TESTING
+    ###
+    MM.global['username'] = prompt('Enter Your Character Name:')
+
     MM.use 'sprite'
 
     NPC = MM.use 'class/unit', 'npc'
@@ -377,8 +382,6 @@ MM.add 'map', (opts) ->
     Testing purposes!!! BELOW
     ###
 
-    alert('zomg run away!!!!')
-    $(document).focus()
 
     arrPos = []
     totalSprites = 25
@@ -400,7 +403,8 @@ MM.add 'map', (opts) ->
         width: 65
         imgpath: '/img/sprite_monster.png'
         pos: pos
-        speed: 1
+        speed: if id == 1 then 2 else 1
+        name: if id == 1 then 'Leaping Lizzy' else 'Lizzy'
         skip: 4
         anim:
           s: [

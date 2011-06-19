@@ -333,7 +333,10 @@
     MM.require('sprite');
     MM.require('user');
     return MM.run(function() {
-      var NPC, Player, arrPos, i, id, pos, totalSprites, x, xMax, y, yMax, _i, _len;
+      /*
+          TESTING
+          */      var NPC, Player, arrPos, i, id, pos, totalSprites, x, xMax, y, yMax, _i, _len;
+      MM.global['username'] = prompt('Enter Your Character Name:');
       MM.use('sprite');
       NPC = MM.use('class/unit', 'npc');
       Player = MM.use('class/unit', 'pc');
@@ -361,8 +364,6 @@
       /*
           Testing purposes!!! BELOW
           */
-      alert('zomg run away!!!!');
-      $(document).focus();
       arrPos = [];
       totalSprites = 25;
       xMax = MM.map.tileMap[0].length * 50;
@@ -385,7 +386,8 @@
           width: 65,
           imgpath: '/img/sprite_monster.png',
           pos: pos,
-          speed: 1,
+          speed: id === 1 ? 2 : 1,
+          name: id === 1 ? 'Leaping Lizzy' : 'Lizzy',
           skip: 4,
           anim: {
             s: ["0 0", "-65px 0", "-130px 0"],

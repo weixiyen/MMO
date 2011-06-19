@@ -1,6 +1,22 @@
 .map .unit {
   position: absolute;
 }
+.map .unit .name {
+  color: #ff0;
+  text-shadow: #000 0 0 4px;
+  font: bold 11px Arial;
+  width: 100px;
+  text-align: center;
+  position: relative;
+}
 .map .unit .body {
+  position: relative;
+}
+.map .user .name {
+  color: #fff;
+  text-shadow: #000 0 0 4px;
+  font: bold 11px Arial;
+  width: 100px;
+  text-align: center;
   position: relative;
 }

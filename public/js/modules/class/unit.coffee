@@ -12,6 +12,7 @@ MM.add 'class/unit', (opts) ->
       @pos = data.pos
       @el = data.el
       @speed = data.speed
+      @name = data.name
       @skip = data.skip
       @moving = false
       @tag =
@@ -22,7 +23,8 @@ MM.add 'class/unit', (opts) ->
         anim: 'unit:'+@id+':anim'
         chase: 'unit:'+@id+':chase'
         
-      @elBody = @el.append('<div class="body"></div>').find('.body:first')
+      @elBody = @el.append('<div class="body"><div class="name"><span>'+@name+'</span></div></div>').find('.body:first')
+      @elName = @el.find('.name:first')
 
       # METHODS
       @create()
@@ -41,6 +43,10 @@ MM.add 'class/unit', (opts) ->
         background: 'no-repeat url(' + @imgpath + ')'
         left: @width / 2 * -1
         top: @height / 2 * -1
+
+      @elName.css
+        left: @width / 2 - 50
+        top: -10
 
     stop: ->
       $.loop.remove @tag.move

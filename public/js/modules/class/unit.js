@@ -19,6 +19,7 @@
         this.pos = data.pos;
         this.el = data.el;
         this.speed = data.speed;
+        this.name = data.name;
         this.skip = data.skip;
         this.moving = false;
         this.tag = {
@@ -29,7 +30,8 @@
           anim: 'unit:' + this.id + ':anim',
           chase: 'unit:' + this.id + ':chase'
         };
-        this.elBody = this.el.append('<div class="body"></div>').find('.body:first');
+        this.elBody = this.el.append('<div class="body"><div class="name"><span>' + this.name + '</span></div></div>').find('.body:first');
+        this.elName = this.el.find('.name:first');
         this.create();
       }
       Unit.prototype.create = function() {
@@ -40,12 +42,16 @@
           height: 0,
           width: 0
         });
-        return this.elBody.css({
+        this.elBody.css({
           height: this.height,
           width: this.width,
           background: 'no-repeat url(' + this.imgpath + ')',
           left: this.width / 2 * -1,
           top: this.height / 2 * -1
+        });
+        return this.elName.css({
+          left: this.width / 2 - 50,
+          top: -10
         });
       };
       Unit.prototype.stop = function() {

@@ -4,8 +4,10 @@
     var User;
     User = (function() {
       function User(data) {
+        this.name = data.name;
         this.map = data.map;
-        this.el = $('<div id="user" class="user ui-sprite"></div>').appendTo(MM.map.$map);
+        this.el = $('<div id="user" class="user"><div class="name">' + this.name + '</div></div>').appendTo(MM.map.$map);
+        this.elName = this.el.find('.name:first');
         this.height = data.height;
         this.width = data.width;
         this.imgpath = data.imgpath;
@@ -25,6 +27,10 @@
           background: 'no-repeat url(' + this.imgpath + ')',
           position: 'fixed',
           zIndex: MM.map.ycoord
+        });
+        this.elName.css({
+          left: this.width / 2 - 50,
+          top: -10
         });
         this.tag = {
           automove: 'user:path:automove',
@@ -194,6 +200,7 @@
         width: 40,
         imgpath: '/img/sprite_user.png',
         facing: 's',
+        name: MM.global['username'],
         anim: {
           w: ["0 0", "-50px 0", "-100px 0"],
           n: ["-150px 0", "-200px 0", "-250px 0"],

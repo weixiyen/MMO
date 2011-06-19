@@ -2,8 +2,10 @@ MM.add 'user', (opts) ->
   
   class User
     constructor: (data) ->
+      @name = data.name
       @map = data.map
-      @el = $('<div id="user" class="user ui-sprite"></div>').appendTo(MM.map.$map)
+      @el = $('<div id="user" class="user"><div class="name">'+@name+'</div></div>').appendTo(MM.map.$map)
+      @elName = @el.find '.name:first'
       @height = data.height
       @width = data.width
       @imgpath = data.imgpath
@@ -23,6 +25,10 @@ MM.add 'user', (opts) ->
         background: 'no-repeat url(' + @imgpath + ')'
         position: 'fixed'
         zIndex: MM.map.ycoord
+
+      @elName.css
+        left: @width / 2 - 50
+        top: -10
         
       @tag = 
         automove: 'user:path:automove'
@@ -180,6 +186,7 @@ MM.add 'user', (opts) ->
       width: 40
       imgpath: '/img/sprite_user.png'
       facing: 's'
+      name: MM.global['username']
       anim:
         w: [
           "0 0",
