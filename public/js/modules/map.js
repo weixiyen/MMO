@@ -388,7 +388,7 @@
           pos: pos,
           speed: id === 1 ? 3 : id < 11 ? 2 : 1,
           name: id === 1 ? 'Leaping Lizzy' : id < 11 ? 'Fast Lizard' : 'Lizard',
-          skip: 4,
+          skip: id === 1 ? 4 : id < 11 ? 6 : 8,
           anim: {
             s: ["0 0", "-65px 0", "-130px 0"],
             n: ["-195px 0", "-260px 0", "-325px 0"],

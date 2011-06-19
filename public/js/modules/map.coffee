@@ -405,7 +405,7 @@ MM.add 'map', (opts) ->
         pos: pos
         speed: if id == 1 then 3 else if id < 11 then 2 else 1
         name: if id == 1 then 'Leaping Lizzy' else if id < 11 then 'Fast Lizard' else 'Lizard'
-        skip: 4
+        skip: if id == 1 then 4 else if id < 11 then 6 else 8
         anim:
           s: [
             "0 0",
