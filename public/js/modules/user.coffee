@@ -2,13 +2,13 @@ MM.add 'user', (opts) ->
   
   class User
     constructor: (data) ->
+      @map = data.map
       @el = $('<div id="user" class="user ui-sprite"></div>').appendTo(MM.map.$map)
       @height = data.height
       @width = data.width
       @imgpath = data.imgpath
       @id = data.id
       @anim = data.anim
-      @sprite = data.sprite
       @spriteQueue = []
       @stub = 'user-'
       @moving =
@@ -122,14 +122,14 @@ MM.add 'user', (opts) ->
     
     spriteStart: (direction) ->
       loopid = @stub + direction
-      @sprite.start loopid,
+      MM.sprite.start loopid,
         el: @el
         queue: @anim[direction]
         skip: 4
       @spriteQueueAdd direction
     
     spriteStop: (direction) ->
-      @sprite.stop @stub+direction
+      MM.sprite.stop @stub+direction
       @spriteQueueRemove direction
       if @spriteQueue.length
         @spriteStart @spriteQueue[0]
@@ -154,7 +154,7 @@ MM.add 'user', (opts) ->
     stopAllSprites: (direction) ->
       for k, v of @moving
         if @moving[ k ] == true
-          @sprite.stop (@stub+k)
+          MM.sprite.stop (@stub+k)
     
     stopAll: ->
       for k, v of @moving
@@ -172,22 +172,17 @@ MM.add 'user', (opts) ->
       @el.css
         'background-position': @anim[direction][1]
   
-  MM.require 'sprite'
   MM.require 'user', 'css'
-  MM.require 'sprites', 'css'
   
   MM.run ->
-  
-    MM.use 'sprite'
-    
+
     # make public data for others to use  
-    MM.user = new User 
-      el: opts.el
+    MM.user = new User
+      map: MM.map
       height: 64
       width: 40
       imgpath: '/img/sprite_user.png'
       facing: 's'
-      sprite: MM.sprite
       anim:
         w: [
           "0 0",

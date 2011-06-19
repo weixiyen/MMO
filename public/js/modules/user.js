@@ -3,13 +3,13 @@
     var User;
     User = (function() {
       function User(data) {
+        this.map = data.map;
         this.el = $('<div id="user" class="user ui-sprite"></div>').appendTo(MM.map.$map);
         this.height = data.height;
         this.width = data.width;
         this.imgpath = data.imgpath;
         this.id = data.id;
         this.anim = data.anim;
-        this.sprite = data.sprite;
         this.spriteQueue = [];
         this.stub = 'user-';
         this.moving = {
@@ -120,7 +120,7 @@
       User.prototype.spriteStart = function(direction) {
         var loopid;
         loopid = this.stub + direction;
-        this.sprite.start(loopid, {
+        MM.sprite.start(loopid, {
           el: this.el,
           queue: this.anim[direction],
           skip: 4
@@ -128,7 +128,7 @@
         return this.spriteQueueAdd(direction);
       };
       User.prototype.spriteStop = function(direction) {
-        this.sprite.stop(this.stub + direction);
+        MM.sprite.stop(this.stub + direction);
         this.spriteQueueRemove(direction);
         if (this.spriteQueue.length) {
           this.spriteStart(this.spriteQueue[0]);
@@ -159,7 +159,7 @@
         _results = [];
         for (k in _ref) {
           v = _ref[k];
-          _results.push(this.moving[k] === true ? this.sprite.stop(this.stub + k) : void 0);
+          _results.push(this.moving[k] === true ? MM.sprite.stop(this.stub + k) : void 0);
         }
         return _results;
       };
@@ -191,19 +191,15 @@
       };
       return User;
     })();
-    MM.require('sprite');
     MM.require('user', 'css');
-    MM.require('sprites', 'css');
     return MM.run(function() {
       var $doc;
-      MM.use('sprite');
       MM.user = new User({
-        el: opts.el,
+        map: MM.map,
         height: 64,
         width: 40,
         imgpath: '/img/sprite_user.png',
         facing: 's',
-        sprite: MM.sprite,
         anim: {
           w: ["0 0", "-50px 0", "-100px 0"],
           n: ["-150px 0", "-200px 0", "-250px 0"],

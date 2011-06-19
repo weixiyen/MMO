@@ -75,7 +75,6 @@ js_queue = []
 css_queue = []
 paths_list = {}
 WEB.require = (name, type='js') ->
-  
   # have we required this path before?
   key = name + '.' + type
   if paths_list[key]?

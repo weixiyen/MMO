@@ -55,6 +55,7 @@ MM.add 'map', (opts) ->
         arrData = [ arrData ]
       for data in arrData
         if !@npcs[data.id]? and !@players[data.id]
+          
           if data.type == 'npc'
             @addNpc data
           if data.type == 'player'
@@ -297,11 +298,13 @@ MM.add 'map', (opts) ->
   ui_path = 'maps/map_' + opts.map_id
   MM.require ui_path, 'css'
   MM.require 'map', 'css'
-
-  # require units
   MM.require 'class/unit'
+  MM.require 'sprite'
+  MM.require 'user'
   
   MM.run ->
+
+    MM.use 'sprite'
 
     NPC = MM.use 'class/unit', 'npc'
     Player = MM.use 'class/unit', 'pc'
@@ -356,62 +359,106 @@ MM.add 'map', (opts) ->
       NPC: NPC
       Player: Player
 
-    MM.map.addUnits
-      id: 'npc-1'
-      type: 'npc'
-      height: 60
-      width: 65
-      imgpath: '/img/sprite_monster.png'
-      pos: [600, 600]
-      anim:
-        s: [
-          "0 0",
-          "-65px 0",
-          "-130px 0"
-        ],
-        n: [
-          "-195px 0",
-          "-260px 0",
-          "-325px 0"
-        ],
-        w: [
-          "-390px 0",
-          "-455px 0",
-          "-520px 0"
-        ],
-        e: [
-          "-585px 0",
-          "-650px 0",
-          "-715px 0"
-        ]
-    MM.map.addUnits
-      id: 'npc-2'
-      type: 'npc'
-      height: 60
-      width: 65
-      imgpath: '/img/sprite_monster.png'
-      pos: [750, 750]
-      anim:
-        s: [
-          "0 0",
-          "-65px 0",
-          "-130px 0"
-        ],
-        n: [
-          "-195px 0",
-          "-260px 0",
-          "-325px 0"
-        ],
-        w: [
-          "-390px 0",
-          "-455px 0",
-          "-520px 0"
-        ],
-        e: [
-          "-585px 0",
-          "-650px 0",
-          "-715px 0"
-        ]
+    MM.use 'user'
+
+    arrPos = [
+      [750, 750]
+      [800, 800]
+      [600, 750]
+      [600, 600]
+      [550, 500]
+      [550, 700]
+      [800, 550]
+      [800, 575]
+      [450, 750]
+      [800, 850]
+      [900, 900]
+      [634, 622]
+      [544, 537]
+      [673, 839]
+      [546, 574]
+      [675, 584]
+      [630, 752]
+      [654, 834]
+      [300, 430]
+      [843, 450]
+      [784, 434]
+      [534, 400]
+      [400, 530]
+      [300, 525]
+      [550, 730]
+      [600, 860]
+      [300, 970]
+      [434, 682]
+      [544, 537]
+      [373, 829]
+      [446, 534]
+      [575, 524]
+
+      [950, 750]
+      [1000, 800]
+      [1100, 750]
+      [1000, 600]
+      [1150, 500]
+      [1050, 700]
+      [1100, 550]
+      [1000, 575]
+      [1150, 750]
+      [1100, 850]
+      [1000, 900]
+      [1034, 622]
+      [1144, 537]
+      [1073, 839]
+      [1146, 574]
+      [1175, 584]
+      [1130, 752]
+      [954, 834]
+      [900, 430]
+      [943, 450]
+      [1184, 434]
+      [1034, 400]
+      [900, 530]
+      [900, 525]
+      [950, 730]
+      [1100, 860]
+      [1000, 970]
+      [934, 682]
+      [1144, 537]
+      [973, 829]
+      [1046, 534]
+      [1175, 524]
+    ]
+    id = 0
+    for pos in arrPos
+      MM.map.addUnits
+        id: 'npc-' + id
+        type: 'npc'
+        height: 60
+        width: 65
+        imgpath: '/img/sprite_monster.png'
+        pos: pos
+        anim:
+          s: [
+            "0 0",
+            "-65px 0",
+            "-130px 0"
+          ],
+          n: [
+            "-195px 0",
+            "-260px 0",
+            "-325px 0"
+          ],
+          w: [
+            "-390px 0",
+            "-455px 0",
+            "-520px 0"
+          ],
+          e: [
+            "-585px 0",
+            "-650px 0",
+            "-715px 0"
+          ]
+      id++
     
     MM.map.$tileMap.delegate '.tile', 'click', (e) ->
       tgt = $(e.target)
