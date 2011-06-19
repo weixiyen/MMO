@@ -32,10 +32,7 @@ MM.add 'class/unit', (opts) ->
         left: @width / 2 * -1
         top: @height / 2 * -1
 
-      arrDir = ['n','e','w','s']
-      getRandomInt = (min, max)->
-        return Math.floor(Math.random() * (max - min + 1)) + min
-      direction = arrDir[getRandomInt 0, 3]
+      direction = ['n','e','w','s'][MM.random 0, 3]
       
       MM.sprite.start @id,
         el: @elBody
