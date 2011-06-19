@@ -78,15 +78,19 @@ MM.add 'map', (opts) ->
       
       @accessible newXcoord, newYcoord
     
-    completedPath: (node1, node2) ->
-      direction = MM.user.getSimpleDirection @getDirection node1, node2
-      if direction == @dir.W and @xcoord <= node2[0]
+    completedPath: (node1, node2, coords) ->
+
+      if !coords?
+        coords = [@xcoord, @ycoord]
+
+      direction = @getSimpleDirection @getDirection node1, node2
+      if direction == @dir.W and coords[0] <= node2[0]
         return true
-      else if direction == @dir.E and @xcoord >= node2[0]
+      else if direction == @dir.E and coords[0] >= node2[0]
         return true
-      else if direction == @dir.N and @ycoord <= node2[1]
+      else if direction == @dir.N and coords[1] <= node2[1]
         return true
-      else if direction == @dir.S and @ycoord >= node2[1]
+      else if direction == @dir.S and coords[1] >= node2[1]
         return true
       return false
     
@@ -157,6 +161,9 @@ MM.add 'map', (opts) ->
       else if from[0] < to[0]
         direction += @dir.E
       return direction
+
+    getSimpleDirection: (direction) ->
+      return if direction.length == 2 then direction.substr 0, 1 else direction
     
     getPath: (start, end) ->
       a = @collisionGraph.nodes[ start[1] ][ start[0] ]
@@ -166,24 +173,21 @@ MM.add 'map', (opts) ->
       tileSize = @tileSize
       halfTileSize = @halfTileSize
       
-      # XXX
-      @$tileMap.find('.path').remove()
-      html = [] 
+      #@$tileMap.find('.path').remove()
+      #html = []
 
       for node in path
-        # XXX
-        left = node[0] * tileSize + 'px'
-        top = node[1] * tileSize + 'px'
-        tileHtml = '<div class="tile path" style="left:'+left+';top:'+top+';"></div>'
-        html.push tileHtml
+        #left = node[0] * tileSize + 'px'
+        #top = node[1] * tileSize + 'px'
+        #tileHtml = '<div class="tile path" style="left:'+left+';top:'+top+';"></div>'
+        #html.push tileHtml
         
         x = node[0] * tileSize + halfTileSize
         y = node[1] * tileSize + halfTileSize
         nodepath.push [x, y]
-      
-      # XXX
-      @$tileMap.append html.join ''
-      
+
+      #@$tileMap.append html.join ''
+
       return nodepath
 
     getTilesToAddAndRemove: (topLeftCoord, bottomRightCoord) ->
@@ -361,8 +365,21 @@ MM.add 'map', (opts) ->
 
     MM.use 'user'
 
+    MM.map.$tileMap.delegate '.tile', 'click', (e) ->
+      tgt = $(e.target)
+      left = parseInt tgt.css('left'), 10
+      top = parseInt tgt.css('top'), 10
+      MM.user.runTo [left, top]
+
+
+    ###
+    Testing purposes!!! BELOW
+    ###
+
+    alert('gotta catch em all!')
+
     arrPos = []
-    totalSprites = 50
+    totalSprites = 100
     i = 0
     while i < totalSprites
       x = MM.random(300, 1200)
@@ -371,6 +388,7 @@ MM.add 'map', (opts) ->
       i++
     id = 0
     for pos in arrPos
+      id++
       MM.map.addUnits
         id: 'npc-' + id
         type: 'npc'
@@ -378,6 +396,8 @@ MM.add 'map', (opts) ->
         width: 65
         imgpath: '/img/sprite_monster.png'
         pos: pos
+        speed: 2
+        skip: 4
         anim:
           s: [
             "0 0",
@@ -399,11 +419,14 @@ MM.add 'map', (opts) ->
             "-650px 0",
             "-715px 0"
           ]
-      id++
+
+      xMax = MM.map.tileMap[0].length * 50
+      yMax = MM.map.tileMap.length * 50
+
+      x = MM.random 0, xMax
+      y = MM.random 0, yMax
+
+      MM.map.npcs['npc-'+id].walkTo [x,y]
+
     MM.log 'total sprites', id
     
-    MM.map.$tileMap.delegate '.tile', 'click', (e) ->
-      tgt = $(e.target)
-      left = parseInt tgt.css('left'), 10
-      top = parseInt tgt.css('top'), 10
-      MM.user.runTo [left, top]

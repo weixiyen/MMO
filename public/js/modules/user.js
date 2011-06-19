@@ -1,4 +1,5 @@
 (function() {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
   MM.add('user', function(opts) {
     var User;
     User = (function() {
@@ -50,7 +51,7 @@
         NODE1 = 'user:path:node:1';
         NODE2 = 'user:path:node:2';
         $.loop.remove(LOOPID);
-        MM.user.stopAll();
+        this.stopAll();
         divisor = MM.map.tileSize;
         x1 = Math.floor(MM.map.xcoord / divisor);
         y1 = Math.floor(MM.map.ycoord / divisor);
@@ -60,7 +61,7 @@
         if (path.length < 2) {
           return;
         }
-        run = function() {
+        run = __bind(function() {
           if (path.length < 2) {
             $.loop.remove(LOOPID);
             MM.user.stopAll();
@@ -68,8 +69,8 @@
           }
           MM.global[NODE1] = path.shift();
           MM.global[NODE2] = path[0];
-          return MM.user.move(MM.map.getDirection(MM.global[NODE1], MM.global[NODE2]));
-        };
+          return this.move(MM.map.getDirection(MM.global[NODE1], MM.global[NODE2]));
+        }, this);
         MM.global[this.tag.automove] = true;
         run();
         return $.loop.add(LOOPID, function() {
@@ -98,7 +99,7 @@
         yBound = Math.floor(this.height / 2);
         MM.map.panStart(direction, xBound, yBound);
         this.stopAllSprites(direction);
-        return this.spriteStart(this.getSimpleDirection(direction));
+        return this.spriteStart(this.map.getSimpleDirection(direction));
       };
       User.prototype.movingDiagonally = function() {
         var i, k, v, _ref;
@@ -176,15 +177,8 @@
       User.prototype.teleport = function(xcoord, ycoord) {
         return MM.map.goTo(xcoord, ycoord);
       };
-      User.prototype.getSimpleDirection = function(direction) {
-        if (direction.length === 2) {
-          return direction.substr(0, 1);
-        } else {
-          return direction;
-        }
-      };
       User.prototype.face = function(direction) {
-        direction = this.getSimpleDirection(direction);
+        direction = this.map.getSimpleDirection(direction);
         return this.el.css({
           'background-position': this.anim[direction][1]
         });

@@ -49,7 +49,7 @@ MM.add 'user', (opts) ->
       NODE2 = 'user:path:node:2'
       
       $.loop.remove LOOPID
-      MM.user.stopAll()
+      @stopAll()
       
       divisor = MM.map.tileSize
       x1 = Math.floor( MM.map.xcoord / divisor )
@@ -63,14 +63,14 @@ MM.add 'user', (opts) ->
         return
       
       # get new path segment & move the user
-      run = -> 
+      run = =>
         if path.length < 2
           $.loop.remove LOOPID
           MM.user.stopAll()
           return
         MM.global[NODE1] = path.shift() 
         MM.global[NODE2] = path[0]
-        MM.user.move MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
+        @move MM.map.getDirection MM.global[NODE1], MM.global[NODE2]
       
       # GO!!!
       MM.global[ @tag.automove ] = true
@@ -106,7 +106,7 @@ MM.add 'user', (opts) ->
       @stopAllSprites direction
       
       # begin animation
-      @spriteStart @getSimpleDirection direction
+      @spriteStart @map.getSimpleDirection direction
     
     movingDiagonally: ->
       i = 0
@@ -164,11 +164,8 @@ MM.add 'user', (opts) ->
     teleport: (xcoord, ycoord) ->
       MM.map.goTo xcoord, ycoord
       
-    getSimpleDirection: (direction) ->
-      return if direction.length == 2 then direction.substr 0, 1 else direction
-    
     face: (direction) ->
-      direction = @getSimpleDirection direction
+      direction = @map.getSimpleDirection direction
       @el.css
         'background-position': @anim[direction][1]
   

@@ -80,16 +80,19 @@
         }
         return this.accessible(newXcoord, newYcoord);
       };
-      Map.prototype.completedPath = function(node1, node2) {
+      Map.prototype.completedPath = function(node1, node2, coords) {
         var direction;
-        direction = MM.user.getSimpleDirection(this.getDirection(node1, node2));
-        if (direction === this.dir.W && this.xcoord <= node2[0]) {
+        if (!(coords != null)) {
+          coords = [this.xcoord, this.ycoord];
+        }
+        direction = this.getSimpleDirection(this.getDirection(node1, node2));
+        if (direction === this.dir.W && coords[0] <= node2[0]) {
           return true;
-        } else if (direction === this.dir.E && this.xcoord >= node2[0]) {
+        } else if (direction === this.dir.E && coords[0] >= node2[0]) {
           return true;
-        } else if (direction === this.dir.N && this.ycoord <= node2[1]) {
+        } else if (direction === this.dir.N && coords[1] <= node2[1]) {
           return true;
-        } else if (direction === this.dir.S && this.ycoord >= node2[1]) {
+        } else if (direction === this.dir.S && coords[1] >= node2[1]) {
           return true;
         }
         return false;
@@ -175,27 +178,27 @@
         }
         return direction;
       };
+      Map.prototype.getSimpleDirection = function(direction) {
+        if (direction.length === 2) {
+          return direction.substr(0, 1);
+        } else {
+          return direction;
+        }
+      };
       Map.prototype.getPath = function(start, end) {
-        var a, b, halfTileSize, html, left, node, nodepath, path, tileHtml, tileSize, top, x, y, _i, _len;
+        var a, b, halfTileSize, node, nodepath, path, tileSize, x, y, _i, _len;
         a = this.collisionGraph.nodes[start[1]][start[0]];
         b = this.collisionGraph.nodes[end[1]][end[0]];
         path = $.astar.search(this.collisionGraph.nodes, a, b);
         nodepath = [];
         tileSize = this.tileSize;
         halfTileSize = this.halfTileSize;
-        this.$tileMap.find('.path').remove();
-        html = [];
         for (_i = 0, _len = path.length; _i < _len; _i++) {
           node = path[_i];
-          left = node[0] * tileSize + 'px';
-          top = node[1] * tileSize + 'px';
-          tileHtml = '<div class="tile path" style="left:' + left + ';top:' + top + ';"></div>';
-          html.push(tileHtml);
           x = node[0] * tileSize + halfTileSize;
           y = node[1] * tileSize + halfTileSize;
           nodepath.push([x, y]);
         }
-        this.$tileMap.append(html.join(''));
         return nodepath;
       };
       Map.prototype.getTilesToAddAndRemove = function(topLeftCoord, bottomRightCoord) {
@@ -329,7 +332,7 @@
     MM.require('sprite');
     MM.require('user');
     return MM.run(function() {
-      var NPC, Player, arrPos, i, id, pos, totalSprites, x, y, _i, _len;
+      var NPC, Player, arrPos, i, id, pos, totalSprites, x, xMax, y, yMax, _i, _len;
       MM.use('sprite');
       NPC = MM.use('class/unit', 'npc');
       Player = MM.use('class/unit', 'pc');
@@ -347,8 +350,19 @@
         Player: Player
       }));
       MM.use('user');
+      MM.map.$tileMap.delegate('.tile', 'click', function(e) {
+        var left, tgt, top;
+        tgt = $(e.target);
+        left = parseInt(tgt.css('left'), 10);
+        top = parseInt(tgt.css('top'), 10);
+        return MM.user.runTo([left, top]);
+      });
+      /*
+          Testing purposes!!! BELOW
+          */
+      alert('gotta catch em all!');
       arrPos = [];
-      totalSprites = 50;
+      totalSprites = 100;
       i = 0;
       while (i < totalSprites) {
         x = MM.random(300, 1200);
@@ -359,6 +373,7 @@
       id = 0;
       for (_i = 0, _len = arrPos.length; _i < _len; _i++) {
         pos = arrPos[_i];
+        id++;
         MM.map.addUnits({
           id: 'npc-' + id,
           type: 'npc',
@@ -366,6 +381,8 @@
           width: 65,
           imgpath: '/img/sprite_monster.png',
           pos: pos,
+          speed: 2,
+          skip: 4,
           anim: {
             s: ["0 0", "-65px 0", "-130px 0"],
             n: ["-195px 0", "-260px 0", "-325px 0"],
@@ -373,16 +390,13 @@
             e: ["-585px 0", "-650px 0", "-715px 0"]
           }
         });
-        id++;
+        xMax = MM.map.tileMap[0].length * 50;
+        yMax = MM.map.tileMap.length * 50;
+        x = MM.random(0, xMax);
+        y = MM.random(0, yMax);
+        MM.map.npcs['npc-' + id].walkTo([x, y]);
       }
-      MM.log('total sprites', id);
-      return MM.map.$tileMap.delegate('.tile', 'click', function(e) {
-        var left, tgt, top;
-        tgt = $(e.target);
-        left = parseInt(tgt.css('left'), 10);
-        top = parseInt(tgt.css('top'), 10);
-        return MM.user.runTo([left, top]);
-      });
+      return MM.log('total sprites', id);
     });
   });
 }).call(this);

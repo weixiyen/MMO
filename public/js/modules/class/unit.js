@@ -1,5 +1,5 @@
 (function() {
-  var __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
+  var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; }, __hasProp = Object.prototype.hasOwnProperty, __extends = function(child, parent) {
     for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; }
     function ctor() { this.constructor = child; }
     ctor.prototype = parent.prototype;
@@ -18,11 +18,20 @@
         this.anim = data.anim;
         this.pos = data.pos;
         this.el = data.el;
+        this.speed = data.speed;
+        this.skip = data.skip;
+        this.moving = false;
+        this.tag = {
+          pathloop: 'unit:' + this.id + ':path:loop',
+          node1: 'unit:' + this.id + ':path:node:1',
+          node2: 'unit:' + this.id + ':path:node:2',
+          move: 'unit:' + this.id + ':move',
+          anim: 'unit:' + this.id + ':anim'
+        };
         this.elBody = this.el.append('<div class="body"></div>').find('.body:first');
         this.create();
       }
       Unit.prototype.create = function() {
-        var direction;
         this.el.css({
           left: this.pos[0],
           top: this.pos[1],
@@ -30,22 +39,77 @@
           height: 0,
           width: 0
         });
-        this.elBody.css({
+        return this.elBody.css({
           height: this.height,
           width: this.width,
           background: 'no-repeat url(' + this.imgpath + ')',
           left: this.width / 2 * -1,
           top: this.height / 2 * -1
         });
-        direction = ['n', 'e', 'w', 's'][MM.random(0, 3)];
-        return MM.sprite.start(this.id, {
+      };
+      Unit.prototype.stop = function() {
+        $.loop.remove(this.tag.move);
+        return MM.sprite.stop(this.tag.anim);
+      };
+      Unit.prototype.move = function(direction) {
+        $.loop.add(this.tag.move, __bind(function() {
+          return this.walk(direction);
+        }, this));
+        return MM.sprite.start(this.tag.anim, {
           el: this.elBody,
           queue: this.anim[direction],
-          skip: 10
+          skip: this.skip
         });
       };
-      Unit.prototype.walkTo = function() {
-        return MM.log('walking');
+      Unit.prototype.walk = function(direction) {
+        if (direction === 'w') {
+          this.pos[0] -= this.speed;
+        } else if (direction === 'e') {
+          this.pos[0] += this.speed;
+        } else if (direction === 'n') {
+          this.pos[1] -= this.speed;
+        } else if (direction === 's') {
+          this.pos[1] += this.speed;
+        }
+        return this.el.css({
+          left: this.pos[0],
+          top: this.pos[1],
+          zIndex: this.pos[1]
+        });
+      };
+      Unit.prototype.walkTo = function(coords) {
+        var LOOPID, NODE1, NODE2, divisor, path, walk, x1, x2, y1, y2;
+        LOOPID = this.tag.pathloop;
+        NODE1 = this.tag.node1;
+        NODE2 = this.tag.node2;
+        $.loop.remove(LOOPID);
+        this.stop();
+        divisor = MM.map.tileSize;
+        x1 = Math.floor(this.pos[0] / divisor);
+        y1 = Math.floor(this.pos[1] / divisor);
+        x2 = Math.floor(coords[0] / divisor);
+        y2 = Math.floor(coords[1] / divisor);
+        path = MM.map.getPath([x1, y1], [x2, y2]);
+        if (path.length < 2) {
+          return;
+        }
+        walk = __bind(function() {
+          if (path.length < 2) {
+            $.loop.remove(LOOPID);
+            this.stop();
+            return;
+          }
+          MM.global[NODE1] = path.shift();
+          MM.global[NODE2] = path[0];
+          return this.move(MM.map.getDirection(MM.global[NODE1], MM.global[NODE2]));
+        }, this);
+        walk();
+        return $.loop.add(LOOPID, __bind(function() {
+          if (MM.map.completedPath(MM.global[NODE1], MM.global[NODE2], [this.pos[0], this.pos[1]])) {
+            this.stop();
+            return walk();
+          }
+        }, this));
       };
       Unit.prototype.doAbility = function() {
         return MM.log('do ability');
