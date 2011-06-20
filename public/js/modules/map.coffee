@@ -23,6 +23,8 @@ MM.add 'map', (opts) ->
       @players = {}
       @unitStub = 'unit-'
       @pos = [options.xcoord, options.ycoord]
+      @xOffset = -1 * Math.ceil( MM.settings.partyBox.width / 2.5 )
+      @yOffset = 0
 
       # initialize functions
       @setViewportInfo()
@@ -238,8 +240,8 @@ MM.add 'map', (opts) ->
     goTo: (xcoord, ycoord) ->
       @setCoords xcoord, ycoord
       @$map.css
-        left: @left
-        top: @top
+        left: @left + @xOffset
+        top: @top + @yOffset
     
     panStart: (direction, xBound=0, yBound=0) ->
       loopId = 'pan_map_' + direction
@@ -285,8 +287,8 @@ MM.add 'map', (opts) ->
         @top -= change
 
       pos = 
-        left: @left
-        top: @top
+        left: @left + @xOffset
+        top: @top + @yOffset
       return pos
 
     removeUnit: (id) ->
@@ -318,7 +320,8 @@ MM.add 'map', (opts) ->
 
     
     # TESTING
-    MM.global['username'] = prompt('Enter Your Character Name:')
+    # MM.global['username'] = prompt('Enter Your Character Name:')
+    MM.global['username'] = 'Player 1'
     tileMap = []
     wMax = 50
     hMax = 50
@@ -341,7 +344,6 @@ MM.add 'map', (opts) ->
     xMax = tileMap[0].length * 50
     yMax = tileMap.length * 50
 
-    MM.log tileMap
     # END TESTING
 
     MM.extend 'map', new Map

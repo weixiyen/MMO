@@ -24,6 +24,8 @@
         this.players = {};
         this.unitStub = 'unit-';
         this.pos = [options.xcoord, options.ycoord];
+        this.xOffset = -1 * Math.ceil(MM.settings.partyBox.width / 2.5);
+        this.yOffset = 0;
         this.setViewportInfo();
         this.goTo(this.pos[0], this.pos[1]);
         this.startUIGenerator();
@@ -251,8 +253,8 @@
       Map.prototype.goTo = function(xcoord, ycoord) {
         this.setCoords(xcoord, ycoord);
         return this.$map.css({
-          left: this.left,
-          top: this.top
+          left: this.left + this.xOffset,
+          top: this.top + this.yOffset
         });
       };
       Map.prototype.panStart = function(direction, xBound, yBound) {
@@ -308,8 +310,8 @@
           this.top -= change;
         }
         pos = {
-          left: this.left,
-          top: this.top
+          left: this.left + this.xOffset,
+          top: this.top + this.yOffset
         };
         return pos;
       };
@@ -338,7 +340,7 @@
       NPC = MM.use('class/unit', 'npc');
       Player = MM.use('class/unit', 'pc');
       MM.render(opts.el, ui_path);
-      MM.global['username'] = prompt('Enter Your Character Name:');
+      MM.global['username'] = 'Player 1';
       tileMap = [];
       wMax = 50;
       hMax = 50;
@@ -362,7 +364,6 @@
       totalSprites = 25;
       xMax = tileMap[0].length * 50;
       yMax = tileMap.length * 50;
-      MM.log(tileMap);
       MM.extend('map', new Map({
         $map: opts.el,
         $tileMap: $('#ui-map-1'),

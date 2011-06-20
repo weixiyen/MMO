@@ -38,8 +38,8 @@ MM.add 'user', (opts) ->
       @face data.facing
       
     center: ->
-      left = $(window).width() / 2 - @width / 2
-      top = $(window).height() / 2 - @height / 2
+      left = $(window).width() / 2 - @width / 2 + @map.xOffset
+      top = $(window).height() / 2 - @height / 2 + @map.yOffset
       @put left, top
     
     # relative to screen
