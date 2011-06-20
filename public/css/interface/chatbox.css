@@ -20,20 +20,6 @@
   position: relative;
   padding: 5px 0 0 5px;
 }
-.ui-chatlog .wrap .tabs {
-  height: 53px;
-}
-.ui-chatlog .wrap .tabs .tab {
-  width: 45px;
-  height: 45px;
-  border-radius: 5px;
-  margin-right: 3px;
-  background: #00f;
-  float: left;
-}
-.ui-chatlog .wrap .tabs .tab:last-child {
-  margin: 0;
-}
 .ui-chatlog .wrap .log {
   color: #fff;
 }

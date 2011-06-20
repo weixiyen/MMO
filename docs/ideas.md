@@ -158,3 +158,14 @@ First load gets all npc within certain distance
 If no npc, then create the npc on the spot via Ajax query, then perform action
 If npc, then perform action
 Delete any npc from memory more than x distance away
+
+
+UI Notes
+=========
+
+Chat Priority
+----------
+1) Party
+2) Linkshell
+3) General
+4) Combat
