@@ -85,17 +85,18 @@
         });
       };
       Unit.prototype.walkTo = function(coords) {
-        var LOOPID, NODE1, NODE2, divisor, path, walk, x1, x2, y1, y2;
+        var LOOPID, NODE1, NODE2, path, walk, x1, x2, xDivisor, y1, y2, yDivisor;
         LOOPID = this.tag.pathloop;
         NODE1 = this.tag.node1;
         NODE2 = this.tag.node2;
         $.loop.remove(LOOPID);
         this.stop();
-        divisor = MM.map.tileSize;
-        x1 = Math.floor(this.pos[0] / divisor);
-        y1 = Math.floor(this.pos[1] / divisor);
-        x2 = Math.floor(coords[0] / divisor);
-        y2 = Math.floor(coords[1] / divisor);
+        xDivisor = MM.map.tileWidth;
+        yDivisor = MM.map.tileHeight;
+        x1 = Math.floor(this.pos[0] / xDivisor);
+        y1 = Math.floor(this.pos[1] / yDivisor);
+        x2 = Math.floor(coords[0] / xDivisor);
+        y2 = Math.floor(coords[1] / yDivisor);
         path = MM.map.getPath([x1, y1], [x2, y2]);
         if (path.length < 2) {
           return;

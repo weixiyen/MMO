@@ -7,8 +7,10 @@ MM.add 'map', (opts) ->
       @change = options.change
       @$map = options.$map
       @$tileMap = options.$tileMap
-      @tileSize = options.tileSize
-      @halfTileSize = Math.floor( options.tileSize / 2 )
+      @tileWidth = options.tileWidth
+      @tileHeight = options.tileHeight
+      @halfTileWidth = Math.floor( options.tileWidth / 2 )
+      @halfTileHeight = Math.floor( options.tileHeight / 2 )
       @tileMap = options.tileMap
       @viewableTiles = {}
       @collisionTypes = options.collisionTypes
@@ -119,7 +121,8 @@ MM.add 'map', (opts) ->
     
     generateUI: ->
       
-      tileSize = @tileSize
+      tileWidth = @tileWidth
+      tileHeight = @tileHeight
       x2max = @tileMap[0].length
       y2max = @tileMap.length
       
@@ -128,10 +131,10 @@ MM.add 'map', (opts) ->
       x2 = @pos[0] + @viewportHalfWidth
       y2 = @pos[1] + @viewportHalfHeight
 
-      x1 = Math.floor( x1 / tileSize ) - 3
-      y1 = Math.floor( y1 / tileSize ) - 3
-      x2 = Math.floor( x2 / tileSize ) + 3
-      y2 = Math.floor( y2 / tileSize ) + 3
+      x1 = Math.floor( x1 / tileWidth ) - 3
+      y1 = Math.floor( y1 / tileHeight ) - 3
+      x2 = Math.floor( x2 / tileWidth ) + 3
+      y2 = Math.floor( y2 / tileHeight ) + 3
 
       x1 = if x1 < 0 then 0 else x1
       y1 = if y1 < 0 then 0 else y1
@@ -149,8 +152,8 @@ MM.add 'map', (opts) ->
       $( purgeIds.join(',') ).remove()
     
     getCoordsByPos: (left, top) ->
-      xcoord = Math.floor( left / @tileSize )
-      ycoord = Math.floor( top / @tileSize )
+      xcoord = Math.floor( left / @tileWidth )
+      ycoord = Math.floor( top / @tileHeight )
       return [ xcoord, ycoord ]
     
     getDirection: (from, to) ->
@@ -173,20 +176,22 @@ MM.add 'map', (opts) ->
       b = @collisionGraph.nodes[ end[1] ][ end[0] ]
       path = $.astar.search @collisionGraph.nodes, a, b
       nodepath = []
-      tileSize = @tileSize
-      halfTileSize = @halfTileSize
+      tileWidth = @tileWidth
+      tileHeight = @tileHeight
+      halfTileWidth = @halfTileWidth
+      halfTileHeight = @halfTileHeight
       
       #@$tileMap.find('.path').remove()
       #html = []
 
       for node in path
-        #left = node[0] * tileSize + 'px'
-        #top = node[1] * tileSize + 'px'
+        #left = node[0] * tileWidth + 'px'
+        #top = node[1] * tileHeight + 'px'
         #tileHtml = '<div class="tile path" style="left:'+left+';top:'+top+';"></div>'
         #html.push tileHtml
         
-        x = node[0] * tileSize + halfTileSize
-        y = node[1] * tileSize + halfTileSize
+        x = node[0] * tileWidth + halfTileWidth
+        y = node[1] * tileHeight + halfTileHeight
         nodepath.push [x, y]
 
       #@$tileMap.append html.join ''
@@ -200,7 +205,8 @@ MM.add 'map', (opts) ->
       x2 = bottomRightCoord[0]
       y2 = bottomRightCoord[1]
 
-      tileSize = @tileSize
+      tileWidth = @tileWidth
+      tileHeight = @tileHeight
       addHtml = []
       purgeIds = []
       newViewableTiles = {}
@@ -216,9 +222,9 @@ MM.add 'map', (opts) ->
 
           if !@viewableTiles[stub]?
             @viewableTiles[stub] = tile
-            left = (x * tileSize) + 'px'
-            top = (y * tileSize) + 'px'
-            addHtml.push '<div id="'+stub+'" class="tile type-'+tile+'" style="left:'+left+';top:'+top+';"></div>'
+            left = (x * tileWidth) + 'px'
+            top = (y * tileHeight) + 'px'
+            addHtml.push '<div id="'+stub+'" class="tile type-'+tile+'" style="left:'+left+';top:'+top+';width:'+tileWidth+'px;height:'+tileHeight+'px;"></div>'
 
           x++
         y++
@@ -231,8 +237,8 @@ MM.add 'map', (opts) ->
       return [addHtml, purgeIds]
         
     getTileType: (xcoord, ycoord) ->
-      x = Math.floor( xcoord / @tileSize )
-      y = Math.floor( ycoord / @tileSize )
+      x = Math.floor( xcoord / @tileWidth )
+      y = Math.floor( ycoord / @tileHeight )
       if undefined == @tileMap[ y ] or undefined == @tileMap[ y ][ x ]
         return false
       @tileMap[ y ][ x ]
@@ -352,7 +358,8 @@ MM.add 'map', (opts) ->
       xcoord: MM.random 0, xMax
       ycoord: MM.random 0, yMax
       change: 3
-      tileSize: 75
+      tileWidth: 128
+      tileHeight: 64
       tileMap: tileMap
       collisionTypes: [99, 98]
       NPC: NPC

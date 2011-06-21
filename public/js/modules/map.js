@@ -7,8 +7,10 @@
         this.change = options.change;
         this.$map = options.$map;
         this.$tileMap = options.$tileMap;
-        this.tileSize = options.tileSize;
-        this.halfTileSize = Math.floor(options.tileSize / 2);
+        this.tileWidth = options.tileWidth;
+        this.tileHeight = options.tileHeight;
+        this.halfTileWidth = Math.floor(options.tileWidth / 2);
+        this.halfTileHeight = Math.floor(options.tileHeight / 2);
         this.tileMap = options.tileMap;
         this.viewableTiles = {};
         this.collisionTypes = options.collisionTypes;
@@ -136,18 +138,19 @@
         return this.collisionGraph = $.astar.graph(collisionMap);
       };
       Map.prototype.generateUI = function() {
-        var addHtml, bottomRightCoord, purgeIds, tileSize, tiles, topLeftCoord, x1, x2, x2max, y1, y2, y2max;
-        tileSize = this.tileSize;
+        var addHtml, bottomRightCoord, purgeIds, tileHeight, tileWidth, tiles, topLeftCoord, x1, x2, x2max, y1, y2, y2max;
+        tileWidth = this.tileWidth;
+        tileHeight = this.tileHeight;
         x2max = this.tileMap[0].length;
         y2max = this.tileMap.length;
         x1 = this.pos[0] - this.viewportHalfWidth;
         y1 = this.pos[1] - this.viewportHalfHeight;
         x2 = this.pos[0] + this.viewportHalfWidth;
         y2 = this.pos[1] + this.viewportHalfHeight;
-        x1 = Math.floor(x1 / tileSize) - 3;
-        y1 = Math.floor(y1 / tileSize) - 3;
-        x2 = Math.floor(x2 / tileSize) + 3;
-        y2 = Math.floor(y2 / tileSize) + 3;
+        x1 = Math.floor(x1 / tileWidth) - 3;
+        y1 = Math.floor(y1 / tileHeight) - 3;
+        x2 = Math.floor(x2 / tileWidth) + 3;
+        y2 = Math.floor(y2 / tileHeight) + 3;
         x1 = x1 < 0 ? 0 : x1;
         y1 = y1 < 0 ? 0 : y1;
         x2 = x2 > x2max ? x2max : x2;
@@ -162,8 +165,8 @@
       };
       Map.prototype.getCoordsByPos = function(left, top) {
         var xcoord, ycoord;
-        xcoord = Math.floor(left / this.tileSize);
-        ycoord = Math.floor(top / this.tileSize);
+        xcoord = Math.floor(left / this.tileWidth);
+        ycoord = Math.floor(top / this.tileHeight);
         return [xcoord, ycoord];
       };
       Map.prototype.getDirection = function(from, to) {
@@ -189,28 +192,31 @@
         }
       };
       Map.prototype.getPath = function(start, end) {
-        var a, b, halfTileSize, node, nodepath, path, tileSize, x, y, _i, _len;
+        var a, b, halfTileHeight, halfTileWidth, node, nodepath, path, tileHeight, tileWidth, x, y, _i, _len;
         a = this.collisionGraph.nodes[start[1]][start[0]];
         b = this.collisionGraph.nodes[end[1]][end[0]];
         path = $.astar.search(this.collisionGraph.nodes, a, b);
         nodepath = [];
-        tileSize = this.tileSize;
-        halfTileSize = this.halfTileSize;
+        tileWidth = this.tileWidth;
+        tileHeight = this.tileHeight;
+        halfTileWidth = this.halfTileWidth;
+        halfTileHeight = this.halfTileHeight;
         for (_i = 0, _len = path.length; _i < _len; _i++) {
           node = path[_i];
-          x = node[0] * tileSize + halfTileSize;
-          y = node[1] * tileSize + halfTileSize;
+          x = node[0] * tileWidth + halfTileWidth;
+          y = node[1] * tileHeight + halfTileHeight;
           nodepath.push([x, y]);
         }
         return nodepath;
       };
       Map.prototype.getTilesToAddAndRemove = function(topLeftCoord, bottomRightCoord) {
-        var addHtml, k, left, newViewableTiles, purgeIds, stub, tile, tileSize, top, v, x, x1, x2, y, y1, y2, _ref;
+        var addHtml, k, left, newViewableTiles, purgeIds, stub, tile, tileHeight, tileWidth, top, v, x, x1, x2, y, y1, y2, _ref;
         x1 = topLeftCoord[0];
         y1 = topLeftCoord[1];
         x2 = bottomRightCoord[0];
         y2 = bottomRightCoord[1];
-        tileSize = this.tileSize;
+        tileWidth = this.tileWidth;
+        tileHeight = this.tileHeight;
         addHtml = [];
         purgeIds = [];
         newViewableTiles = {};
@@ -223,9 +229,9 @@
             newViewableTiles[stub] = tile;
             if (!(this.viewableTiles[stub] != null)) {
               this.viewableTiles[stub] = tile;
-              left = (x * tileSize) + 'px';
-              top = (y * tileSize) + 'px';
-              addHtml.push('<div id="' + stub + '" class="tile type-' + tile + '" style="left:' + left + ';top:' + top + ';"></div>');
+              left = (x * tileWidth) + 'px';
+              top = (y * tileHeight) + 'px';
+              addHtml.push('<div id="' + stub + '" class="tile type-' + tile + '" style="left:' + left + ';top:' + top + ';width:' + tileWidth + 'px;height:' + tileHeight + 'px;"></div>');
             }
             x++;
           }
@@ -243,8 +249,8 @@
       };
       Map.prototype.getTileType = function(xcoord, ycoord) {
         var x, y;
-        x = Math.floor(xcoord / this.tileSize);
-        y = Math.floor(ycoord / this.tileSize);
+        x = Math.floor(xcoord / this.tileWidth);
+        y = Math.floor(ycoord / this.tileHeight);
         if (void 0 === this.tileMap[y] || void 0 === this.tileMap[y][x]) {
           return false;
         }
@@ -370,7 +376,8 @@
         xcoord: MM.random(0, xMax),
         ycoord: MM.random(0, yMax),
         change: 3,
-        tileSize: 75,
+        tileWidth: 128,
+        tileHeight: 64,
         tileMap: tileMap,
         collisionTypes: [99, 98],
         NPC: NPC,

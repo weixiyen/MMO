@@ -83,11 +83,12 @@ MM.add 'class/unit', (opts) ->
       $.loop.remove LOOPID
       @stop()
 
-      divisor = MM.map.tileSize
-      x1 = Math.floor( @pos[0] / divisor )
-      y1 = Math.floor( @pos[1] / divisor )
-      x2 = Math.floor( coords[0] / divisor )
-      y2 = Math.floor( coords[1] / divisor )
+      xDivisor = MM.map.tileWidth
+      yDivisor = MM.map.tileHeight
+      x1 = Math.floor( @pos[0] / xDivisor )
+      y1 = Math.floor( @pos[1] / yDivisor )
+      x2 = Math.floor( coords[0] / xDivisor )
+      y2 = Math.floor( coords[1] / yDivisor )
       path = MM.map.getPath [x1,y1], [x2,y2]
 
       # check for bad path
