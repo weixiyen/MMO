@@ -368,8 +368,8 @@ MM.add 'map', (opts) ->
     MM.extend 'map', new Map
       $map: opts.el
       $tileMap: $('#ui-map-1')
-      xcoord: MM.random 0, xMax / 2
-      ycoord: MM.random 0, yMax / 2
+      xcoord: MM.random 0, xMax
+      ycoord: MM.random 0, yMax
       change: 4
       tileWidth: 128
       tileHeight: 64
@@ -399,8 +399,8 @@ MM.add 'map', (opts) ->
     
     i = 0
     while i < totalSprites
-      x = MM.random 0, xMax / 2
-      y = MM.random 0, yMax / 2
+      x = MM.random 0, xMax
+      y = MM.random 0, yMax
       arrPos.push [x, y]
       i++
     id = 0
@@ -437,8 +437,8 @@ MM.add 'map', (opts) ->
             "-650px 0",
             "-715px 0"
           ]
-      x = MM.random 0, xMax / 2
-      y = MM.random 0, yMax / 2
+      x = MM.random 0, xMax
+      y = MM.random 0, yMax
 
       #MM.map.npcs['npc-'+id].chase MM.map.npcs['npc-'+ (id-1)]
       MM.map.npcs['npc-'+id].chase()
