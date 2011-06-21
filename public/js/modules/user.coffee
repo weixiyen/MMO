@@ -18,13 +18,13 @@ MM.add 'user', (opts) ->
         e: false
         s: false
         w: false
-      
+
       @el.css
         height: @height
         width: @width
         background: 'no-repeat url(' + @imgpath + ')'
         position: 'fixed'
-        zIndex: MM.map.ycoord
+        zIndex: @map.pos[1]
 
       @elName.css
         left: @width / 2 - 50
@@ -57,8 +57,8 @@ MM.add 'user', (opts) ->
       $.loop.remove LOOPID
       @stopAll()
       
-      xDivisor = MM.map.tileWidth
-      yDivisor = MM.map.tileHeight
+      xDivisor = MM.map.nodeWidth
+      yDivisor = MM.map.nodeHeight
       x1 = Math.floor( MM.map.pos[0] / xDivisor )
       y1 = Math.floor( MM.map.pos[1] / yDivisor )
       x2 = Math.floor( coords[0] / xDivisor )
@@ -105,8 +105,8 @@ MM.add 'user', (opts) ->
       else 
         @moving[ direction ] = true
       
-      xBound = Math.floor( @width/2 )
-      yBound = Math.floor( @height/2 )
+      xBound = Math.floor( @width / 2 )
+      yBound = Math.floor( @height / 2 )
       
       MM.map.panStart direction, xBound, yBound
       
@@ -132,7 +132,7 @@ MM.add 'user', (opts) ->
       MM.sprite.start loopid,
         el: @el
         queue: @anim[direction]
-        skip: 4
+        skip: 3
       @spriteQueueAdd direction
     
     spriteStop: (direction) ->

@@ -1,6 +1,6 @@
 (function() {
   WEB.namespace('MM');
-  $.loop.setInterval(20);
+  $.loop.setInterval(30);
   MM.global = {};
   MM.addRoute('/', function(tokens) {
     return MM.use('page.main', {

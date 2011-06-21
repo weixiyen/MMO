@@ -83,8 +83,8 @@ MM.add 'class/unit', (opts) ->
       $.loop.remove LOOPID
       @stop()
 
-      xDivisor = MM.map.tileWidth
-      yDivisor = MM.map.tileHeight
+      xDivisor = MM.map.nodeWidth
+      yDivisor = MM.map.nodeHeight
       x1 = Math.floor( @pos[0] / xDivisor )
       y1 = Math.floor( @pos[1] / yDivisor )
       x2 = Math.floor( coords[0] / xDivisor )

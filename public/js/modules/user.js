@@ -26,7 +26,7 @@
           width: this.width,
           background: 'no-repeat url(' + this.imgpath + ')',
           position: 'fixed',
-          zIndex: MM.map.ycoord
+          zIndex: this.map.pos[1]
         });
         this.elName.css({
           left: this.width / 2 - 50,
@@ -58,8 +58,8 @@
         NODE2 = 'user:path:node:2';
         $.loop.remove(LOOPID);
         this.stopAll();
-        xDivisor = MM.map.tileWidth;
-        yDivisor = MM.map.tileHeight;
+        xDivisor = MM.map.nodeWidth;
+        yDivisor = MM.map.nodeHeight;
         x1 = Math.floor(MM.map.pos[0] / xDivisor);
         y1 = Math.floor(MM.map.pos[1] / yDivisor);
         x2 = Math.floor(coords[0] / xDivisor);
@@ -131,7 +131,7 @@
         MM.sprite.start(loopid, {
           el: this.el,
           queue: this.anim[direction],
-          skip: 4
+          skip: 3
         });
         return this.spriteQueueAdd(direction);
       };
