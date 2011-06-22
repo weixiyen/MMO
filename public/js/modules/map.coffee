@@ -30,19 +30,86 @@ MM.add 'map', (opts) ->
       @xOffset = -1 * Math.ceil( MM.settings.partyBox.width / 2.5 )
       @yOffset = 0
       @tileEagerloadDepth = 6
+      @isPointInPoly = $.polygon.isPointWithin
 
-      
       # initialize functions
       @setViewportInfo()
       @goTo @pos[0], @pos[1]
       @startUIGenerator()
       @generateCollisionGraph @tileMap
-      
+
+    ###
     accessible: (xcoord, ycoord) ->
       tileType = @getTileType xcoord, ycoord
       if tileType == false
         return false
       -1 == $.inArray( tileType, @collisionTypes )
+    ###
+
+    accessible: (xcoord, ycoord) ->
+      
+      # 1) find 4 neighbor tiles
+      c = [xcoord, ycoord]
+      n = [xcoord, ycoord - @nodeHeight]
+      e = [xcoord + @nodeWidth, ycoord]
+      w = [xcoord - @nodeWidth, ycoord]
+      s = [xcoord, ycoord + @nodeHeight]
+
+      # 2) only save tiles with ID of 99
+      badTiles = []
+      for coord in [c, n, e, w, s]
+        tileType = @getTileType coord[0], coord[1]
+        if -1 != $.inArray( tileType, @collisionTypes )
+          badTiles.push coord
+          
+      # 3) for each tile of 99, get polygon points
+      badPolygons = []
+      for coord in badTiles
+        badPolygons.push @getPolygon coord
+
+      # 4) for each polygon, check if point is within the polygon
+      accessible = true
+      for polygon in badPolygons
+        bad = @isPointInPoly polygon,
+          x: xcoord
+          y: ycoord
+        if bad == true
+          accessible = false
+          break
+
+      if accessible
+        @$map.append('<div style="width:2px;height:2px;z-index:1000;position:absolute;background:blue;left:'+xcoord+'px;top:'+ycoord+'px;"></div>')
+      else
+        @$map.append('<div style="width:2px;height:2px;z-index:1000;position:absolute;background:red;left:'+xcoord+'px;top:'+ycoord+'px;"></div>')
+      return accessible
+    
+    getPolygon: ( coord ) ->
+      # center the point on the node
+      nw = @nodeWidth
+      nh = @nodeHeight
+
+      tx = Math.floor( coord[0] / nw )
+      ty = Math.floor( coord[1] / nh )
+      stub = '#t_'+tx+'_'+ty
+      $(stub).addClass('path')
+
+      x = Math.floor( coord[0] / nw ) * nw + ( nw / 2 )
+      y = Math.floor( coord[1] / nh ) * nh + ( nh / 2 )
+      
+      n =
+        x: x
+        y: y - nh
+      e =
+        x: x + nw
+        y: y
+      s =
+        x: x
+        y: y + nh
+      w =
+        x: x - nw
+        y: y
+
+      return [n,e,s,w]
 
     addNpc: (data) ->
 
@@ -73,9 +140,9 @@ MM.add 'map', (opts) ->
     canShift: (direction, xBound, yBound) ->
       newXcoord = @pos[0]
       newYcoord = @pos[1]
-      xBound += @change
-      yBound += @change
-      
+      xBound = @change
+      yBound = @change
+
       if direction == @dir.W
         newXcoord -= xBound
       else if direction == @dir.E

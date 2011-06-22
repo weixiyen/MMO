@@ -41,8 +41,8 @@
       }
       User.prototype.center = function() {
         var left, top;
-        left = $(window).width() / 2 - this.width / 2 + this.map.xOffset;
-        top = $(window).height() / 2 - this.height / 2 + this.map.yOffset;
+        left = $(window).width() / 2 - this.width / 2 + this.map.xOffset + 8;
+        top = $(window).height() / 2 - this.height + this.map.yOffset + 8;
         return this.put(left, top);
       };
       User.prototype.put = function(x, y) {
