@@ -38,14 +38,7 @@ MM.add 'map', (opts) ->
       @startUIGenerator()
       @generateCollisionGraph @tileMap
 
-    ###
-    accessible: (xcoord, ycoord) ->
-      tileType = @getTileType xcoord, ycoord
-      if tileType == false
-        return false
-      -1 == $.inArray( tileType, @collisionTypes )
-    ###
-
+    # determine if the coordinate is accessible
     accessible: (xcoord, ycoord) ->
       
       # 1) find 4 neighbor tiles
@@ -59,7 +52,7 @@ MM.add 'map', (opts) ->
       badTiles = []
       for coord in [c, n, e, w, s]
         tileType = @getTileType coord[0], coord[1]
-        if -1 != $.inArray( tileType, @collisionTypes )
+        if -1 != @collisionTypes.indexOf tileType
           badTiles.push coord
           
       # 3) for each tile of 99, get polygon points
@@ -68,34 +61,26 @@ MM.add 'map', (opts) ->
         badPolygons.push @getPolygon coord
 
       # 4) for each polygon, check if point is within the polygon
-      accessible = true
       for polygon in badPolygons
         bad = @isPointInPoly polygon,
           x: xcoord
           y: ycoord
         if bad == true
-          accessible = false
+          return false
           break
 
-      if accessible
-        @$map.append('<div style="width:2px;height:2px;z-index:1000;position:absolute;background:blue;left:'+xcoord+'px;top:'+ycoord+'px;"></div>')
-      else
-        @$map.append('<div style="width:2px;height:2px;z-index:1000;position:absolute;background:red;left:'+xcoord+'px;top:'+ycoord+'px;"></div>')
-      return accessible
+      return true
     
     getPolygon: ( coord ) ->
-      # center the point on the node
       nw = @nodeWidth
       nh = @nodeHeight
 
-      tx = Math.floor( coord[0] / nw )
-      ty = Math.floor( coord[1] / nh )
-      stub = '#t_'+tx+'_'+ty
-      $(stub).addClass('path')
-
+      # get the tile's top and left corner coordinate and add 1/2 of the height
+      # this will give us the center point of the rectangle
       x = Math.floor( coord[0] / nw ) * nw + ( nw / 2 )
       y = Math.floor( coord[1] / nh ) * nh + ( nh / 2 )
-      
+
+      # make the points a diamond wrapping the rectangle
       n =
         x: x
         y: y - nh
@@ -109,6 +94,7 @@ MM.add 'map', (opts) ->
         x: x - nw
         y: y
 
+      # return the polygon points in clockwise order
       return [n,e,s,w]
 
     addNpc: (data) ->
@@ -173,12 +159,11 @@ MM.add 'map', (opts) ->
     
     generateCollisionGraph: (tiles) ->
       collisionMap = []
-      collisionTypes = @collisionTypes
       x = y = 0
       len = tiles[0].length
 
-      getAccessible = (type) ->
-        if -1 == $.inArray( type, collisionTypes ) then 0 else 1
+      getAccessible = (type) =>
+        if -1 == @collisionTypes.indexOf(type) then 0 else 1
       createRow = ( row ) ->
         collisionMap.push []
         createTile( tile ) for tile in row

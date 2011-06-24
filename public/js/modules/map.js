@@ -37,15 +37,8 @@
         this.startUIGenerator();
         this.generateCollisionGraph(this.tileMap);
       }
-      /*
-          accessible: (xcoord, ycoord) ->
-            tileType = @getTileType xcoord, ycoord
-            if tileType == false
-              return false
-            -1 == $.inArray( tileType, @collisionTypes )
-          */
       Map.prototype.accessible = function(xcoord, ycoord) {
-        var accessible, bad, badPolygons, badTiles, c, coord, e, n, polygon, s, tileType, w, _i, _j, _k, _len, _len2, _len3, _ref;
+        var bad, badPolygons, badTiles, c, coord, e, n, polygon, s, tileType, w, _i, _j, _k, _len, _len2, _len3, _ref;
         c = [xcoord, ycoord];
         n = [xcoord, ycoord - this.nodeHeight];
         e = [xcoord + this.nodeWidth, ycoord];
@@ -56,7 +49,7 @@
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           coord = _ref[_i];
           tileType = this.getTileType(coord[0], coord[1]);
-          if (-1 !== $.inArray(tileType, this.collisionTypes)) {
+          if (-1 !== this.collisionTypes.indexOf(tileType)) {
             badTiles.push(coord);
           }
         }
@@ -65,7 +58,6 @@
           coord = badTiles[_j];
           badPolygons.push(this.getPolygon(coord));
         }
-        accessible = true;
         for (_k = 0, _len3 = badPolygons.length; _k < _len3; _k++) {
           polygon = badPolygons[_k];
           bad = this.isPointInPoly(polygon, {
@@ -73,25 +65,16 @@
             y: ycoord
           });
           if (bad === true) {
-            accessible = false;
+            return false;
             break;
           }
         }
-        if (accessible) {
-          this.$map.append('<div style="width:2px;height:2px;z-index:1000;position:absolute;background:blue;left:' + xcoord + 'px;top:' + ycoord + 'px;"></div>');
-        } else {
-          this.$map.append('<div style="width:2px;height:2px;z-index:1000;position:absolute;background:red;left:' + xcoord + 'px;top:' + ycoord + 'px;"></div>');
-        }
-        return accessible;
+        return true;
       };
       Map.prototype.getPolygon = function(coord) {
-        var e, n, nh, nw, s, stub, tx, ty, w, x, y;
+        var e, n, nh, nw, s, w, x, y;
         nw = this.nodeWidth;
         nh = this.nodeHeight;
-        tx = Math.floor(coord[0] / nw);
-        ty = Math.floor(coord[1] / nh);
-        stub = '#t_' + tx + '_' + ty;
-        $(stub).addClass('path');
         x = Math.floor(coord[0] / nw) * nw + (nw / 2);
         y = Math.floor(coord[1] / nh) * nh + (nh / 2);
         n = {
@@ -174,18 +157,17 @@
         return false;
       };
       Map.prototype.generateCollisionGraph = function(tiles) {
-        var collisionMap, collisionTypes, createRow, createTile, getAccessible, len, row, x, y, _i, _len;
+        var collisionMap, createRow, createTile, getAccessible, len, row, x, y, _i, _len;
         collisionMap = [];
-        collisionTypes = this.collisionTypes;
         x = y = 0;
         len = tiles[0].length;
-        getAccessible = function(type) {
-          if (-1 === $.inArray(type, collisionTypes)) {
+        getAccessible = __bind(function(type) {
+          if (-1 === this.collisionTypes.indexOf(type)) {
             return 0;
           } else {
             return 1;
           }
-        };
+        }, this);
         createRow = function(row) {
           var tile, _i, _len;
           collisionMap.push([]);
