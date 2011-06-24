@@ -101,8 +101,6 @@ start = function() {
   dev.coffee('stylus', 'stylus -w public/css/*');
   dev.start('mongolock', 'rm /data/db/mongod.lock', 'silent');
   dev.start('redis', 'redis-server', 'silent');
-  dev.start('brew', 'brew update', 'silent');
-  dev.start('npm', 'npm update', 'silent');
   dev.start('mongo', 'mongod', 'silent');
   dev.start('lb', 'haproxy -f scripts/haproxy.conf -p /var/run/haproxy.pid', 'silent');
   return dev.nginx();

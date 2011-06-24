@@ -1,5 +1,7 @@
-var ENV, channels, flushChannel, io, log, redis, settings, subscriber, util;
+var ENV, channels, flushChannel, http, io, log, redis, server, settings, socket, subscriber, util;
 require.paths.unshift(process.cwd() + '/lib');
+http = require('http');
+io = require('socket.io');
 util = require('util');
 redis = require('redis');
 ENV = process.env.ENV;
@@ -7,9 +9,13 @@ settings = require('settings').stream;
 if (process.argv[2] != null) {
   settings.port = process.argv[2];
 }
-io = require('socket.io').listen(Number(settings.port));
+server = http.createServer(function(req, res) {
+  return res.end(null);
+});
+server.listen(settings.port);
 channels = {};
-io.sockets.on('connection', function(client) {
+socket = io.listen(server);
+socket.on('connection', function(client) {
   var sid;
   sid = client.sessionId;
   client.on('message', function(data) {

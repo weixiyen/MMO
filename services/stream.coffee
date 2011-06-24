@@ -1,4 +1,6 @@
 require.paths.unshift(process.cwd() + '/lib')
+http = require 'http'
+io = require 'socket.io'
 util = require 'util'
 redis = require 'redis'
 ENV = process.env.ENV
@@ -8,13 +10,18 @@ settings = require('settings').stream
 # -------------------------------------------------
 settings.port = process.argv[2] if process.argv[2]?
 
-io = require('socket.io').listen Number(settings.port)
+# WEB SERVER WITH DEFAULT MSG
+# -------------------------------------------------
+server = http.createServer (req, res) ->
+	res.end null
+server.listen settings.port
 
 # SOCKET SERVER
 # -------------------------------------------------
 channels = {}
 
-io.sockets.on 'connection', (client) ->
+socket = io.listen server
+socket.on 'connection', (client) ->
 	
 	# when a client connects
 	sid = client.sessionId

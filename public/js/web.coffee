@@ -161,8 +161,9 @@ tokenize = (pattern, url) ->
 # WEB.comet
 $ ->
   comet = {}
-  socket = io.connect( 'http://' + window.location.hostname )
+  socket = new io.Socket
   reconn_interval = null
+  socket.connect()
   
   socket.on 'connect', () ->
     clearInterval reconn_interval

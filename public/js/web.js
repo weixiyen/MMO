@@ -177,8 +177,9 @@
   $(function() {
     var comet, reconn_interval, socket;
     comet = {};
-    socket = io.connect('http://' + window.location.hostname);
+    socket = new io.Socket;
     reconn_interval = null;
+    socket.connect();
     socket.on('connect', function() {
       return clearInterval(reconn_interval);
     });
