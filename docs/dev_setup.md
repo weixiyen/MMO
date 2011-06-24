@@ -54,7 +54,7 @@ Download & install npm, coffee-script, and stylus
 	npm install mongodb
 	npm install mongoose
 	npm install redis
-	npm install socket.io
+	npm install socket.io@0.6.1
 	npm install uuid
 	npm install zeromq
 	npm install jade

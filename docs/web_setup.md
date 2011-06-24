@@ -68,7 +68,7 @@ Install in node_modules
     npm install mongodb 
     npm install mongoose 
     npm install redis 
-    npm install socket.io 
+    npm install socket.io@0.6.1
     npm install jade 
     npm install uuid 
     npm install zeromq
