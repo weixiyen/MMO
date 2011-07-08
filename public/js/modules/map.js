@@ -28,8 +28,8 @@
         this.players = {};
         this.unitStub = 'unit-';
         this.pos = [options.xcoord, options.ycoord];
-        this.xOffset = -1 * Math.ceil(MM.settings.partyBox.width / 2.5);
-        this.yOffset = 0;
+        this.xOffset = 0;
+        this.yOffset = -1 * Math.ceil(MM.settings.partyBox.height / 2.5);
         this.tileEagerloadDepth = 6;
         this.isPointInPoly = $.polygon.isPointWithin;
         this.setViewportInfo();
@@ -390,7 +390,7 @@
       };
       Map.prototype.startUIGenerator = function() {
         this.generateUI();
-        return $.loop.add('map:ui:generator', 40, __bind(function() {
+        return $.loop.add('map:ui:generator', 20, __bind(function() {
           return this.generateUI();
         }, this));
       };
@@ -419,7 +419,7 @@
         w = 0;
         while (w < wMax) {
           if ((0 === h % 2 && 0 === w % 2) || (0 !== h % 2 && 0 !== w % 2)) {
-            random = MM.random(0, 2);
+            random = MM.random(0, 10);
             if (0 === random) {
               tileMap[h][w] = 99;
             } else {
@@ -442,7 +442,7 @@
         xcoord: MM.random(0, xMax),
         ycoord: MM.random(0, yMax),
         change: 4,
-        tileWidth: 128,
+        tileWidth: 126,
         tileHeight: 64,
         tileMap: tileMap,
         collisionTypes: [99, 98],

@@ -1,6 +1,6 @@
 WEB = {}
 
-WEB.VERSION = guid()
+WEB.VERSION = window.VERSION || guid()
 
 WEB.options =
   paths:
@@ -25,17 +25,17 @@ WEB.log = (label, print = null) ->
 # 	WEB.use 'feed'		--->	lazyloads /js/ui/feed.js
 #										--->	then runs WEB.add 'feed', (opts)->
 #										--->	then runs WEB.use 'feed', options
-module = {}
+module = new Object
 WEB.add = (name, fn) ->
-  if !module[name]?
+  if !module.hasOwnProperty( name )
     module[name] = fn
 WEB.use = (name, opts) ->
-  if !module[name]?
-    WEB.require name
-    WEB.run ->
+  if module.hasOwnProperty( name )
+    return module[name] opts
+  WEB.require name
+  WEB.run ->
+    if module.hasOwnProperty( name )
       module[name] opts
-  else
-    module[name] opts
 
 extensions = []
 WEB.extend = (name, ext) ->
@@ -66,6 +66,8 @@ History.Adapter.bind window, 'statechange', ->
   if data? and data.module?
 	  WEB.use data.module, data
 WEB.go = (opts) ->
+  if opts.path == window.location.pathname or document.location.href.match("#.[a-zA-Z0-9/]+\\?")
+    WEB.use opts.module, opts
   History.pushState opts, opts.title, opts.path
 
 # WEB.require
@@ -75,19 +77,20 @@ js_queue = []
 css_queue = []
 paths_list = {}
 WEB.require = (name, type='js') ->
+
   # have we required this path before?
   key = name + '.' + type
   if paths_list[key]?
     return
   paths_list[key] = true
-  
+
   if type == 'js'
     src = WEB.options.paths.modules + name + '.js?v=' + WEB.VERSION
     js_queue.push src
   else
     src = WEB.options.paths.css + name + '.css?v=' + WEB.VERSION
     css_queue.push src
-	  
+
 WEB.run = (fn) ->
   if css_queue.length > 0
     LazyLoad.css css_queue
@@ -100,21 +103,24 @@ WEB.run = (fn) ->
     fn()
 
 # WEB.render - templating with jade
-# WEB.render '#myDiv', 'feed/football', options
+# WEB.render '#myDiv', 'feed/football', options, callback
 jade = require 'jade'
-WEB.render = (el, filename, options) ->
+WEB.render = (el, filename, options={}, callback) ->
   tpl_path = WEB.options.paths.tpl + filename + '.jade?v=' + WEB.VERSION
-  req = WEB.get 
+  req = WEB.get
     url: tpl_path
     async: false
+    dataType: 'text'
   req.success (res) ->
     el.html jade.render res, options
+    if callback
+      callback()
 
 # WEB.route - client-side pathname-based routing
 # call WEB.route() to route to the current pathname
 # call WEB.route('/pathname') to route to /pathname
 # the routes data structure (array of objects)
-# [  
+# [
 #   {
 #     path: regexObj
 #     fn: function
@@ -127,20 +133,36 @@ WEB.render = (el, filename, options) ->
 routes = []
 
 WEB.route = (pathname=null) ->
-  # calling WEB.route() will route to current pathname
+  # route action WEB.route
   if pathname == null
-    return WEB.route document.location.pathname
+    try
+      WEB.route document.location.href.match("#.[a-zA-Z0-9/]+\\?")[0].replace( new RegExp('[#.\\?]', 'g'), '' )
+    catch error
+      WEB.route document.location.pathname
+    return
   for route in routes
     if pathname.match getPatternRegex route.path
       route.fn tokenize route.path, pathname
       break
-      
+
 WEB.addRoute = (path, fn=[]) ->
   # create regular expression of the path
-  # add stuff to identify this route  
-  routes.push
-    path: path
-    fn: fn
+  # add stuff to identify this route
+  lastChar = path.substring path.length - 1, path.length
+  if lastChar is '/'
+    routes.push
+      path: path.slice(0, -1)
+      fn: fn
+    routes.push
+      path: path
+      fn: fn
+  else
+    routes.push
+      path: path + '/'
+      fn: fn
+    routes.push
+      path: path
+      fn: fn
 
 getPatternRegex = (pattern) ->
   alnum_pattern = '[-_a-zA-Z0-9]+'
@@ -158,27 +180,17 @@ tokenize = (pattern, url) ->
       params[h_frag] = u_frags[_i]
   params
 
+WEB.comet = $.noop
+
 # WEB.comet
 $ ->
   comet = {}
-  socket = new io.Socket
-  reconn_interval = null
-  socket.connect()
-  
-  socket.on 'connect', () ->
-    clearInterval reconn_interval
-  	
-  socket.on 'message', (msg) ->
-    comet[ msg.channel ] msg.data
-  	
-  socket.on 'disconnect', () ->
-    reconn = ->
-      socket.connect()
-    reconn_interval = setInterval reconn, 5000
-
+  socket = io.connect('http://' + document.domain);
   WEB.comet = (channel, fn) ->
-    comet[ channel ] = fn
-    socket.send
-      channel: channel
+    socket.on channel, (data)->
+      fn data
+
+WEB.resetUI = ->
+  $('*').unbind().undelegate().die()
 
 @WEB = WEB

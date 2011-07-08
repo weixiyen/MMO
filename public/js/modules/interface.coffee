@@ -2,6 +2,7 @@ MM.add 'interface', (opts) ->
 
   MM.require 'interface/chatbox'
   MM.require 'interface/partybox'
+  MM.require 'interface/minimap'
 
   MM.run ->
 
@@ -12,3 +13,6 @@ MM.add 'interface', (opts) ->
 
     MM.use 'interface/partybox',
       el: $('#partybox')
+
+    MM.use 'interface/minimap',
+      el: $('#minimap')

@@ -5,8 +5,8 @@ MM.add 'interface/chatbox', (opts) ->
       @$el = data.el
       @$bg = @$el.find('.ui-chatbox:first')
       @$log = @$el.find('.ui-chatlog:first')
-      @height = $(window).height() - MM.settings.partyBox.height - 11
-      @width = MM.settings.partyBox.width
+      @height = MM.settings.partyBox.height
+      @width = $(window).width() - MM.settings.partyBox.width * 2 - 12
       @create()
     create: ->
       @$bg.css

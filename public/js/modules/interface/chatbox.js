@@ -6,8 +6,8 @@
         this.$el = data.el;
         this.$bg = this.$el.find('.ui-chatbox:first');
         this.$log = this.$el.find('.ui-chatlog:first');
-        this.height = $(window).height() - MM.settings.partyBox.height - 11;
-        this.width = MM.settings.partyBox.width;
+        this.height = MM.settings.partyBox.height;
+        this.width = $(window).width() - MM.settings.partyBox.width * 2 - 12;
         this.create();
       }
       Chatbox.prototype.create = function() {

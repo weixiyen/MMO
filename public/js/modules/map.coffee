@@ -27,8 +27,8 @@ MM.add 'map', (opts) ->
       @players = {}
       @unitStub = 'unit-'
       @pos = [options.xcoord, options.ycoord]
-      @xOffset = -1 * Math.ceil( MM.settings.partyBox.width / 2.5 )
-      @yOffset = 0
+      @xOffset = 0
+      @yOffset = -1 * Math.ceil( MM.settings.partyBox.height / 2.5 )
       @tileEagerloadDepth = 6
       @isPointInPoly = $.polygon.isPointWithin
 
@@ -366,7 +366,7 @@ MM.add 'map', (opts) ->
 
     startUIGenerator: ->
       @generateUI()
-      $.loop.add 'map:ui:generator', 40, =>
+      $.loop.add 'map:ui:generator', 20, =>
         @generateUI()
     
       
@@ -400,7 +400,7 @@ MM.add 'map', (opts) ->
       w = 0
       while w < wMax
         if (0 == h % 2 and 0 == w % 2) or (0 != h % 2 and 0 != w % 2)
-          random = MM.random 0, 2
+          random = MM.random 0, 10
           if 0 == random
             tileMap[h][w] = 99 # blocked tile
           else
@@ -423,7 +423,7 @@ MM.add 'map', (opts) ->
       xcoord: MM.random 0, xMax
       ycoord: MM.random 0, yMax
       change: 4
-      tileWidth: 128
+      tileWidth: 126
       tileHeight: 64
       tileMap: tileMap
       collisionTypes: [99, 98]

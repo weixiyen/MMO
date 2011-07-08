@@ -8,11 +8,36 @@
 }
 .ui-map-1 .tile {
   position: absolute;
-  background: no-repeat url("/img/green_tile.png");
+  background: no-repeat url("/img/tiles.png");
+}
+.ui-map-1 .tile.type-1,
+.ui-map-1 {
+  background-position: -2px -68px;
+}
+.ui-map-1 .tile.type-2 {
+  background-position: -130px -2px;
+}
+.ui-map-1 .tile.type-3 {
+  background-position: -260px -2px;
+}
+.ui-map-1 .tile.type-4 {
+  background-position: -388px -2px;
+}
+.ui-map-1 .tile.type-5 {
+  background-position: -516px -2px;
+}
+.ui-map-1 .tile.type-6 {
+  background-position: -645px -2px;
+}
+.ui-map-1 .tile.type-7,
+.ui-map-1 .tile.type-8,
+.ui-map-1 .tile.type-9,
+.ui-map-1 .tile.type-10 {
+  background-position: -2px -2px;
 }
 .ui-map-1 .tile.type-99 {
-  background: no-repeat url("/img/black_tile.png");
+  background: none;
 }
 .ui-map-1 .tile.path {
-  background: no-repeat url("/img/yellow_tile.png");
+  background: none;
 }

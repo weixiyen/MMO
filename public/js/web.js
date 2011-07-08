@@ -1,7 +1,7 @@
 (function() {
   var History, WEB, ajax, css_queue, extensions, getPatternRegex, jade, js_queue, module, paths_list, routes, tokenize;
   WEB = {};
-  WEB.VERSION = guid();
+  WEB.VERSION = window.VERSION || guid();
   WEB.options = {
     paths: {
       tpl: '/tpl/',
@@ -25,21 +25,22 @@
       return console.log(label);
     }
   };
-  module = {};
+  module = new Object;
   WEB.add = function(name, fn) {
-    if (!(module[name] != null)) {
+    if (!module.hasOwnProperty(name)) {
       return module[name] = fn;
     }
   };
   WEB.use = function(name, opts) {
-    if (!(module[name] != null)) {
-      WEB.require(name);
-      return WEB.run(function() {
-        return module[name](opts);
-      });
-    } else {
+    if (module.hasOwnProperty(name)) {
       return module[name](opts);
     }
+    WEB.require(name);
+    return WEB.run(function() {
+      if (module.hasOwnProperty(name)) {
+        return module[name](opts);
+      }
+    });
   };
   extensions = [];
   WEB.extend = function(name, ext) {
@@ -76,6 +77,9 @@
     }
   });
   WEB.go = function(opts) {
+    if (opts.path === window.location.pathname || document.location.href.match("#.[a-zA-Z0-9/]+\\?")) {
+      WEB.use(opts.module, opts);
+    }
     return History.pushState(opts, opts.title, opts.path);
   };
   js_queue = [];
@@ -114,15 +118,22 @@
     }
   };
   jade = require('jade');
-  WEB.render = function(el, filename, options) {
+  WEB.render = function(el, filename, options, callback) {
     var req, tpl_path;
+    if (options == null) {
+      options = {};
+    }
     tpl_path = WEB.options.paths.tpl + filename + '.jade?v=' + WEB.VERSION;
     req = WEB.get({
       url: tpl_path,
-      async: false
+      async: false,
+      dataType: 'text'
     });
     return req.success(function(res) {
-      return el.html(jade.render(res, options));
+      el.html(jade.render(res, options));
+      if (callback) {
+        return callback();
+      }
     });
   };
   routes = [];
@@ -132,7 +143,12 @@
       pathname = null;
     }
     if (pathname === null) {
-      return WEB.route(document.location.pathname);
+      try {
+        WEB.route(document.location.href.match("#.[a-zA-Z0-9/]+\\?")[0].replace(new RegExp('[#.\\?]', 'g'), ''));
+      } catch (error) {
+        WEB.route(document.location.pathname);
+      }
+      return;
     }
     _results = [];
     for (_i = 0, _len = routes.length; _i < _len; _i++) {
@@ -145,13 +161,30 @@
     return _results;
   };
   WEB.addRoute = function(path, fn) {
+    var lastChar;
     if (fn == null) {
       fn = [];
     }
-    return routes.push({
-      path: path,
-      fn: fn
-    });
+    lastChar = path.substring(path.length - 1, path.length);
+    if (lastChar === '/') {
+      routes.push({
+        path: path.slice(0, -1),
+        fn: fn
+      });
+      return routes.push({
+        path: path,
+        fn: fn
+      });
+    } else {
+      routes.push({
+        path: path + '/',
+        fn: fn
+      });
+      return routes.push({
+        path: path,
+        fn: fn
+      });
+    }
   };
   getPatternRegex = function(pattern) {
     var alnum_pattern, pattern_re, token_re;
@@ -174,31 +207,19 @@
     }
     return params;
   };
+  WEB.comet = $.noop;
   $(function() {
-    var comet, reconn_interval, socket;
+    var comet, socket;
     comet = {};
-    socket = new io.Socket;
-    reconn_interval = null;
-    socket.connect();
-    socket.on('connect', function() {
-      return clearInterval(reconn_interval);
-    });
-    socket.on('message', function(msg) {
-      return comet[msg.channel](msg.data);
-    });
-    socket.on('disconnect', function() {
-      var reconn;
-      reconn = function() {
-        return socket.connect();
-      };
-      return reconn_interval = setInterval(reconn, 5000);
-    });
+    socket = io.connect('http://' + document.domain);
     return WEB.comet = function(channel, fn) {
-      comet[channel] = fn;
-      return socket.send({
-        channel: channel
+      return socket.on(channel, function(data) {
+        return fn(data);
       });
     };
   });
+  WEB.resetUI = function() {
+    return $('*').unbind().undelegate().die();
+  };
   this.WEB = WEB;
 }).call(this);
