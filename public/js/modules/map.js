@@ -32,8 +32,8 @@
         this.yOffset = -1 * Math.ceil(MM.settings.partyBox.height / 2.5);
         this.tileEagerloadDepth = 6;
         this.isPointInPoly = $.polygon.isPointWithin;
-        this.setViewportInfo();
-        this.goTo(this.pos[0], this.pos[1]);
+        this.recenter();
+        this.bindWindowResize();
         this.startUIGenerator();
         this.generateCollisionGraph(this.tileMap);
       }
@@ -70,6 +70,11 @@
           }
         }
         return true;
+      };
+      Map.prototype.bindWindowResize = function() {
+        return $(window).resize(__bind(function() {
+          return this.recenter();
+        }, this));
       };
       Map.prototype.getPolygon = function(coord) {
         var e, n, nh, nw, s, w, x, y;
@@ -343,6 +348,10 @@
       };
       Map.prototype.panStop = function(direction) {
         return $.loop.remove('pan_map_' + direction);
+      };
+      Map.prototype.recenter = function() {
+        this.setViewportInfo();
+        return this.goTo(this.pos[0], this.pos[1]);
       };
       Map.prototype.setCoords = function(xcoord, ycoord) {
         this.pos[0] = xcoord;

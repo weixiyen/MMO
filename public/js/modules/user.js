@@ -37,8 +37,14 @@
           pathloop: 'user:path:loop'
         };
         this.center();
+        this.bindWindowResize();
         this.face(data.facing);
       }
+      User.prototype.bindWindowResize = function() {
+        return $(window).resize(__bind(function() {
+          return this.center();
+        }, this));
+      };
       User.prototype.center = function() {
         var left, top;
         left = $(window).width() / 2 - this.width / 2 + this.map.xOffset + 8;

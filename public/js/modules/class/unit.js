@@ -47,7 +47,7 @@
           width: this.width,
           background: 'no-repeat url(' + this.imgpath + ')',
           left: this.width / 2 * -1,
-          top: this.height / 2 * -1
+          top: this.height * -1
         });
         return this.elName.css({
           left: this.width / 2 - 50,

@@ -42,7 +42,7 @@ MM.add 'class/unit', (opts) ->
         width: @width
         background: 'no-repeat url(' + @imgpath + ')'
         left: @width / 2 * -1
-        top: @height / 2 * -1
+        top: @height * -1
 
       @elName.css
         left: @width / 2 - 50

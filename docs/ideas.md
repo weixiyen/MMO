@@ -169,3 +169,13 @@ Chat Priority
 2) Linkshell
 3) General
 4) Combat
+
+Chat Layout
+----------
+RIGHT MENU
+- Chat
+- Person 1
+- Person 2
+- Person 3
+- Person ...
+- Combat Log

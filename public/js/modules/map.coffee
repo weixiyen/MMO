@@ -33,11 +33,11 @@ MM.add 'map', (opts) ->
       @isPointInPoly = $.polygon.isPointWithin
 
       # initialize functions
-      @setViewportInfo()
-      @goTo @pos[0], @pos[1]
+      @recenter()
+      @bindWindowResize()
       @startUIGenerator()
       @generateCollisionGraph @tileMap
-
+        
     # determine if the coordinate is accessible
     accessible: (xcoord, ycoord) ->
       
@@ -70,6 +70,10 @@ MM.add 'map', (opts) ->
           break
 
       return true
+
+    bindWindowResize: ->
+      $(window).resize =>
+        @recenter()
     
     getPolygon: ( coord ) ->
       nw = @nodeWidth
@@ -319,6 +323,10 @@ MM.add 'map', (opts) ->
 
     panStop: (direction) ->
       $.loop.remove 'pan_map_' + direction
+
+    recenter: ->
+      @setViewportInfo()
+      @goTo @pos[0], @pos[1]
     
     setCoords: (xcoord, ycoord) ->
       @pos[0] = xcoord

@@ -33,9 +33,14 @@ MM.add 'user', (opts) ->
       @tag = 
         automove: 'user:path:automove'
         pathloop: 'user:path:loop'
-        
+
       @center()
+      @bindWindowResize()
       @face data.facing
+
+    bindWindowResize: ->
+      $(window).resize =>
+        @center()
       
     center: ->
       left = $(window).width() / 2 - @width / 2 + @map.xOffset + 8
