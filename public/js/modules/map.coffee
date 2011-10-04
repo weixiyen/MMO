@@ -419,7 +419,7 @@ MM.add 'map', (opts) ->
       h++
       
     arrPos = []
-    totalSprites = 100
+    totalSprites = 66
     xMax = tileMap[0].length * 64
     yMax = tileMap.length * 32
 
