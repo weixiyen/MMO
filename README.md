@@ -1,24 +1,5 @@
 MMO
 ===
- 
-Current Tasks
----
-
-Weixi & Sunny
-
-- Game UI
-
-Stan
-
-- Map Maker
-
-Derek
-
-- Combat
-
-Dave & Sarah
-
-- 3D Models
 
 Documentation
 ---

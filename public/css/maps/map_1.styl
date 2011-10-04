@@ -7,21 +7,24 @@
   cursor pointer
   .tile
     position absolute
-    background no-repeat url('/img/tiles.png')
-  .tile.type-1,
-    background-position -2px -68px
+    background no-repeat 0 0
+    background-size 128px 64px
+    display block
+    position absolute
+  .tile.type-1
+    background-image url('/img/tile_07.png')
   .tile.type-2
-    background-position -130px -2px
+    background-image url('/img/tile_02.png')
   .tile.type-3
-    background-position -260px -2px
+    background-image url('/img/tile_03.png')
   .tile.type-4
-    background-position -388px -2px
+    background-image url('/img/tile_04.png')
   .tile.type-5
-    background-position -516px -2px
+    background-image url('/img/tile_05.png')
   .tile.type-6
-    background-position -645px -2px
+    background-image url('/img/tile_06.png')
   .tile.type-7, .tile.type-8, .tile.type-9, .tile.type-10
-    background-position -2px -2px
+    background-image url('/img/tile_01.png')
   .tile.type-99
     background none
   .tile.path

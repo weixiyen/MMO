@@ -8,32 +8,34 @@
 }
 .ui-map-1 .tile {
   position: absolute;
-  background: no-repeat url("/img/tiles.png");
+  background: no-repeat 0 0;
+  background-size: 128px 64px;
+  display: block;
+  position: absolute;
 }
-.ui-map-1 .tile.type-1,
-.ui-map-1 {
-  background-position: -2px -68px;
+.ui-map-1 .tile.type-1 {
+  background-image: url("/img/tile_07.png");
 }
 .ui-map-1 .tile.type-2 {
-  background-position: -130px -2px;
+  background-image: url("/img/tile_02.png");
 }
 .ui-map-1 .tile.type-3 {
-  background-position: -260px -2px;
+  background-image: url("/img/tile_03.png");
 }
 .ui-map-1 .tile.type-4 {
-  background-position: -388px -2px;
+  background-image: url("/img/tile_04.png");
 }
 .ui-map-1 .tile.type-5 {
-  background-position: -516px -2px;
+  background-image: url("/img/tile_05.png");
 }
 .ui-map-1 .tile.type-6 {
-  background-position: -645px -2px;
+  background-image: url("/img/tile_06.png");
 }
 .ui-map-1 .tile.type-7,
 .ui-map-1 .tile.type-8,
 .ui-map-1 .tile.type-9,
 .ui-map-1 .tile.type-10 {
-  background-position: -2px -2px;
+  background-image: url("/img/tile_01.png");
 }
 .ui-map-1 .tile.type-99 {
   background: none;
