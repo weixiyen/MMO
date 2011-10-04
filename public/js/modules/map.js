@@ -442,7 +442,7 @@
         h++;
       }
       arrPos = [];
-      totalSprites = 30;
+      totalSprites = 100;
       xMax = tileMap[0].length * 64;
       yMax = tileMap.length * 32;
       MM.extend('map', new Map({
